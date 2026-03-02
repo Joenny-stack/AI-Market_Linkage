@@ -1,0 +1,1 @@
+# Django configuration __init__.py

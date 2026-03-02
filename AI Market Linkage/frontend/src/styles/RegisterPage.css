@@ -1,0 +1,33 @@
+.register-page {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 80vh;
+  padding: 1rem;
+}
+
+.register-container {
+  background: white;
+  padding: 2.5rem;
+  border-radius: 8px;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.1);
+  width: 100%;
+  max-width: 500px;
+}
+
+.register-container h1 {
+  text-align: center;
+  margin-bottom: 0.5rem;
+}
+
+.register-container > p {
+  text-align: center;
+  color: var(--text-light);
+  margin-bottom: 2rem;
+}
+
+@media (max-width: 600px) {
+  .register-container {
+    padding: 1.5rem;
+  }
+}

@@ -1,0 +1,11 @@
+.edit-listing-page {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 2rem 1rem;
+  text-align: center;
+}
+
+.edit-listing-page h1 {
+  color: var(--primary-color);
+  margin-bottom: 1rem;
+}
