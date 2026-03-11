@@ -6,6 +6,9 @@ node_modules/
 frontend/dist/
 dist/
 
+#Dataset folder
+dataset
+
 # Env files
 .env
 .env.local
