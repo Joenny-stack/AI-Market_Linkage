@@ -43,6 +43,34 @@
   margin-top: 0.5rem;
 }
 
+.image-preview-wrapper {
+  margin-top: 1rem;
+  max-width: 360px;
+}
+
+.image-preview {
+  width: 100%;
+  display: block;
+  border-radius: 8px;
+  border: 1px solid var(--border-color);
+}
+
+.ai-loading {
+  margin-top: 0.75rem;
+  color: var(--primary-color);
+  font-weight: 600;
+}
+
+.ai-error {
+  margin-top: 0.75rem;
+  color: #b42318;
+  font-weight: 500;
+}
+
+.ai-actions {
+  margin-top: 0.75rem;
+}
+
 .form-actions {
   display: flex;
   gap: 1rem;

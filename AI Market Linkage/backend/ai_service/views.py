@@ -1,5 +1,6 @@
 import os
 import tempfile
+import logging
 
 from django.conf import settings
 from rest_framework import status
@@ -9,6 +10,9 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 
 from .predict import predict_tomato
+
+
+logger = logging.getLogger(__name__)
 
 
 class TomatoClassificationAPIView(APIView):
@@ -45,7 +49,14 @@ class TomatoClassificationAPIView(APIView):
 
             prediction = predict_tomato(temp_path)
             return Response(prediction, status=status.HTTP_200_OK)
+        except (FileNotFoundError, RuntimeError) as exc:
+            logger.exception("AI classifier unavailable")
+            return Response(
+                {"error": f"AI classifier unavailable: {str(exc)}"},
+                status=status.HTTP_503_SERVICE_UNAVAILABLE,
+            )
         except Exception as exc:
+            logger.exception("Unexpected tomato classification failure")
             return Response(
                 {"error": f"Prediction failed: {str(exc)}"},
                 status=status.HTTP_500_INTERNAL_SERVER_ERROR,

@@ -1,6 +1,7 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { listingAPI } from '../api/endpoints';
+import { classifyTomatoImage, listingAPI } from '../api/endpoints';
+import AIQualityResult from '../components/AIQualityResult';
 import '../styles/AddListingPage.css';
 
 export default function AddListingPage() {
@@ -21,8 +22,22 @@ export default function AddListingPage() {
     status: 'AVAILABLE',
   });
   const [images, setImages] = useState([]);
+  const [imagePreview, setImagePreview] = useState('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
+  const [aiPrediction, setAiPrediction] = useState('');
+  const [aiConfidence, setAiConfidence] = useState(null);
+  const [aiGrade, setAiGrade] = useState('');
+  const [aiLoading, setAiLoading] = useState(false);
+  const [aiError, setAiError] = useState('');
+
+  useEffect(() => {
+    return () => {
+      if (imagePreview) {
+        URL.revokeObjectURL(imagePreview);
+      }
+    };
+  }, [imagePreview]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -32,8 +47,83 @@ export default function AddListingPage() {
     }));
   };
 
-  const handleImageChange = (e) => {
-    setImages(Array.from(e.target.files));
+  const handleImageChange = async (e) => {
+    const selectedImages = Array.from(e.target.files || []);
+    setImages(selectedImages);
+
+    if (imagePreview) {
+      URL.revokeObjectURL(imagePreview);
+    }
+
+    if (!selectedImages.length) {
+      setImagePreview('');
+      setAiPrediction('');
+      setAiConfidence(null);
+      setAiGrade('');
+      setAiError('');
+      setAiLoading(false);
+      return;
+    }
+
+    setImagePreview(URL.createObjectURL(selectedImages[0]));
+
+    await analyzeImage(selectedImages[0]);
+  };
+
+  const analyzeImage = async (imageFile) => {
+    if (!imageFile) {
+      return;
+    }
+
+    setAiLoading(true);
+    setAiError('');
+    try {
+      const prediction = await classifyTomatoImage(imageFile);
+      setAiPrediction(prediction.class || '');
+      setAiConfidence(typeof prediction.confidence === 'number' ? prediction.confidence : null);
+      setAiGrade(prediction.grade || '');
+    } catch {
+      setAiPrediction('');
+      setAiConfidence(null);
+      setAiGrade('');
+      setAiError('AI analysis unavailable. Listing can still be created.');
+    } finally {
+      setAiLoading(false);
+    }
+  };
+
+  const handleReanalyze = async () => {
+    if (!images.length || aiLoading) {
+      return;
+    }
+
+    await analyzeImage(images[0]);
+  };
+
+  const buildListingPayload = (includeAI = true) => {
+    const payload = new FormData();
+
+    Object.keys(formData).forEach((key) => {
+      payload.append(key, formData[key]);
+    });
+
+    images.forEach((image) => {
+      payload.append('images', image);
+    });
+
+    if (includeAI && aiPrediction && aiGrade && typeof aiConfidence === 'number') {
+      payload.append('ai_class', aiPrediction);
+      payload.append('quality_grade', aiGrade);
+      payload.append('confidence_score', String(aiConfidence));
+    }
+
+    return payload;
+  };
+
+  const shouldRetryWithoutAI = (err) => {
+    const responseData = err?.response?.data;
+    const text = JSON.stringify(responseData || '').toLowerCase();
+    return text.includes('unexpected field') || text.includes('ai_class') || text.includes('quality_grade') || text.includes('confidence_score');
   };
 
   const handleSubmit = async (e) => {
@@ -42,19 +132,22 @@ export default function AddListingPage() {
     setError('');
 
     try {
-      const formDataToSend = new FormData();
-      Object.keys(formData).forEach(key => {
-        formDataToSend.append(key, formData[key]);
-      });
-      
-      images.forEach(image => {
-        formDataToSend.append('images', image);
-      });
-
-      await listingAPI.createListing(formDataToSend);
+      const payloadWithAI = buildListingPayload(true);
+      await listingAPI.createListing(payloadWithAI);
       navigate('/farmer/listings');
     } catch (err) {
-      setError(err.response?.data?.detail || 'Failed to create listing');
+      if (aiPrediction && shouldRetryWithoutAI(err)) {
+        try {
+          const payloadWithoutAI = buildListingPayload(false);
+          await listingAPI.createListing(payloadWithoutAI);
+          navigate('/farmer/listings');
+          return;
+        } catch (retryErr) {
+          setError(retryErr.response?.data?.detail || 'Failed to create listing');
+        }
+      } else {
+        setError(err.response?.data?.detail || 'Failed to create listing');
+      }
     }
     setLoading(false);
   };
@@ -246,6 +339,37 @@ export default function AddListingPage() {
               onChange={handleImageChange}
             />
             <p className="hint">{images.length} image(s) selected</p>
+
+            {imagePreview && (
+              <div className="image-preview-wrapper">
+                <img src={imagePreview} alt="Selected produce" className="image-preview" />
+              </div>
+            )}
+
+            {aiLoading && <p className="ai-loading">Analyzing tomato quality...</p>}
+
+            {!aiLoading && (aiPrediction || aiGrade || typeof aiConfidence === 'number') && (
+              <AIQualityResult
+                prediction={aiPrediction}
+                confidence={aiConfidence}
+                grade={aiGrade}
+              />
+            )}
+
+            {!aiLoading && aiError && <p className="ai-error">{aiError}</p>}
+
+            {!!images.length && (
+              <div className="ai-actions">
+                <button
+                  type="button"
+                  className="btn btn-secondary btn-sm"
+                  onClick={handleReanalyze}
+                  disabled={aiLoading}
+                >
+                  {aiLoading ? 'Analyzing...' : 'Re-analyze'}
+                </button>
+              </div>
+            )}
           </div>
         </div>
 

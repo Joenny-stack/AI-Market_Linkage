@@ -1,11 +1,66 @@
 .edit-listing-page {
   max-width: 900px;
   margin: 0 auto;
-  padding: 2rem 1rem;
-  text-align: center;
+  padding: 1rem;
 }
 
 .edit-listing-page h1 {
+  text-align: center;
+  margin-bottom: 1.25rem;
+}
+
+.edit-card {
+  background: white;
+  padding: 1.5rem;
+  border-radius: 8px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+}
+
+.edit-note {
+  margin-top: 0;
+  color: var(--text-light);
+}
+
+.hint {
+  font-size: 0.9rem;
+  color: var(--text-light);
+  margin-top: 0.5rem;
+}
+
+.image-preview-wrapper {
+  margin-top: 1rem;
+  max-width: 360px;
+}
+
+.image-preview {
+  width: 100%;
+  display: block;
+  border-radius: 8px;
+  border: 1px solid var(--border-color);
+}
+
+.ai-loading {
+  margin-top: 0.75rem;
   color: var(--primary-color);
-  margin-bottom: 1rem;
+  font-weight: 600;
+}
+
+.ai-error {
+  margin-top: 0.75rem;
+  color: #b42318;
+  font-weight: 500;
+}
+
+.ai-actions {
+  margin-top: 0.75rem;
+}
+
+.page-actions {
+  margin-top: 1.25rem;
+}
+
+@media (max-width: 768px) {
+  .edit-card {
+    padding: 1rem;
+  }
 }

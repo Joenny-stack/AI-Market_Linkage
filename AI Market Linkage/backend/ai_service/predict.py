@@ -1,3 +1,4 @@
+import logging
 from pathlib import Path
 from typing import Dict
 
@@ -17,6 +18,7 @@ GRADE_MAP = {
 MODEL_PATH = Path(getattr(settings, "AI_CLASSIFIER_MODEL_PATH", settings.BASE_DIR / "ai_service" / "model" / "tomato_classifier.h5"))
 
 _MODEL = None
+logger = logging.getLogger(__name__)
 
 
 def _get_model() -> tf.keras.Model:
@@ -24,7 +26,13 @@ def _get_model() -> tf.keras.Model:
     if _MODEL is None:
         if not MODEL_PATH.exists():
             raise FileNotFoundError(f"Tomato classifier model not found at: {MODEL_PATH}")
-        _MODEL = tf.keras.models.load_model(MODEL_PATH)
+        try:
+            # compile=False avoids requiring training-only metadata/objects.
+            _MODEL = tf.keras.models.load_model(MODEL_PATH, compile=False)
+            logger.info("Tomato classifier loaded from %s", MODEL_PATH)
+        except Exception as exc:
+            logger.exception("Failed to load tomato classifier model")
+            raise RuntimeError(f"Failed to load tomato classifier model: {exc}") from exc
     return _MODEL
 
 

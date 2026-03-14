@@ -1,5 +1,16 @@
 import apiClient from './client';
 
+export const classifyTomatoImage = async (imageFile) => {
+  const formData = new FormData();
+  formData.append('image', imageFile);
+
+  const response = await apiClient.post('/ai/classify-tomato/', formData, {
+    headers: { 'Content-Type': 'multipart/form-data' },
+  });
+
+  return response.data;
+};
+
 // Authentication API calls
 export const authAPI = {
   register: (data) => apiClient.post('/auth/register/', data),
@@ -40,9 +51,15 @@ export const inquiryAPI = {
   markResponded: (id) => apiClient.patch(`/inquiries/${id}/mark_responded/`),
 };
 
+// AI API calls
+export const aiAPI = {
+  classifyTomatoImage,
+};
+
 export default {
   authAPI,
   farmerAPI,
   listingAPI,
   inquiryAPI,
+  aiAPI,
 };
