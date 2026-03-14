@@ -1,14 +1,14 @@
 import { useState, useEffect } from 'react';
-import { listingAPI } from '../api/endpoints';
 import '../styles/ListingFilter.css';
 
 export default function ListingFilter({ onFilter }) {
   const [filters, setFilters] = useState({
-    crop: '',
+    crop_name: '',
     province: '',
     min_price: '',
     max_price: '',
     status: 'AVAILABLE',
+    quality_grade: '',
   });
 
   useEffect(() => {
@@ -25,11 +25,12 @@ export default function ListingFilter({ onFilter }) {
 
   const handleReset = () => {
     setFilters({
-      crop: '',
+      crop_name: '',
       province: '',
       min_price: '',
       max_price: '',
       status: 'AVAILABLE',
+      quality_grade: '',
     });
   };
 
@@ -41,8 +42,8 @@ export default function ListingFilter({ onFilter }) {
         <label>Crop Name</label>
         <input
           type="text"
-          name="crop"
-          value={filters.crop}
+          name="crop_name"
+          value={filters.crop_name}
           onChange={handleChange}
           placeholder="Search crop..."
         />
@@ -80,6 +81,17 @@ export default function ListingFilter({ onFilter }) {
             placeholder="10000"
           />
         </div>
+      </div>
+
+      <div className="filter-group">
+        <label>Quality Grade</label>
+        <select name="quality_grade" value={filters.quality_grade} onChange={handleChange}>
+          <option value="">All Grades</option>
+          <option value="Grade A">Grade A</option>
+          <option value="Grade B">Grade B</option>
+          <option value="Grade C">Grade C</option>
+          <option value="Reject">Reject</option>
+        </select>
       </div>
 
       <div className="filter-group">

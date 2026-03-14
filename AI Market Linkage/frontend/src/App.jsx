@@ -26,11 +26,14 @@ import ProtectedRoute from './components/ProtectedRoute';
 import './styles/App.css';
 
 function App() {
-  const { isAuthenticated, loadUser } = useAuthStore();
+  const { isAuthenticated, user, loadUser } = useAuthStore();
+
+  const normalizedRole = String(user?.role || '').trim().toUpperCase();
+  const dashboardPath = normalizedRole === 'BUYER' ? '/buyer/dashboard' : '/farmer/dashboard';
 
   useEffect(() => {
     loadUser();
-  }, []);
+  }, [loadUser]);
 
   return (
     <Router>
@@ -42,8 +45,8 @@ function App() {
             <Route path="/" element={<HomePage />} />
             <Route path="/listings" element={<BrowseListingsPage />} />
             <Route path="/listings/:id" element={<ListingDetailPage />} />
-            <Route path="/login" element={isAuthenticated ? <Navigate to="/dashboard" /> : <LoginPage />} />
-            <Route path="/register" element={isAuthenticated ? <Navigate to="/dashboard" /> : <RegisterPage />} />
+            <Route path="/login" element={isAuthenticated ? <Navigate to={dashboardPath} /> : <LoginPage />} />
+            <Route path="/register" element={isAuthenticated ? <Navigate to={dashboardPath} /> : <RegisterPage />} />
 
             {/* Protected Routes - Farmer */}
             <Route
@@ -80,7 +83,7 @@ function App() {
             {/* Protected Routes - All Users */}
             <Route
               path="/dashboard"
-              element={<ProtectedRoute><FarmerDashboardPage /></ProtectedRoute>}
+              element={<ProtectedRoute><Navigate to={dashboardPath} replace /></ProtectedRoute>}
             />
             <Route
               path="/profile"

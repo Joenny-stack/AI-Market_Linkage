@@ -75,6 +75,23 @@
   margin-bottom: 0.3rem;
 }
 
+.ai-summary {
+  background: #f6fbf8;
+  border: 1px solid #d8efe1;
+  border-radius: 6px;
+  padding: 0.65rem;
+  margin-bottom: 1rem;
+  font-size: 0.88rem;
+}
+
+.ai-summary p {
+  margin-bottom: 0.25rem;
+}
+
+.ai-summary p:last-child {
+  margin-bottom: 0;
+}
+
 .description {
   color: var(--text-light);
   font-size: 0.9rem;

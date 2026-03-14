@@ -74,6 +74,14 @@
   margin-bottom: 2rem;
 }
 
+.ai-section {
+  margin-bottom: 2rem;
+  background: #f6fbf8;
+  border: 1px solid #d8efe1;
+  border-radius: 8px;
+  padding: 1rem;
+}
+
 .detail-row {
   display: flex;
   justify-content: space-between;

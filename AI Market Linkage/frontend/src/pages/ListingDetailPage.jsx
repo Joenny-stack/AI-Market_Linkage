@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { listingAPI, inquiryAPI } from '../api/endpoints';
 import useAuthStore from '../context/authStore';
+import { resolveMediaUrl } from '../utils/media';
 import '../styles/ListingDetailPage.css';
 
 export default function ListingDetailPage() {
@@ -49,12 +50,18 @@ export default function ListingDetailPage() {
   if (loading) return <div className="loading">Loading listing...</div>;
   if (!listing) return <div className="not-found">Listing not found</div>;
 
+  const mainImage = resolveMediaUrl(listing.images?.[0]?.image);
+  const hasAI = !!(listing.quality_grade || listing.predicted_class || typeof listing.confidence_score === 'number');
+  const confidencePercent = typeof listing.confidence_score === 'number'
+    ? `${Math.round(listing.confidence_score * 100)}%`
+    : 'N/A';
+
   return (
     <div className="listing-detail-page">
       <div className="listing-detail-container">
         <div className="listing-gallery">
-          {listing.images && listing.images.length > 0 ? (
-            <img src={listing.images[0].image} alt={listing.crop_name} className="main-image" />
+          {mainImage ? (
+            <img src={mainImage} alt={listing.crop_name} className="main-image" />
           ) : (
             <img src="https://via.placeholder.com/500x400" alt={listing.crop_name} />
           )}
@@ -62,7 +69,7 @@ export default function ListingDetailPage() {
           {listing.images && listing.images.length > 1 && (
             <div className="thumbnail-gallery">
               {listing.images.map(img => (
-                <img key={img.id} src={img.image} alt="thumbnail" />
+                <img key={img.id} src={resolveMediaUrl(img.image)} alt="thumbnail" />
               ))}
             </div>
           )}
@@ -98,6 +105,24 @@ export default function ListingDetailPage() {
               <span>{listing.gps_latitude}, {listing.gps_longitude}</span>
             </div>
           </div>
+
+          {hasAI && (
+            <div className="ai-section">
+              <h3>AI Quality Assessment</h3>
+              <div className="detail-row">
+                <span>Quality Grade:</span>
+                <span>{listing.quality_grade || 'N/A'}</span>
+              </div>
+              <div className="detail-row">
+                <span>Tomato State:</span>
+                <span>{listing.predicted_class || 'N/A'}</span>
+              </div>
+              <div className="detail-row">
+                <span>Confidence:</span>
+                <span>{confidencePercent}</span>
+              </div>
+            </div>
+          )}
 
           <div className="description-section">
             <h3>Description</h3>

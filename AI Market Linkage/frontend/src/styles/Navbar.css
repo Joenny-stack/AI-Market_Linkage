@@ -65,9 +65,69 @@
   border-color: rgba(255,255,255,0.5);
 }
 
+.navbar-skeleton {
+  display: flex;
+  gap: 0.75rem;
+  align-items: center;
+}
+
+.navbar-resolved {
+  display: flex;
+  gap: 1.5rem;
+  align-items: center;
+}
+
+.navbar-fade-enter {
+  animation: navbarFadeIn 180ms ease-out;
+}
+
+.navbar-skeleton-item {
+  display: inline-block;
+  width: 72px;
+  height: 28px;
+  border-radius: 6px;
+  background: linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0.18) 0%,
+    rgba(255, 255, 255, 0.34) 50%,
+    rgba(255, 255, 255, 0.18) 100%
+  );
+  background-size: 200% 100%;
+  animation: navbarShimmer 1.2s infinite linear;
+}
+
+@keyframes navbarShimmer {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
+}
+
+@keyframes navbarFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-2px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
 @media (max-width: 768px) {
   .navbar-menu {
     gap: 0.5rem;
     font-size: 0.9rem;
+  }
+
+  .navbar-resolved {
+    gap: 0.5rem;
+  }
+
+  .navbar-skeleton-item {
+    width: 56px;
+    height: 24px;
   }
 }

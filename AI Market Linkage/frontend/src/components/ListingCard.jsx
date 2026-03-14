@@ -1,8 +1,13 @@
 import { Link } from 'react-router-dom';
+import { resolveMediaUrl } from '../utils/media';
 import '../styles/ListingCard.css';
 
 export default function ListingCard({ listing }) {
-  const imageUrl = listing.images?.[0]?.image || 'https://via.placeholder.com/300x200';
+  const imageUrl = resolveMediaUrl(listing.images?.[0]?.image) || 'https://via.placeholder.com/300x200';
+  const hasAI = !!(listing.quality_grade || listing.predicted_class || typeof listing.confidence_score === 'number');
+  const confidencePercent = typeof listing.confidence_score === 'number'
+    ? `${Math.round(listing.confidence_score * 100)}%`
+    : null;
 
   return (
     <div className="listing-card">
@@ -24,7 +29,15 @@ export default function ListingCard({ listing }) {
           <p><strong>Farmer:</strong> {listing.farmer_name}</p>
         </div>
 
-        <p className="description">{listing.description.substring(0, 100)}...</p>
+        {hasAI && (
+          <div className="ai-summary">
+            <p><strong>AI Grade:</strong> {listing.quality_grade || 'N/A'}</p>
+            <p><strong>Tomato State:</strong> {listing.predicted_class || 'N/A'}</p>
+            {confidencePercent && <p><strong>Confidence:</strong> {confidencePercent}</p>}
+          </div>
+        )}
+
+        <p className="description">{(listing.description || '').substring(0, 100)}...</p>
 
         <Link to={`/listings/${listing.id}`} className="view-btn">
           View Details

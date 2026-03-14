@@ -1,5 +1,20 @@
 import apiClient from './client';
 
+const normalizeListingParams = (params = {}) => {
+  const next = { ...params };
+
+  // Backward compatibility for older clients that still send crop.
+  if (!next.crop_name && next.crop) {
+    next.crop_name = next.crop;
+  }
+  delete next.crop;
+
+  // Remove empty values to avoid noisy query strings.
+  return Object.fromEntries(
+    Object.entries(next).filter(([, value]) => value !== '' && value !== null && value !== undefined)
+  );
+};
+
 export const classifyTomatoImage = async (imageFile) => {
   const formData = new FormData();
   formData.append('image', imageFile);
@@ -29,7 +44,7 @@ export const farmerAPI = {
 
 // Listing API calls
 export const listingAPI = {
-  getListings: (params) => apiClient.get('/listings/', { params }),
+  getListings: (params) => apiClient.get('/listings/', { params: normalizeListingParams(params) }),
   getListingDetail: (id) => apiClient.get(`/listings/${id}/`),
   createListing: (data) => apiClient.post('/listings/', data, { headers: { 'Content-Type': 'multipart/form-data' } }),
   updateListing: (id, data) => apiClient.put(`/listings/${id}/`, data, { headers: { 'Content-Type': 'multipart/form-data' } }),
