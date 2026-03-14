@@ -54,6 +54,17 @@ class ListingViewSet(viewsets.ModelViewSet):
         Create a listing and associate it with the current farmer.
         """
         serializer.save(farmer=self.request.user)
+
+    def create(self, request, *args, **kwargs):
+        """
+        Create listing and return detail serializer so AI fields are included.
+        """
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        listing = serializer.save(farmer=request.user)
+        output_serializer = ListingSerializer(listing, context=self.get_serializer_context())
+        headers = self.get_success_headers(output_serializer.data)
+        return Response(output_serializer.data, status=status.HTTP_201_CREATED, headers=headers)
     
     def perform_destroy(self, instance):
         """

@@ -112,3 +112,14 @@ Access Django admin at `http://localhost:8000/admin/`
 - Pillow (Image processing)
 - Django Filters
 - CORS Headers
+
+
+
+
+cd "AI Market Linkage"
+pip install tensorflow numpy matplotlib scikit-learn pillow
+python ai_model/train_model.py
+
+
+
+pip install seaborn

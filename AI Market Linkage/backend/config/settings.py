@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'listings.apps.ListingsConfig',
     'inquiries.apps.InquiriesConfig',
     'core.apps.CoreConfig',
+    'ai_service.apps.AiServiceConfig',
 ]
 
 MIDDLEWARE = [
@@ -157,6 +158,9 @@ DATA_UPLOAD_MAX_MEMORY_SIZE = 5242880  # 5MB
 FILE_UPLOAD_MAX_MEMORY_SIZE = 5242880  # 5MB
 ALLOWED_UPLOAD_EXTENSIONS = ['jpg', 'jpeg', 'png', 'gif', 'webp']
 MAX_UPLOAD_SIZE = 5 * 1024 * 1024  # 5MB
+
+# AI Service
+AI_CLASSIFIER_MODEL_PATH = BASE_DIR / 'ai_service' / 'model' / 'tomato_classifier.h5'
 
 # Logging
 LOGGING = {

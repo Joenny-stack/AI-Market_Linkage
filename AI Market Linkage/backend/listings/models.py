@@ -37,6 +37,7 @@ class Listing(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
     
     # Phase 2 AI fields (reserved, nullable)
+    predicted_class = models.CharField(max_length=50, null=True, blank=True)
     quality_grade = models.CharField(max_length=50, null=True, blank=True)
     ai_price_recommendation = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)
     confidence_score = models.FloatField(null=True, blank=True)

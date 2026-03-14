@@ -1,8 +1,14 @@
 """
 Serializers for listings.
 """
+import logging
+
 from rest_framework import serializers
+
 from .models import Listing, ListingImage
+
+
+logger = logging.getLogger(__name__)
 
 
 class ListingImageSerializer(serializers.ModelSerializer):
@@ -48,6 +54,7 @@ class ListingSerializer(serializers.ModelSerializer):
             'images',
             'total_price',
             'quality_grade',
+            'predicted_class',
             'ai_price_recommendation',
             'confidence_score',
             'created_at',
@@ -57,6 +64,7 @@ class ListingSerializer(serializers.ModelSerializer):
             'id',
             'farmer',
             'quality_grade',
+            'predicted_class',
             'ai_price_recommendation',
             'confidence_score',
             'created_at',
@@ -92,6 +100,12 @@ class ListingCreateUpdateSerializer(serializers.ModelSerializer):
             'status',
             'images'
         ]
+
+    @staticmethod
+    def _is_tomato_listing(validated_data):
+        crop_name = str(validated_data.get('crop_name', '')).lower()
+        category = str(validated_data.get('category', '')).lower()
+        return 'tomato' in crop_name or 'tomato' in category
     
     def create(self, validated_data):
         images = validated_data.pop('images', [])
@@ -99,6 +113,20 @@ class ListingCreateUpdateSerializer(serializers.ModelSerializer):
         
         for image_file in images:
             ListingImage.objects.create(listing=listing, image=image_file)
+
+        if images and self._is_tomato_listing(validated_data):
+            try:
+                from ai_service.predict import predict_tomato
+
+                first_image = listing.images.first()
+                if first_image and first_image.image:
+                    prediction = predict_tomato(first_image.image.path)
+                    listing.predicted_class = prediction.get('class')
+                    listing.quality_grade = prediction.get('grade')
+                    listing.confidence_score = prediction.get('confidence')
+                    listing.save(update_fields=['predicted_class', 'quality_grade', 'confidence_score'])
+            except Exception as exc:
+                logger.warning('AI tomato classification failed for listing %s: %s', listing.id, exc)
         
         return listing
     

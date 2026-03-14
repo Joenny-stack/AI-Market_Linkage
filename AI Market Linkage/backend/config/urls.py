@@ -20,6 +20,7 @@ urlpatterns = [
     path('api/farmers/', include('farmers.urls')),
     path('api/listings/', include('listings.urls')),
     path('api/inquiries/', include('inquiries.urls')),
+    path('api/ai/', include('ai_service.urls')),
 ]
 
 # Serve media files in development
