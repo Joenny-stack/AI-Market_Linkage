@@ -51,6 +51,9 @@ export default function ListingDetailPage() {
   if (!listing) return <div className="not-found">Listing not found</div>;
 
   const mainImage = resolveMediaUrl(listing.images?.[0]?.image);
+  const recommendedPriceRaw = listing.recommended_price ?? listing.ai_price_recommendation;
+  const recommendedPrice = Number(recommendedPriceRaw);
+  const hasRecommendedPrice = Number.isFinite(recommendedPrice);
   const hasAI = !!(
     listing.quality_grade
     || listing.predicted_class
@@ -62,9 +65,6 @@ export default function ListingDetailPage() {
   const confidencePercent = typeof listing.confidence_score === 'number'
     ? `${Math.round(listing.confidence_score * 100)}%`
     : 'N/A';
-  const recommendedPriceRaw = listing.recommended_price ?? listing.ai_price_recommendation;
-  const recommendedPrice = Number(recommendedPriceRaw);
-  const hasRecommendedPrice = Number.isFinite(recommendedPrice);
 
   return (
     <div className="listing-detail-page">
