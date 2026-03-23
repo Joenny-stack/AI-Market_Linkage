@@ -1,0 +1,769 @@
+crop,location,grade,quantity,price
+Tomatoes,Harare,Grade A,50,1.65
+Tomatoes,Harare,Grade A,100,1.62
+Tomatoes,Harare,Grade A,200,1.57
+Tomatoes,Harare,Grade A,500,1.52
+Tomatoes,Harare,Grade B,50,1.32
+Tomatoes,Harare,Grade B,100,1.29
+Tomatoes,Harare,Grade B,200,1.25
+Tomatoes,Harare,Grade B,500,1.22
+Tomatoes,Harare,Grade C,50,0.94
+Tomatoes,Harare,Grade C,100,0.92
+Tomatoes,Harare,Grade C,200,0.89
+Tomatoes,Harare,Grade C,500,0.86
+Tomatoes,Harare,Reject,50,0.39
+Tomatoes,Harare,Reject,100,0.38
+Tomatoes,Harare,Reject,200,0.37
+Tomatoes,Harare,Reject,500,0.35
+Tomatoes,Bulawayo,Grade A,50,1.58
+Tomatoes,Bulawayo,Grade A,100,1.54
+Tomatoes,Bulawayo,Grade A,200,1.50
+Tomatoes,Bulawayo,Grade A,500,1.45
+Tomatoes,Bulawayo,Grade B,50,1.26
+Tomatoes,Bulawayo,Grade B,100,1.23
+Tomatoes,Bulawayo,Grade B,200,1.20
+Tomatoes,Bulawayo,Grade B,500,1.16
+Tomatoes,Bulawayo,Grade C,50,0.89
+Tomatoes,Bulawayo,Grade C,100,0.87
+Tomatoes,Bulawayo,Grade C,200,0.85
+Tomatoes,Bulawayo,Grade C,500,0.82
+Tomatoes,Bulawayo,Reject,50,0.37
+Tomatoes,Bulawayo,Reject,100,0.36
+Tomatoes,Bulawayo,Reject,200,0.35
+Tomatoes,Bulawayo,Reject,500,0.34
+Tomatoes,Gweru,Grade A,50,1.50
+Tomatoes,Gweru,Grade A,100,1.47
+Tomatoes,Gweru,Grade A,200,1.43
+Tomatoes,Gweru,Grade A,500,1.38
+Tomatoes,Gweru,Grade B,50,1.20
+Tomatoes,Gweru,Grade B,100,1.18
+Tomatoes,Gweru,Grade B,200,1.14
+Tomatoes,Gweru,Grade B,500,1.10
+Tomatoes,Gweru,Grade C,50,0.85
+Tomatoes,Gweru,Grade C,100,0.83
+Tomatoes,Gweru,Grade C,200,0.81
+Tomatoes,Gweru,Grade C,500,0.78
+Tomatoes,Gweru,Reject,50,0.35
+Tomatoes,Gweru,Reject,100,0.34
+Tomatoes,Gweru,Reject,200,0.33
+Tomatoes,Gweru,Reject,500,0.32
+Tomatoes,Mutare,Grade A,50,1.53
+Tomatoes,Mutare,Grade A,100,1.50
+Tomatoes,Mutare,Grade A,200,1.45
+Tomatoes,Mutare,Grade A,500,1.41
+Tomatoes,Mutare,Grade B,50,1.22
+Tomatoes,Mutare,Grade B,100,1.20
+Tomatoes,Mutare,Grade B,200,1.16
+Tomatoes,Mutare,Grade B,500,1.13
+Tomatoes,Mutare,Grade C,50,0.87
+Tomatoes,Mutare,Grade C,100,0.85
+Tomatoes,Mutare,Grade C,200,0.82
+Tomatoes,Mutare,Grade C,500,0.80
+Tomatoes,Mutare,Reject,50,0.36
+Tomatoes,Mutare,Reject,100,0.35
+Tomatoes,Mutare,Reject,200,0.34
+Tomatoes,Mutare,Reject,500,0.33
+Tomatoes,Masvingo,Grade A,50,1.43
+Tomatoes,Masvingo,Grade A,100,1.40
+Tomatoes,Masvingo,Grade A,200,1.36
+Tomatoes,Masvingo,Grade A,500,1.31
+Tomatoes,Masvingo,Grade B,50,1.14
+Tomatoes,Masvingo,Grade B,100,1.12
+Tomatoes,Masvingo,Grade B,200,1.08
+Tomatoes,Masvingo,Grade B,500,1.05
+Tomatoes,Masvingo,Grade C,50,0.81
+Tomatoes,Masvingo,Grade C,100,0.79
+Tomatoes,Masvingo,Grade C,200,0.77
+Tomatoes,Masvingo,Grade C,500,0.74
+Tomatoes,Masvingo,Reject,50,0.33
+Tomatoes,Masvingo,Reject,100,0.32
+Tomatoes,Masvingo,Reject,200,0.31
+Tomatoes,Masvingo,Reject,500,0.30
+Tomatoes,Kadoma,Grade A,50,1.47
+Tomatoes,Kadoma,Grade A,100,1.44
+Tomatoes,Kadoma,Grade A,200,1.40
+Tomatoes,Kadoma,Grade A,500,1.35
+Tomatoes,Kadoma,Grade B,50,1.18
+Tomatoes,Kadoma,Grade B,100,1.15
+Tomatoes,Kadoma,Grade B,200,1.12
+Tomatoes,Kadoma,Grade B,500,1.08
+Tomatoes,Kadoma,Grade C,50,0.83
+Tomatoes,Kadoma,Grade C,100,0.81
+Tomatoes,Kadoma,Grade C,200,0.79
+Tomatoes,Kadoma,Grade C,500,0.76
+Tomatoes,Kadoma,Reject,50,0.34
+Tomatoes,Kadoma,Reject,100,0.33
+Tomatoes,Kadoma,Reject,200,0.32
+Tomatoes,Kadoma,Reject,500,0.31
+Maize,Harare,Grade A,50,0.66
+Maize,Harare,Grade A,100,0.65
+Maize,Harare,Grade A,200,0.63
+Maize,Harare,Grade A,500,0.61
+Maize,Harare,Grade B,50,0.50
+Maize,Harare,Grade B,100,0.49
+Maize,Harare,Grade B,200,0.47
+Maize,Harare,Grade B,500,0.46
+Maize,Harare,Grade C,50,0.31
+Maize,Harare,Grade C,100,0.30
+Maize,Harare,Grade C,200,0.29
+Maize,Harare,Grade C,500,0.28
+Maize,Harare,Reject,50,0.13
+Maize,Harare,Reject,100,0.13
+Maize,Harare,Reject,200,0.12
+Maize,Harare,Reject,500,0.11
+Maize,Bulawayo,Grade A,50,0.63
+Maize,Bulawayo,Grade A,100,0.62
+Maize,Bulawayo,Grade A,200,0.59
+Maize,Bulawayo,Grade A,500,0.58
+Maize,Bulawayo,Grade B,50,0.47
+Maize,Bulawayo,Grade B,100,0.46
+Maize,Bulawayo,Grade B,200,0.45
+Maize,Bulawayo,Grade B,500,0.43
+Maize,Bulawayo,Grade C,50,0.29
+Maize,Bulawayo,Grade C,100,0.29
+Maize,Bulawayo,Grade C,200,0.28
+Maize,Bulawayo,Grade C,500,0.27
+Maize,Bulawayo,Reject,50,0.13
+Maize,Bulawayo,Reject,100,0.12
+Maize,Bulawayo,Reject,200,0.12
+Maize,Bulawayo,Reject,500,0.11
+Maize,Gweru,Grade A,50,0.60
+Maize,Gweru,Grade A,100,0.59
+Maize,Gweru,Grade A,200,0.57
+Maize,Gweru,Grade A,500,0.55
+Maize,Gweru,Grade B,50,0.45
+Maize,Gweru,Grade B,100,0.44
+Maize,Gweru,Grade B,200,0.43
+Maize,Gweru,Grade B,500,0.41
+Maize,Gweru,Grade C,50,0.28
+Maize,Gweru,Grade C,100,0.27
+Maize,Gweru,Grade C,200,0.27
+Maize,Gweru,Grade C,500,0.26
+Maize,Gweru,Reject,50,0.12
+Maize,Gweru,Reject,100,0.12
+Maize,Gweru,Reject,200,0.11
+Maize,Gweru,Reject,500,0.11
+Maize,Mutare,Grade A,50,0.61
+Maize,Mutare,Grade A,100,0.60
+Maize,Mutare,Grade A,200,0.58
+Maize,Mutare,Grade A,500,0.56
+Maize,Mutare,Grade B,50,0.46
+Maize,Mutare,Grade B,100,0.45
+Maize,Mutare,Grade B,200,0.44
+Maize,Mutare,Grade B,500,0.42
+Maize,Mutare,Grade C,50,0.29
+Maize,Mutare,Grade C,100,0.28
+Maize,Mutare,Grade C,200,0.27
+Maize,Mutare,Grade C,500,0.26
+Maize,Mutare,Reject,50,0.12
+Maize,Mutare,Reject,100,0.12
+Maize,Mutare,Reject,200,0.11
+Maize,Mutare,Reject,500,0.11
+Maize,Masvingo,Grade A,50,0.57
+Maize,Masvingo,Grade A,100,0.56
+Maize,Masvingo,Grade A,200,0.54
+Maize,Masvingo,Grade A,500,0.52
+Maize,Masvingo,Grade B,50,0.43
+Maize,Masvingo,Grade B,100,0.42
+Maize,Masvingo,Grade B,200,0.41
+Maize,Masvingo,Grade B,500,0.39
+Maize,Masvingo,Grade C,50,0.27
+Maize,Masvingo,Grade C,100,0.26
+Maize,Masvingo,Grade C,200,0.25
+Maize,Masvingo,Grade C,500,0.24
+Maize,Masvingo,Reject,50,0.11
+Maize,Masvingo,Reject,100,0.11
+Maize,Masvingo,Reject,200,0.11
+Maize,Masvingo,Reject,500,0.10
+Maize,Kadoma,Grade A,50,0.59
+Maize,Kadoma,Grade A,100,0.58
+Maize,Kadoma,Grade A,200,0.56
+Maize,Kadoma,Grade A,500,0.54
+Maize,Kadoma,Grade B,50,0.44
+Maize,Kadoma,Grade B,100,0.43
+Maize,Kadoma,Grade B,200,0.42
+Maize,Kadoma,Grade B,500,0.40
+Maize,Kadoma,Grade C,50,0.27
+Maize,Kadoma,Grade C,100,0.27
+Maize,Kadoma,Grade C,200,0.26
+Maize,Kadoma,Grade C,500,0.25
+Maize,Kadoma,Reject,50,0.12
+Maize,Kadoma,Reject,100,0.11
+Maize,Kadoma,Reject,200,0.11
+Maize,Kadoma,Reject,500,0.10
+Onions,Harare,Grade A,50,0.99
+Onions,Harare,Grade A,100,0.97
+Onions,Harare,Grade A,200,0.94
+Onions,Harare,Grade A,500,0.91
+Onions,Harare,Grade B,50,0.72
+Onions,Harare,Grade B,100,0.70
+Onions,Harare,Grade B,200,0.68
+Onions,Harare,Grade B,500,0.66
+Onions,Harare,Grade C,50,0.46
+Onions,Harare,Grade C,100,0.45
+Onions,Harare,Grade C,200,0.44
+Onions,Harare,Grade C,500,0.43
+Onions,Harare,Reject,50,0.20
+Onions,Harare,Reject,100,0.19
+Onions,Harare,Reject,200,0.19
+Onions,Harare,Reject,500,0.18
+Onions,Bulawayo,Grade A,50,0.95
+Onions,Bulawayo,Grade A,100,0.93
+Onions,Bulawayo,Grade A,200,0.90
+Onions,Bulawayo,Grade A,500,0.87
+Onions,Bulawayo,Grade B,50,0.68
+Onions,Bulawayo,Grade B,100,0.67
+Onions,Bulawayo,Grade B,200,0.65
+Onions,Bulawayo,Grade B,500,0.63
+Onions,Bulawayo,Grade C,50,0.44
+Onions,Bulawayo,Grade C,100,0.43
+Onions,Bulawayo,Grade C,200,0.42
+Onions,Bulawayo,Grade C,500,0.41
+Onions,Bulawayo,Reject,50,0.19
+Onions,Bulawayo,Reject,100,0.18
+Onions,Bulawayo,Reject,200,0.18
+Onions,Bulawayo,Reject,500,0.17
+Onions,Gweru,Grade A,50,0.90
+Onions,Gweru,Grade A,100,0.88
+Onions,Gweru,Grade A,200,0.86
+Onions,Gweru,Grade A,500,0.83
+Onions,Gweru,Grade B,50,0.65
+Onions,Gweru,Grade B,100,0.64
+Onions,Gweru,Grade B,200,0.62
+Onions,Gweru,Grade B,500,0.60
+Onions,Gweru,Grade C,50,0.42
+Onions,Gweru,Grade C,100,0.41
+Onions,Gweru,Grade C,200,0.40
+Onions,Gweru,Grade C,500,0.39
+Onions,Gweru,Reject,50,0.18
+Onions,Gweru,Reject,100,0.18
+Onions,Gweru,Reject,200,0.17
+Onions,Gweru,Reject,500,0.17
+Onions,Mutare,Grade A,50,0.92
+Onions,Mutare,Grade A,100,0.90
+Onions,Mutare,Grade A,200,0.87
+Onions,Mutare,Grade A,500,0.84
+Onions,Mutare,Grade B,50,0.66
+Onions,Mutare,Grade B,100,0.65
+Onions,Mutare,Grade B,200,0.63
+Onions,Mutare,Grade B,500,0.61
+Onions,Mutare,Grade C,50,0.43
+Onions,Mutare,Grade C,100,0.42
+Onions,Mutare,Grade C,200,0.41
+Onions,Mutare,Grade C,500,0.40
+Onions,Mutare,Reject,50,0.18
+Onions,Mutare,Reject,100,0.18
+Onions,Mutare,Reject,200,0.17
+Onions,Mutare,Reject,500,0.17
+Onions,Masvingo,Grade A,50,0.86
+Onions,Masvingo,Grade A,100,0.84
+Onions,Masvingo,Grade A,200,0.82
+Onions,Masvingo,Grade A,500,0.79
+Onions,Masvingo,Grade B,50,0.62
+Onions,Masvingo,Grade B,100,0.60
+Onions,Masvingo,Grade B,200,0.59
+Onions,Masvingo,Grade B,500,0.57
+Onions,Masvingo,Grade C,50,0.40
+Onions,Masvingo,Grade C,100,0.39
+Onions,Masvingo,Grade C,200,0.38
+Onions,Masvingo,Grade C,500,0.37
+Onions,Masvingo,Reject,50,0.17
+Onions,Masvingo,Reject,100,0.17
+Onions,Masvingo,Reject,200,0.16
+Onions,Masvingo,Reject,500,0.16
+Onions,Kadoma,Grade A,50,0.88
+Onions,Kadoma,Grade A,100,0.86
+Onions,Kadoma,Grade A,200,0.84
+Onions,Kadoma,Grade A,500,0.81
+Onions,Kadoma,Grade B,50,0.64
+Onions,Kadoma,Grade B,100,0.62
+Onions,Kadoma,Grade B,200,0.61
+Onions,Kadoma,Grade B,500,0.59
+Onions,Kadoma,Grade C,50,0.41
+Onions,Kadoma,Grade C,100,0.40
+Onions,Kadoma,Grade C,200,0.39
+Onions,Kadoma,Grade C,500,0.38
+Onions,Kadoma,Reject,50,0.17
+Onions,Kadoma,Reject,100,0.17
+Onions,Kadoma,Reject,200,0.16
+Onions,Kadoma,Reject,500,0.16
+Potatoes,Harare,Grade A,50,0.77
+Potatoes,Harare,Grade A,100,0.75
+Potatoes,Harare,Grade A,200,0.73
+Potatoes,Harare,Grade A,500,0.71
+Potatoes,Harare,Grade B,50,0.57
+Potatoes,Harare,Grade B,100,0.56
+Potatoes,Harare,Grade B,200,0.54
+Potatoes,Harare,Grade B,500,0.53
+Potatoes,Harare,Grade C,50,0.36
+Potatoes,Harare,Grade C,100,0.35
+Potatoes,Harare,Grade C,200,0.34
+Potatoes,Harare,Grade C,500,0.33
+Potatoes,Harare,Reject,50,0.13
+Potatoes,Harare,Reject,100,0.13
+Potatoes,Harare,Reject,200,0.13
+Potatoes,Harare,Reject,500,0.12
+Potatoes,Bulawayo,Grade A,50,0.74
+Potatoes,Bulawayo,Grade A,100,0.72
+Potatoes,Bulawayo,Grade A,200,0.70
+Potatoes,Bulawayo,Grade A,500,0.68
+Potatoes,Bulawayo,Grade B,50,0.55
+Potatoes,Bulawayo,Grade B,100,0.53
+Potatoes,Bulawayo,Grade B,200,0.52
+Potatoes,Bulawayo,Grade B,500,0.50
+Potatoes,Bulawayo,Grade C,50,0.35
+Potatoes,Bulawayo,Grade C,100,0.34
+Potatoes,Bulawayo,Grade C,200,0.33
+Potatoes,Bulawayo,Grade C,500,0.32
+Potatoes,Bulawayo,Reject,50,0.13
+Potatoes,Bulawayo,Reject,100,0.12
+Potatoes,Bulawayo,Reject,200,0.12
+Potatoes,Bulawayo,Reject,500,0.11
+Potatoes,Gweru,Grade A,50,0.70
+Potatoes,Gweru,Grade A,100,0.69
+Potatoes,Gweru,Grade A,200,0.67
+Potatoes,Gweru,Grade A,500,0.64
+Potatoes,Gweru,Grade B,50,0.52
+Potatoes,Gweru,Grade B,100,0.51
+Potatoes,Gweru,Grade B,200,0.49
+Potatoes,Gweru,Grade B,500,0.48
+Potatoes,Gweru,Grade C,50,0.33
+Potatoes,Gweru,Grade C,100,0.32
+Potatoes,Gweru,Grade C,200,0.31
+Potatoes,Gweru,Grade C,500,0.30
+Potatoes,Gweru,Reject,50,0.12
+Potatoes,Gweru,Reject,100,0.12
+Potatoes,Gweru,Reject,200,0.11
+Potatoes,Gweru,Reject,500,0.11
+Potatoes,Mutare,Grade A,50,0.71
+Potatoes,Mutare,Grade A,100,0.70
+Potatoes,Mutare,Grade A,200,0.68
+Potatoes,Mutare,Grade A,500,0.65
+Potatoes,Mutare,Grade B,50,0.53
+Potatoes,Mutare,Grade B,100,0.52
+Potatoes,Mutare,Grade B,200,0.50
+Potatoes,Mutare,Grade B,500,0.49
+Potatoes,Mutare,Grade C,50,0.34
+Potatoes,Mutare,Grade C,100,0.33
+Potatoes,Mutare,Grade C,200,0.32
+Potatoes,Mutare,Grade C,500,0.31
+Potatoes,Mutare,Reject,50,0.12
+Potatoes,Mutare,Reject,100,0.12
+Potatoes,Mutare,Reject,200,0.12
+Potatoes,Mutare,Reject,500,0.11
+Potatoes,Masvingo,Grade A,50,0.67
+Potatoes,Masvingo,Grade A,100,0.65
+Potatoes,Masvingo,Grade A,200,0.63
+Potatoes,Masvingo,Grade A,500,0.61
+Potatoes,Masvingo,Grade B,50,0.49
+Potatoes,Masvingo,Grade B,100,0.48
+Potatoes,Masvingo,Grade B,200,0.47
+Potatoes,Masvingo,Grade B,500,0.45
+Potatoes,Masvingo,Grade C,50,0.31
+Potatoes,Masvingo,Grade C,100,0.31
+Potatoes,Masvingo,Grade C,200,0.30
+Potatoes,Masvingo,Grade C,500,0.29
+Potatoes,Masvingo,Reject,50,0.11
+Potatoes,Masvingo,Reject,100,0.11
+Potatoes,Masvingo,Reject,200,0.11
+Potatoes,Masvingo,Reject,500,0.10
+Potatoes,Kadoma,Grade A,50,0.69
+Potatoes,Kadoma,Grade A,100,0.67
+Potatoes,Kadoma,Grade A,200,0.65
+Potatoes,Kadoma,Grade A,500,0.63
+Potatoes,Kadoma,Grade B,50,0.51
+Potatoes,Kadoma,Grade B,100,0.50
+Potatoes,Kadoma,Grade B,200,0.48
+Potatoes,Kadoma,Grade B,500,0.47
+Potatoes,Kadoma,Grade C,50,0.32
+Potatoes,Kadoma,Grade C,100,0.32
+Potatoes,Kadoma,Grade C,200,0.31
+Potatoes,Kadoma,Grade C,500,0.30
+Potatoes,Kadoma,Reject,50,0.12
+Potatoes,Kadoma,Reject,100,0.11
+Potatoes,Kadoma,Reject,200,0.11
+Potatoes,Kadoma,Reject,500,0.11
+Cabbage,Harare,Grade A,50,0.55
+Cabbage,Harare,Grade A,100,0.54
+Cabbage,Harare,Grade A,200,0.52
+Cabbage,Harare,Grade A,500,0.51
+Cabbage,Harare,Grade B,50,0.36
+Cabbage,Harare,Grade B,100,0.35
+Cabbage,Harare,Grade B,200,0.34
+Cabbage,Harare,Grade B,500,0.33
+Cabbage,Harare,Grade C,50,0.20
+Cabbage,Harare,Grade C,100,0.19
+Cabbage,Harare,Grade C,200,0.19
+Cabbage,Harare,Grade C,500,0.18
+Cabbage,Harare,Reject,50,0.08
+Cabbage,Harare,Reject,100,0.07
+Cabbage,Harare,Reject,200,0.07
+Cabbage,Harare,Reject,500,0.06
+Cabbage,Bulawayo,Grade A,50,0.53
+Cabbage,Bulawayo,Grade A,100,0.51
+Cabbage,Bulawayo,Grade A,200,0.50
+Cabbage,Bulawayo,Grade A,500,0.48
+Cabbage,Bulawayo,Grade B,50,0.35
+Cabbage,Bulawayo,Grade B,100,0.34
+Cabbage,Bulawayo,Grade B,200,0.33
+Cabbage,Bulawayo,Grade B,500,0.32
+Cabbage,Bulawayo,Grade C,50,0.19
+Cabbage,Bulawayo,Grade C,100,0.18
+Cabbage,Bulawayo,Grade C,200,0.18
+Cabbage,Bulawayo,Grade C,500,0.17
+Cabbage,Bulawayo,Reject,50,0.08
+Cabbage,Bulawayo,Reject,100,0.07
+Cabbage,Bulawayo,Reject,200,0.07
+Cabbage,Bulawayo,Reject,500,0.06
+Cabbage,Gweru,Grade A,50,0.50
+Cabbage,Gweru,Grade A,100,0.49
+Cabbage,Gweru,Grade A,200,0.48
+Cabbage,Gweru,Grade A,500,0.46
+Cabbage,Gweru,Grade B,50,0.33
+Cabbage,Gweru,Grade B,100,0.32
+Cabbage,Gweru,Grade B,200,0.31
+Cabbage,Gweru,Grade B,500,0.30
+Cabbage,Gweru,Grade C,50,0.18
+Cabbage,Gweru,Grade C,100,0.18
+Cabbage,Gweru,Grade C,200,0.17
+Cabbage,Gweru,Grade C,500,0.17
+Cabbage,Gweru,Reject,50,0.07
+Cabbage,Gweru,Reject,100,0.07
+Cabbage,Gweru,Reject,200,0.07
+Cabbage,Gweru,Reject,500,0.06
+Cabbage,Mutare,Grade A,50,0.51
+Cabbage,Mutare,Grade A,100,0.50
+Cabbage,Mutare,Grade A,200,0.48
+Cabbage,Mutare,Grade A,500,0.47
+Cabbage,Mutare,Grade B,50,0.34
+Cabbage,Mutare,Grade B,100,0.33
+Cabbage,Mutare,Grade B,200,0.32
+Cabbage,Mutare,Grade B,500,0.31
+Cabbage,Mutare,Grade C,50,0.18
+Cabbage,Mutare,Grade C,100,0.18
+Cabbage,Mutare,Grade C,200,0.17
+Cabbage,Mutare,Grade C,500,0.17
+Cabbage,Mutare,Reject,50,0.07
+Cabbage,Mutare,Reject,100,0.07
+Cabbage,Mutare,Reject,200,0.07
+Cabbage,Mutare,Reject,500,0.06
+Cabbage,Masvingo,Grade A,50,0.48
+Cabbage,Masvingo,Grade A,100,0.47
+Cabbage,Masvingo,Grade A,200,0.45
+Cabbage,Masvingo,Grade A,500,0.44
+Cabbage,Masvingo,Grade B,50,0.31
+Cabbage,Masvingo,Grade B,100,0.31
+Cabbage,Masvingo,Grade B,200,0.30
+Cabbage,Masvingo,Grade B,500,0.29
+Cabbage,Masvingo,Grade C,50,0.17
+Cabbage,Masvingo,Grade C,100,0.17
+Cabbage,Masvingo,Grade C,200,0.16
+Cabbage,Masvingo,Grade C,500,0.16
+Cabbage,Masvingo,Reject,50,0.07
+Cabbage,Masvingo,Reject,100,0.06
+Cabbage,Masvingo,Reject,200,0.06
+Cabbage,Masvingo,Reject,500,0.06
+Cabbage,Kadoma,Grade A,50,0.49
+Cabbage,Kadoma,Grade A,100,0.48
+Cabbage,Kadoma,Grade A,200,0.47
+Cabbage,Kadoma,Grade A,500,0.45
+Cabbage,Kadoma,Grade B,50,0.32
+Cabbage,Kadoma,Grade B,100,0.32
+Cabbage,Kadoma,Grade B,200,0.31
+Cabbage,Kadoma,Grade B,500,0.30
+Cabbage,Kadoma,Grade C,50,0.18
+Cabbage,Kadoma,Grade C,100,0.17
+Cabbage,Kadoma,Grade C,200,0.17
+Cabbage,Kadoma,Grade C,500,0.16
+Cabbage,Kadoma,Reject,50,0.07
+Cabbage,Kadoma,Reject,100,0.07
+Cabbage,Kadoma,Reject,200,0.06
+Cabbage,Kadoma,Reject,500,0.06
+Peppers,Harare,Grade A,50,1.32
+Peppers,Harare,Grade A,100,1.29
+Peppers,Harare,Grade A,200,1.25
+Peppers,Harare,Grade A,500,1.21
+Peppers,Harare,Grade B,50,0.97
+Peppers,Harare,Grade B,100,0.95
+Peppers,Harare,Grade B,200,0.92
+Peppers,Harare,Grade B,500,0.89
+Peppers,Harare,Grade C,50,0.68
+Peppers,Harare,Grade C,100,0.67
+Peppers,Harare,Grade C,200,0.65
+Peppers,Harare,Grade C,500,0.63
+Peppers,Harare,Reject,50,0.28
+Peppers,Harare,Reject,100,0.27
+Peppers,Harare,Reject,200,0.26
+Peppers,Harare,Reject,500,0.25
+Peppers,Bulawayo,Grade A,50,1.26
+Peppers,Bulawayo,Grade A,100,1.23
+Peppers,Bulawayo,Grade A,200,1.19
+Peppers,Bulawayo,Grade A,500,1.16
+Peppers,Bulawayo,Grade B,50,0.92
+Peppers,Bulawayo,Grade B,100,0.90
+Peppers,Bulawayo,Grade B,200,0.88
+Peppers,Bulawayo,Grade B,500,0.85
+Peppers,Bulawayo,Grade C,50,0.65
+Peppers,Bulawayo,Grade C,100,0.64
+Peppers,Bulawayo,Grade C,200,0.62
+Peppers,Bulawayo,Grade C,500,0.60
+Peppers,Bulawayo,Reject,50,0.26
+Peppers,Bulawayo,Reject,100,0.26
+Peppers,Bulawayo,Reject,200,0.25
+Peppers,Bulawayo,Reject,500,0.24
+Peppers,Gweru,Grade A,50,1.20
+Peppers,Gweru,Grade A,100,1.18
+Peppers,Gweru,Grade A,200,1.14
+Peppers,Gweru,Grade A,500,1.10
+Peppers,Gweru,Grade B,50,0.88
+Peppers,Gweru,Grade B,100,0.86
+Peppers,Gweru,Grade B,200,0.84
+Peppers,Gweru,Grade B,500,0.81
+Peppers,Gweru,Grade C,50,0.62
+Peppers,Gweru,Grade C,100,0.61
+Peppers,Gweru,Grade C,200,0.59
+Peppers,Gweru,Grade C,500,0.57
+Peppers,Gweru,Reject,50,0.25
+Peppers,Gweru,Reject,100,0.25
+Peppers,Gweru,Reject,200,0.24
+Peppers,Gweru,Reject,500,0.23
+Peppers,Mutare,Grade A,50,1.22
+Peppers,Mutare,Grade A,100,1.20
+Peppers,Mutare,Grade A,200,1.16
+Peppers,Mutare,Grade A,500,1.13
+Peppers,Mutare,Grade B,50,0.90
+Peppers,Mutare,Grade B,100,0.88
+Peppers,Mutare,Grade B,200,0.85
+Peppers,Mutare,Grade B,500,0.83
+Peppers,Mutare,Grade C,50,0.63
+Peppers,Mutare,Grade C,100,0.62
+Peppers,Mutare,Grade C,200,0.60
+Peppers,Mutare,Grade C,500,0.58
+Peppers,Mutare,Reject,50,0.26
+Peppers,Mutare,Reject,100,0.25
+Peppers,Mutare,Reject,200,0.24
+Peppers,Mutare,Reject,500,0.23
+Peppers,Masvingo,Grade A,50,1.14
+Peppers,Masvingo,Grade A,100,1.12
+Peppers,Masvingo,Grade A,200,1.08
+Peppers,Masvingo,Grade A,500,1.05
+Peppers,Masvingo,Grade B,50,0.84
+Peppers,Masvingo,Grade B,100,0.82
+Peppers,Masvingo,Grade B,200,0.80
+Peppers,Masvingo,Grade B,500,0.77
+Peppers,Masvingo,Grade C,50,0.59
+Peppers,Masvingo,Grade C,100,0.58
+Peppers,Masvingo,Grade C,200,0.56
+Peppers,Masvingo,Grade C,500,0.54
+Peppers,Masvingo,Reject,50,0.24
+Peppers,Masvingo,Reject,100,0.23
+Peppers,Masvingo,Reject,200,0.22
+Peppers,Masvingo,Reject,500,0.22
+Peppers,Kadoma,Grade A,50,1.18
+Peppers,Kadoma,Grade A,100,1.15
+Peppers,Kadoma,Grade A,200,1.12
+Peppers,Kadoma,Grade A,500,1.08
+Peppers,Kadoma,Grade B,50,0.86
+Peppers,Kadoma,Grade B,100,0.84
+Peppers,Kadoma,Grade B,200,0.82
+Peppers,Kadoma,Grade B,500,0.79
+Peppers,Kadoma,Grade C,50,0.61
+Peppers,Kadoma,Grade C,100,0.59
+Peppers,Kadoma,Grade C,200,0.57
+Peppers,Kadoma,Grade C,500,0.55
+Peppers,Kadoma,Reject,50,0.24
+Peppers,Kadoma,Reject,100,0.24
+Peppers,Kadoma,Reject,200,0.23
+Peppers,Kadoma,Reject,500,0.22
+Beans,Harare,Grade A,50,1.49
+Beans,Harare,Grade A,100,1.45
+Beans,Harare,Grade A,200,1.41
+Beans,Harare,Grade A,500,1.37
+Beans,Harare,Grade B,50,1.16
+Beans,Harare,Grade B,100,1.13
+Beans,Harare,Grade B,200,1.10
+Beans,Harare,Grade B,500,1.06
+Beans,Harare,Grade C,50,0.79
+Beans,Harare,Grade C,100,0.77
+Beans,Harare,Grade C,200,0.75
+Beans,Harare,Grade C,500,0.73
+Beans,Harare,Reject,50,0.31
+Beans,Harare,Reject,100,0.30
+Beans,Harare,Reject,200,0.29
+Beans,Harare,Reject,500,0.28
+Beans,Bulawayo,Grade A,50,1.42
+Beans,Bulawayo,Grade A,100,1.39
+Beans,Bulawayo,Grade A,200,1.35
+Beans,Bulawayo,Grade A,500,1.31
+Beans,Bulawayo,Grade B,50,1.10
+Beans,Bulawayo,Grade B,100,1.08
+Beans,Bulawayo,Grade B,200,1.05
+Beans,Bulawayo,Grade B,500,1.01
+Beans,Bulawayo,Grade C,50,0.76
+Beans,Bulawayo,Grade C,100,0.74
+Beans,Bulawayo,Grade C,200,0.72
+Beans,Bulawayo,Grade C,500,0.70
+Beans,Bulawayo,Reject,50,0.29
+Beans,Bulawayo,Reject,100,0.29
+Beans,Bulawayo,Reject,200,0.28
+Beans,Bulawayo,Reject,500,0.27
+Beans,Gweru,Grade A,50,1.35
+Beans,Gweru,Grade A,100,1.32
+Beans,Gweru,Grade A,200,1.28
+Beans,Gweru,Grade A,500,1.24
+Beans,Gweru,Grade B,50,1.05
+Beans,Gweru,Grade B,100,1.03
+Beans,Gweru,Grade B,200,1.00
+Beans,Gweru,Grade B,500,0.97
+Beans,Gweru,Grade C,50,0.72
+Beans,Gweru,Grade C,100,0.71
+Beans,Gweru,Grade C,200,0.68
+Beans,Gweru,Grade C,500,0.66
+Beans,Gweru,Reject,50,0.28
+Beans,Gweru,Reject,100,0.27
+Beans,Gweru,Reject,200,0.27
+Beans,Gweru,Reject,500,0.26
+Beans,Mutare,Grade A,50,1.38
+Beans,Mutare,Grade A,100,1.35
+Beans,Mutare,Grade A,200,1.31
+Beans,Mutare,Grade A,500,1.27
+Beans,Mutare,Grade B,50,1.07
+Beans,Mutare,Grade B,100,1.05
+Beans,Mutare,Grade B,200,1.02
+Beans,Mutare,Grade B,500,0.99
+Beans,Mutare,Grade C,50,0.73
+Beans,Mutare,Grade C,100,0.72
+Beans,Mutare,Grade C,200,0.70
+Beans,Mutare,Grade C,500,0.67
+Beans,Mutare,Reject,50,0.28
+Beans,Mutare,Reject,100,0.28
+Beans,Mutare,Reject,200,0.27
+Beans,Mutare,Reject,500,0.26
+Beans,Masvingo,Grade A,50,1.28
+Beans,Masvingo,Grade A,100,1.26
+Beans,Masvingo,Grade A,200,1.22
+Beans,Masvingo,Grade A,500,1.18
+Beans,Masvingo,Grade B,50,1.00
+Beans,Masvingo,Grade B,100,0.98
+Beans,Masvingo,Grade B,200,0.95
+Beans,Masvingo,Grade B,500,0.92
+Beans,Masvingo,Grade C,50,0.68
+Beans,Masvingo,Grade C,100,0.67
+Beans,Masvingo,Grade C,200,0.65
+Beans,Masvingo,Grade C,500,0.63
+Beans,Masvingo,Reject,50,0.27
+Beans,Masvingo,Reject,100,0.26
+Beans,Masvingo,Reject,200,0.25
+Beans,Masvingo,Reject,500,0.24
+Beans,Kadoma,Grade A,50,1.32
+Beans,Kadoma,Grade A,100,1.29
+Beans,Kadoma,Grade A,200,1.25
+Beans,Kadoma,Grade A,500,1.21
+Beans,Kadoma,Grade B,50,1.03
+Beans,Kadoma,Grade B,100,1.01
+Beans,Kadoma,Grade B,200,0.98
+Beans,Kadoma,Grade B,500,0.95
+Beans,Kadoma,Grade C,50,0.70
+Beans,Kadoma,Grade C,100,0.69
+Beans,Kadoma,Grade C,200,0.67
+Beans,Kadoma,Grade C,500,0.64
+Beans,Kadoma,Reject,50,0.27
+Beans,Kadoma,Reject,100,0.27
+Beans,Kadoma,Reject,200,0.26
+Beans,Kadoma,Reject,500,0.25
+Carrots,Harare,Grade A,50,0.88
+Carrots,Harare,Grade A,100,0.86
+Carrots,Harare,Grade A,200,0.84
+Carrots,Harare,Grade A,500,0.81
+Carrots,Harare,Grade B,50,0.64
+Carrots,Harare,Grade B,100,0.62
+Carrots,Harare,Grade B,200,0.61
+Carrots,Harare,Grade B,500,0.59
+Carrots,Harare,Grade C,50,0.42
+Carrots,Harare,Grade C,100,0.41
+Carrots,Harare,Grade C,200,0.40
+Carrots,Harare,Grade C,500,0.38
+Carrots,Harare,Reject,50,0.15
+Carrots,Harare,Reject,100,0.15
+Carrots,Harare,Reject,200,0.14
+Carrots,Harare,Reject,500,0.14
+Carrots,Bulawayo,Grade A,50,0.84
+Carrots,Bulawayo,Grade A,100,0.82
+Carrots,Bulawayo,Grade A,200,0.80
+Carrots,Bulawayo,Grade A,500,0.77
+Carrots,Bulawayo,Grade B,50,0.61
+Carrots,Bulawayo,Grade B,100,0.59
+Carrots,Bulawayo,Grade B,200,0.58
+Carrots,Bulawayo,Grade B,500,0.56
+Carrots,Bulawayo,Grade C,50,0.40
+Carrots,Bulawayo,Grade C,100,0.39
+Carrots,Bulawayo,Grade C,200,0.38
+Carrots,Bulawayo,Grade C,500,0.37
+Carrots,Bulawayo,Reject,50,0.15
+Carrots,Bulawayo,Reject,100,0.14
+Carrots,Bulawayo,Reject,200,0.14
+Carrots,Bulawayo,Reject,500,0.13
+Carrots,Gweru,Grade A,50,0.80
+Carrots,Gweru,Grade A,100,0.78
+Carrots,Gweru,Grade A,200,0.76
+Carrots,Gweru,Grade A,500,0.74
+Carrots,Gweru,Grade B,50,0.58
+Carrots,Gweru,Grade B,100,0.57
+Carrots,Gweru,Grade B,200,0.55
+Carrots,Gweru,Grade B,500,0.53
+Carrots,Gweru,Grade C,50,0.38
+Carrots,Gweru,Grade C,100,0.37
+Carrots,Gweru,Grade C,200,0.36
+Carrots,Gweru,Grade C,500,0.35
+Carrots,Gweru,Reject,50,0.14
+Carrots,Gweru,Reject,100,0.14
+Carrots,Gweru,Reject,200,0.13
+Carrots,Gweru,Reject,500,0.13
+Carrots,Mutare,Grade A,50,0.82
+Carrots,Mutare,Grade A,100,0.80
+Carrots,Mutare,Grade A,200,0.78
+Carrots,Mutare,Grade A,500,0.75
+Carrots,Mutare,Grade B,50,0.59
+Carrots,Mutare,Grade B,100,0.58
+Carrots,Mutare,Grade B,200,0.56
+Carrots,Mutare,Grade B,500,0.55
+Carrots,Mutare,Grade C,50,0.39
+Carrots,Mutare,Grade C,100,0.38
+Carrots,Mutare,Grade C,200,0.37
+Carrots,Mutare,Grade C,500,0.36
+Carrots,Mutare,Reject,50,0.14
+Carrots,Mutare,Reject,100,0.14
+Carrots,Mutare,Reject,200,0.13
+Carrots,Mutare,Reject,500,0.13
+Carrots,Masvingo,Grade A,50,0.76
+Carrots,Masvingo,Grade A,100,0.74
+Carrots,Masvingo,Grade A,200,0.72
+Carrots,Masvingo,Grade A,500,0.70
+Carrots,Masvingo,Grade B,50,0.55
+Carrots,Masvingo,Grade B,100,0.54
+Carrots,Masvingo,Grade B,200,0.52
+Carrots,Masvingo,Grade B,500,0.51
+Carrots,Masvingo,Grade C,50,0.36
+Carrots,Masvingo,Grade C,100,0.35
+Carrots,Masvingo,Grade C,200,0.34
+Carrots,Masvingo,Grade C,500,0.33
+Carrots,Masvingo,Reject,50,0.13
+Carrots,Masvingo,Reject,100,0.13
+Carrots,Masvingo,Reject,200,0.13
+Carrots,Masvingo,Reject,500,0.12
+Carrots,Kadoma,Grade A,50,0.78
+Carrots,Kadoma,Grade A,100,0.77
+Carrots,Kadoma,Grade A,200,0.74
+Carrots,Kadoma,Grade A,500,0.72
+Carrots,Kadoma,Grade B,50,0.57
+Carrots,Kadoma,Grade B,100,0.55
+Carrots,Kadoma,Grade B,200,0.54
+Carrots,Kadoma,Grade B,500,0.52
+Carrots,Kadoma,Grade C,50,0.37
+Carrots,Kadoma,Grade C,100,0.36
+Carrots,Kadoma,Grade C,200,0.35
+Carrots,Kadoma,Grade C,500,0.34
+Carrots,Kadoma,Reject,50,0.14
+Carrots,Kadoma,Reject,100,0.13
+Carrots,Kadoma,Reject,200,0.13
+Carrots,Kadoma,Reject,500,0.12

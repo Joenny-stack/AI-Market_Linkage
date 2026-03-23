@@ -51,10 +51,20 @@ export default function ListingDetailPage() {
   if (!listing) return <div className="not-found">Listing not found</div>;
 
   const mainImage = resolveMediaUrl(listing.images?.[0]?.image);
-  const hasAI = !!(listing.quality_grade || listing.predicted_class || typeof listing.confidence_score === 'number');
+  const hasAI = !!(
+    listing.quality_grade
+    || listing.predicted_class
+    || typeof listing.confidence_score === 'number'
+    || hasRecommendedPrice
+    || listing.price_variance_flag
+    || listing.pricing_warning
+  );
   const confidencePercent = typeof listing.confidence_score === 'number'
     ? `${Math.round(listing.confidence_score * 100)}%`
     : 'N/A';
+  const recommendedPriceRaw = listing.recommended_price ?? listing.ai_price_recommendation;
+  const recommendedPrice = Number(recommendedPriceRaw);
+  const hasRecommendedPrice = Number.isFinite(recommendedPrice);
 
   return (
     <div className="listing-detail-page">
@@ -82,11 +92,11 @@ export default function ListingDetailPage() {
 
           <div className="price-section">
             <div className="price">
-              <h2>{listing.currency} {listing.price_per_unit}</h2>
-              <p>per {listing.unit}</p>
+              <h2>{listing.currency} {listing.price_per_kg || listing.price_per_unit}</h2>
+              <p>per kg</p>
             </div>
             <div className="quantity">
-              <p><strong>Available:</strong> {listing.quantity_available} {listing.unit}</p>
+              <p><strong>Available:</strong> {listing.quantity_kg || listing.quantity_available} kg</p>
             </div>
           </div>
 
@@ -121,6 +131,28 @@ export default function ListingDetailPage() {
                 <span>Confidence:</span>
                 <span>{confidencePercent}</span>
               </div>
+              {hasRecommendedPrice && (
+                <div className="detail-row">
+                  <span>AI Recommended Price:</span>
+                  <span>${recommendedPrice.toFixed(2)}/kg</span>
+                </div>
+              )}
+              {listing.price_variance_flag && listing.price_variance_flag !== 'FAIR' && (
+                <div className="detail-row">
+                  <span>Pricing Alert:</span>
+                  <span>
+                    {listing.price_variance_flag === 'OVERPRICED'
+                      ? 'Overpriced vs AI recommendation'
+                      : 'Underpriced vs AI recommendation'}
+                  </span>
+                </div>
+              )}
+              {listing.pricing_warning && (
+                <div className="detail-row">
+                  <span>Warning:</span>
+                  <span>{listing.pricing_warning}</span>
+                </div>
+              )}
             </div>
           )}
 

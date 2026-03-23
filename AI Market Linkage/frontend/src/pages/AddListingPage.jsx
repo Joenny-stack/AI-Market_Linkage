@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { classifyTomatoImage, listingAPI } from '../api/endpoints';
+import { aiAPI, classifyTomatoImage, listingAPI } from '../api/endpoints';
 import AIQualityResult from '../components/AIQualityResult';
 import '../styles/AddListingPage.css';
 
@@ -30,6 +30,8 @@ export default function AddListingPage() {
   const [aiGrade, setAiGrade] = useState('');
   const [aiLoading, setAiLoading] = useState(false);
   const [aiError, setAiError] = useState('');
+  const [aiPriceRecommendation, setAiPriceRecommendation] = useState(null);
+  const [priceLoading, setPriceLoading] = useState(false);
 
   useEffect(() => {
     return () => {
@@ -38,6 +40,38 @@ export default function AddListingPage() {
       }
     };
   }, [imagePreview]);
+  // Auto-fetch price recommendation when grade + crop are known
+  useEffect(() => {
+    const crop = formData.crop_name.trim();
+    if (!aiGrade || !crop) {
+      setAiPriceRecommendation(null);
+      return;
+    }
+
+    let cancelled = false;
+    const timer = setTimeout(async () => {
+      setPriceLoading(true);
+      try {
+        const resp = await aiAPI.recommendPrice(
+          crop || 'Tomatoes',
+          formData.province.trim() || 'Harare',
+          aiGrade,
+          parseFloat(formData.quantity_available) || 100,
+        );
+        if (!cancelled) setAiPriceRecommendation(resp.data.recommended_price);
+      } catch {
+        if (!cancelled) setAiPriceRecommendation(null);
+      } finally {
+        if (!cancelled) setPriceLoading(false);
+      }
+    }, 400);
+
+    return () => {
+      cancelled = true;
+      clearTimeout(timer);
+    };
+  }, [aiGrade, formData.crop_name, formData.province, formData.quantity_available]);
+
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -62,6 +96,7 @@ export default function AddListingPage() {
       setAiGrade('');
       setAiError('');
       setAiLoading(false);
+      setAiPriceRecommendation(null);
       return;
     }
 
@@ -115,6 +150,10 @@ export default function AddListingPage() {
       payload.append('ai_class', aiPrediction);
       payload.append('quality_grade', aiGrade);
       payload.append('confidence_score', String(aiConfidence));
+    }
+
+    if (typeof aiPriceRecommendation === 'number') {
+      payload.append('recommended_price', String(aiPriceRecommendation));
     }
 
     return payload;
@@ -202,7 +241,7 @@ export default function AddListingPage() {
 
           <div className="form-row">
             <div className="form-group">
-              <label>Quantity Available *</label>
+              <label>Quantity Available (kg) *</label>
               <input
                 type="number"
                 name="quantity_available"
@@ -217,16 +256,13 @@ export default function AddListingPage() {
               <label>Unit *</label>
               <select name="unit" value={formData.unit} onChange={handleChange}>
                 <option value="kg">Kilogram (kg)</option>
-                <option value="ton">Ton</option>
-                <option value="bag">Bag</option>
-                <option value="crate">Crate</option>
               </select>
             </div>
           </div>
 
           <div className="form-row">
             <div className="form-group">
-              <label>Price Per Unit *</label>
+              <label>Price Per Kg *</label>
               <input
                 type="number"
                 step="0.01"
@@ -353,6 +389,8 @@ export default function AddListingPage() {
                 prediction={aiPrediction}
                 confidence={aiConfidence}
                 grade={aiGrade}
+                recommendedPrice={aiPriceRecommendation}
+                priceLoading={priceLoading}
               />
             )}
 

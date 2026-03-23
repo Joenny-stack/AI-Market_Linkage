@@ -17,6 +17,11 @@ class Listing(models.Model):
         ('SOLD', 'Sold'),
         ('PENDING', 'Pending'),
     ]
+    PRICE_VARIANCE_CHOICES = [
+        ('OVERPRICED', 'Overpriced'),
+        ('UNDERPRICED', 'Underpriced'),
+        ('FAIR', 'Fairly Priced'),
+    ]
     
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     farmer = models.ForeignKey(User, on_delete=models.CASCADE, related_name='listings')
@@ -24,8 +29,9 @@ class Listing(models.Model):
     category = models.CharField(max_length=100)
     description = models.TextField()
     quantity_available = models.DecimalField(max_digits=10, decimal_places=2)
-    unit = models.CharField(max_length=50, help_text='e.g., kg, ton, bag')
+    unit = models.CharField(max_length=50, help_text='Standardized to kg')
     price_per_unit = models.DecimalField(max_digits=10, decimal_places=2)
+    recommended_price = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)
     currency = models.CharField(max_length=10, default='USD')
     harvest_date = models.DateField()
     province = models.CharField(max_length=100)
@@ -40,6 +46,7 @@ class Listing(models.Model):
     predicted_class = models.CharField(max_length=50, null=True, blank=True)
     quality_grade = models.CharField(max_length=50, null=True, blank=True)
     ai_price_recommendation = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)
+    price_variance_flag = models.CharField(max_length=20, choices=PRICE_VARIANCE_CHOICES, null=True, blank=True)
     confidence_score = models.FloatField(null=True, blank=True)
     
     class Meta:
@@ -58,6 +65,14 @@ class Listing(models.Model):
     @property
     def total_price(self):
         return self.quantity_available * self.price_per_unit
+
+    @property
+    def price_per_kg(self):
+        return self.price_per_unit
+
+    @property
+    def quantity_kg(self):
+        return self.quantity_available
 
 
 class ListingImage(models.Model):

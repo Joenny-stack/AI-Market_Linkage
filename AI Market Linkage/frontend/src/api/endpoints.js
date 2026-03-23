@@ -69,6 +69,8 @@ export const inquiryAPI = {
 // AI API calls
 export const aiAPI = {
   classifyTomatoImage,
+  recommendPrice: (crop, location, grade, quantity) =>
+    apiClient.post('/ai/recommend-price/', { crop, location, grade, quantity }),
 };
 
 export default {
