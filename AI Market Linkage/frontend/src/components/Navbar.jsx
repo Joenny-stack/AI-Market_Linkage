@@ -24,6 +24,9 @@ export default function Navbar() {
           <Link to="/listings" className="nav-link">
             Browse Listings
           </Link>
+          <Link to="/map" className="nav-link">
+            Map
+          </Link>
 
           {!initialized ? (
             <div className="navbar-skeleton navbar-fade-enter" aria-hidden="true">

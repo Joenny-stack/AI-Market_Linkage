@@ -1,4 +1,5 @@
-import { useState, useEffect } from 'react';
+import { useMemo, useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import { listingAPI } from '../api/endpoints';
 import ListingCard from '../components/ListingCard';
 import ListingFilter from '../components/ListingFilter';
@@ -24,9 +25,19 @@ export default function BrowseListingsPage() {
     setLoading(false);
   };
 
+  const mappedCount = useMemo(
+    () => listings.filter((l) => Number.isFinite(Number(l.latitude ?? l.gps_latitude))
+      && Number.isFinite(Number(l.longitude ?? l.gps_longitude))).length,
+    [listings]
+  );
+
   return (
     <div className="browse-listings-page">
       <h1>Browse Listings</h1>
+      <div className="browse-toolbar">
+        <p>{listings.length} listing(s) found. {mappedCount} can be viewed on map.</p>
+        <Link to="/map" className="map-cta-link">Open Listings Map</Link>
+      </div>
 
       <div className="browse-container">
         <aside className="sidebar">

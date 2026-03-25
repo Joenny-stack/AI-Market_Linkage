@@ -7,6 +7,7 @@ import logging
 from rest_framework import serializers
 
 from .models import Listing, ListingImage
+from .location_utils import map_location_to_coordinates
 
 
 logger = logging.getLogger(__name__)
@@ -50,8 +51,11 @@ class ListingSerializer(serializers.ModelSerializer):
             'price_per_unit',
             'currency',
             'harvest_date',
+            'location',
             'province',
             'district',
+            'latitude',
+            'longitude',
             'gps_latitude',
             'gps_longitude',
             'status',
@@ -112,13 +116,62 @@ class ListingCreateUpdateSerializer(serializers.ModelSerializer):
             'recommended_price',
             'currency',
             'harvest_date',
+            'location',
             'province',
             'district',
+            'latitude',
+            'longitude',
             'gps_latitude',
             'gps_longitude',
             'status',
             'images'
         ]
+
+    @staticmethod
+    def _resolve_coordinates(validated_data, existing_instance=None):
+        """
+        Prefer explicit GPS coordinates. If absent, map from location/province/district string.
+        """
+        latitude = validated_data.get('latitude')
+        longitude = validated_data.get('longitude')
+        gps_latitude = validated_data.get('gps_latitude')
+        gps_longitude = validated_data.get('gps_longitude')
+
+        # If only legacy gps coords are present, treat them as primary coords.
+        if latitude is None and gps_latitude is not None:
+            latitude = gps_latitude
+        if longitude is None and gps_longitude is not None:
+            longitude = gps_longitude
+
+        # If explicit coords are provided, keep them and mirror to legacy fields.
+        if latitude is not None and longitude is not None:
+            validated_data['latitude'] = float(latitude)
+            validated_data['longitude'] = float(longitude)
+            validated_data['gps_latitude'] = float(latitude)
+            validated_data['gps_longitude'] = float(longitude)
+            return
+
+        location_text = (
+            validated_data.get('location')
+            or validated_data.get('province')
+            or validated_data.get('district')
+        )
+
+        if location_text:
+            mapped = map_location_to_coordinates(str(location_text))
+            if mapped:
+                mapped_lat, mapped_lng = mapped
+                validated_data['latitude'] = mapped_lat
+                validated_data['longitude'] = mapped_lng
+                validated_data['gps_latitude'] = mapped_lat
+                validated_data['gps_longitude'] = mapped_lng
+
+        if existing_instance and not validated_data.get('location'):
+            validated_data['location'] = (
+                existing_instance.location
+                or validated_data.get('province')
+                or existing_instance.province
+            )
 
     def validate_unit(self, value):
         if str(value).strip().lower() != 'kg':
@@ -151,13 +204,24 @@ class ListingCreateUpdateSerializer(serializers.ModelSerializer):
 
         quality_grade = listing.quality_grade or 'Grade A'
         crop_name = str(validated_data.get('crop_name', listing.crop_name or 'Tomatoes'))
-        location = str(validated_data.get('province', listing.province or 'Harare'))
+        location = str(
+            validated_data.get('location')
+            or validated_data.get('province')
+            or listing.location
+            or listing.province
+            or 'Harare'
+        )
         quantity = float(validated_data.get('quantity_available', listing.quantity_available or 100))
         return Decimal(str(predict_price(crop_name, location, quality_grade, quantity)))
     
     def create(self, validated_data):
         images = validated_data.pop('images', [])
         provided_recommended_price = validated_data.pop('recommended_price', None)
+        self._resolve_coordinates(validated_data)
+
+        if not validated_data.get('location'):
+            validated_data['location'] = validated_data.get('province') or validated_data.get('district')
+
         listing = Listing.objects.create(**validated_data)
         
         for image_file in images:
@@ -206,6 +270,7 @@ class ListingCreateUpdateSerializer(serializers.ModelSerializer):
     def update(self, instance, validated_data):
         images = validated_data.pop('images', None)
         provided_recommended_price = validated_data.pop('recommended_price', None)
+        self._resolve_coordinates(validated_data, existing_instance=instance)
         
         for attr, value in validated_data.items():
             setattr(instance, attr, value)

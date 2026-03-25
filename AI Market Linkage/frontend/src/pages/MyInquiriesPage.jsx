@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import { inquiryAPI } from '../api/endpoints';
 import '../styles/InquiriesPage.css';
 
@@ -37,9 +38,11 @@ export default function MyInquiriesPage() {
                   {inquiry.status}
                 </span>
               </div>
-              <p><strong>Listing Price:</strong> {inquiry.listing_price} per unit</p>
+              <p><strong>Listing Price:</strong> {inquiry.listing_currency || 'USD'} {inquiry.listing_price} / {inquiry.listing_unit || 'kg'}</p>
+              {inquiry.listing_location && <p><strong>Location:</strong> {inquiry.listing_location}</p>}
               <p><strong>Your Message:</strong> {inquiry.message}</p>
               <p><strong>Date:</strong> {new Date(inquiry.created_at).toLocaleDateString()}</p>
+              <Link to={`/listings/${inquiry.listing}`} className="inquiry-link">Open Listing</Link>
             </div>
           ))}
         </div>

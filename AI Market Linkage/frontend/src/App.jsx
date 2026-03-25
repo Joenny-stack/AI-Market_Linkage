@@ -7,6 +7,7 @@ import HomePage from './pages/HomePage';
 import LoginPage from './pages/LoginPage';
 import RegisterPage from './pages/RegisterPage';
 import BrowseListingsPage from './pages/BrowseListingsPage';
+import MapPage from './pages/MapPage';
 import ListingDetailPage from './pages/ListingDetailPage';
 import FarmerDashboardPage from './pages/FarmerDashboardPage';
 import BuyerDashboardPage from './pages/BuyerDashboardPage';
@@ -44,6 +45,7 @@ function App() {
             {/* Public Routes */}
             <Route path="/" element={<HomePage />} />
             <Route path="/listings" element={<BrowseListingsPage />} />
+            <Route path="/map" element={<MapPage />} />
             <Route path="/listings/:id" element={<ListingDetailPage />} />
             <Route path="/login" element={isAuthenticated ? <Navigate to={dashboardPath} /> : <LoginPage />} />
             <Route path="/register" element={isAuthenticated ? <Navigate to={dashboardPath} /> : <RegisterPage />} />

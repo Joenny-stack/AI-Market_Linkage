@@ -15,8 +15,11 @@ export default function AddListingPage() {
     price_per_unit: '',
     currency: 'USD',
     harvest_date: '',
+    location: '',
     province: '',
     district: '',
+    latitude: '',
+    longitude: '',
     gps_latitude: '',
     gps_longitude: '',
     status: 'AVAILABLE',
@@ -32,6 +35,9 @@ export default function AddListingPage() {
   const [aiError, setAiError] = useState('');
   const [aiPriceRecommendation, setAiPriceRecommendation] = useState(null);
   const [priceLoading, setPriceLoading] = useState(false);
+  const [geoLoading, setGeoLoading] = useState(false);
+  const [geoError, setGeoError] = useState('');
+  const [detectedLocation, setDetectedLocation] = useState('');
 
   useEffect(() => {
     return () => {
@@ -40,6 +46,67 @@ export default function AddListingPage() {
       }
     };
   }, [imagePreview]);
+
+  useEffect(() => {
+    detectLocation();
+  }, []);
+
+  const detectLocation = () => {
+    if (!navigator.geolocation) {
+      setGeoError('Geolocation is not supported by this browser. Enter location manually.');
+      return;
+    }
+
+    setGeoLoading(true);
+    setGeoError('');
+
+    navigator.geolocation.getCurrentPosition(
+      async (position) => {
+        const lat = Number(position.coords.latitude.toFixed(6));
+        const lng = Number(position.coords.longitude.toFixed(6));
+
+        setFormData((prev) => ({
+          ...prev,
+          latitude: String(lat),
+          longitude: String(lng),
+          gps_latitude: String(lat),
+          gps_longitude: String(lng),
+        }));
+
+        try {
+          const response = await fetch(
+            `https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat=${lat}&lon=${lng}`
+          );
+          const data = await response.json();
+          const address = data?.address || {};
+          const city = address.city || address.town || address.village || '';
+          const state = address.state || address.county || '';
+          const locationText = [city, state].filter(Boolean).join(', ');
+
+          setDetectedLocation(locationText || 'Location detected');
+          setFormData((prev) => ({
+            ...prev,
+            district: prev.district || city,
+            province: prev.province || state,
+            location: locationText || prev.location || city || state,
+          }));
+        } catch {
+          setDetectedLocation(`${lat}, ${lng}`);
+        } finally {
+          setGeoLoading(false);
+        }
+      },
+      (err) => {
+        setGeoLoading(false);
+        if (err.code === err.PERMISSION_DENIED) {
+          setGeoError('Location permission denied. Please enter location manually.');
+        } else {
+          setGeoError('Could not detect location. Please enter location manually.');
+        }
+      },
+      { enableHighAccuracy: true, timeout: 10000, maximumAge: 30000 }
+    );
+  };
   // Auto-fetch price recommendation when grade + crop are known
   useEffect(() => {
     const crop = formData.crop_name.trim();
@@ -54,7 +121,7 @@ export default function AddListingPage() {
       try {
         const resp = await aiAPI.recommendPrice(
           crop || 'Tomatoes',
-          formData.province.trim() || 'Harare',
+          formData.location.trim() || formData.province.trim() || 'Harare',
           aiGrade,
           parseFloat(formData.quantity_available) || 100,
         );
@@ -70,7 +137,7 @@ export default function AddListingPage() {
       cancelled = true;
       clearTimeout(timer);
     };
-  }, [aiGrade, formData.crop_name, formData.province, formData.quantity_available]);
+  }, [aiGrade, formData.crop_name, formData.location, formData.province, formData.quantity_available]);
 
 
   const handleChange = (e) => {
@@ -139,7 +206,10 @@ export default function AddListingPage() {
     const payload = new FormData();
 
     Object.keys(formData).forEach((key) => {
-      payload.append(key, formData[key]);
+      const value = formData[key];
+      if (value !== '' && value !== null && value !== undefined) {
+        payload.append(key, value);
+      }
     });
 
     images.forEach((image) => {
@@ -288,6 +358,16 @@ export default function AddListingPage() {
         <div className="form-section">
           <h2>Location & Dates</h2>
 
+          <div className="form-group">
+            <label>Detected Location</label>
+            {geoLoading && <p className="hint">Detecting location...</p>}
+            {!geoLoading && detectedLocation && <p className="hint">Detected: {detectedLocation}</p>}
+            {!geoLoading && geoError && <p className="ai-error">{geoError}</p>}
+            <button type="button" className="btn btn-secondary btn-sm" onClick={detectLocation} disabled={geoLoading}>
+              {geoLoading ? 'Detecting...' : 'Detect My GPS Location'}
+            </button>
+          </div>
+
           <div className="form-row">
             <div className="form-group">
               <label>Harvest Date *</label>
@@ -310,6 +390,17 @@ export default function AddListingPage() {
           </div>
 
           <div className="form-row">
+            <div className="form-group">
+              <label>Location String</label>
+              <input
+                type="text"
+                name="location"
+                value={formData.location}
+                onChange={handleChange}
+                placeholder="e.g., Gweru, Midlands"
+              />
+            </div>
+
             <div className="form-group">
               <label>Province *</label>
               <input
@@ -337,27 +428,51 @@ export default function AddListingPage() {
 
           <div className="form-row">
             <div className="form-group">
-              <label>GPS Latitude *</label>
+              <label>Latitude</label>
+              <input
+                type="number"
+                step="0.0001"
+                name="latitude"
+                value={formData.latitude}
+                onChange={handleChange}
+                placeholder="e.g., -17.8252"
+              />
+            </div>
+
+            <div className="form-group">
+              <label>Longitude</label>
+              <input
+                type="number"
+                step="0.0001"
+                name="longitude"
+                value={formData.longitude}
+                onChange={handleChange}
+                placeholder="e.g., 31.0335"
+              />
+            </div>
+          </div>
+
+          <div className="form-row">
+            <div className="form-group">
+              <label>Legacy GPS Latitude</label>
               <input
                 type="number"
                 step="0.0001"
                 name="gps_latitude"
                 value={formData.gps_latitude}
                 onChange={handleChange}
-                required
                 placeholder="e.g., -17.8252"
               />
             </div>
 
             <div className="form-group">
-              <label>GPS Longitude *</label>
+              <label>Legacy GPS Longitude</label>
               <input
                 type="number"
                 step="0.0001"
                 name="gps_longitude"
                 value={formData.gps_longitude}
                 onChange={handleChange}
-                required
                 placeholder="e.g., 31.0335"
               />
             </div>

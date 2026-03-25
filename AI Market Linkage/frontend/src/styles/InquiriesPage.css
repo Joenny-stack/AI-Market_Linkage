@@ -41,10 +41,16 @@
   line-height: 1.5;
 }
 
-.inquiry-card .btn {
-  margin-top: 1rem;
-  width: 100%;
-  text-align: center;
+.inquiry-link {
+  display: inline-block;
+  margin-top: 0.75rem;
+  color: var(--primary-color);
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.inquiry-link:hover {
+  text-decoration: underline;
 }
 
 .no-inquiries {

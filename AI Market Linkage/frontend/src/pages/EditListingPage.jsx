@@ -18,8 +18,11 @@ export default function EditListingPage() {
     price_per_unit: '',
     currency: 'USD',
     harvest_date: '',
+    location: '',
     province: '',
     district: '',
+    latitude: '',
+    longitude: '',
     gps_latitude: '',
     gps_longitude: '',
     status: 'AVAILABLE',
@@ -52,7 +55,7 @@ export default function EditListingPage() {
       try {
         const resp = await aiAPI.recommendPrice(
           crop || 'Tomatoes',
-          formData.province.trim() || 'Harare',
+          formData.location.trim() || formData.province.trim() || 'Harare',
           aiGrade,
           parseFloat(formData.quantity_available) || 100,
         );
@@ -64,7 +67,7 @@ export default function EditListingPage() {
       }
     }, 400);
     return () => { cancelled = true; clearTimeout(timer); };
-  }, [aiGrade, formData.crop_name, formData.province, formData.quantity_available]);
+  }, [aiGrade, formData.crop_name, formData.location, formData.province, formData.quantity_available]);
 
   useEffect(() => {
     return () => {
@@ -110,8 +113,11 @@ export default function EditListingPage() {
         price_per_unit: listing.price_per_unit ?? '',
         currency: listing.currency || 'USD',
         harvest_date: listing.harvest_date || '',
+        location: listing.location || '',
         province: listing.province || '',
         district: listing.district || '',
+        latitude: listing.latitude ?? '',
+        longitude: listing.longitude ?? '',
         gps_latitude: listing.gps_latitude ?? '',
         gps_longitude: listing.gps_longitude ?? '',
         status: listing.status || 'AVAILABLE',
@@ -197,7 +203,10 @@ export default function EditListingPage() {
     const payload = new FormData();
 
     Object.keys(formData).forEach((key) => {
-      payload.append(key, formData[key]);
+      const value = formData[key];
+      if (value !== '' && value !== null && value !== undefined) {
+        payload.append(key, value);
+      }
     });
 
     images.forEach((image) => {

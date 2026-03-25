@@ -13,7 +13,10 @@ class InquirySerializer(serializers.ModelSerializer):
     buyer_name = serializers.CharField(source='buyer.full_name', read_only=True)
     listing_crop = serializers.CharField(source='listing.crop_name', read_only=True)
     listing_price = serializers.CharField(source='listing.price_per_unit', read_only=True)
-    
+    listing_currency = serializers.CharField(source='listing.currency', read_only=True)
+    listing_unit = serializers.CharField(source='listing.unit', read_only=True)
+    listing_location = serializers.CharField(source='listing.location', read_only=True)
+
     class Meta:
         model = Inquiry
         fields = [
@@ -21,6 +24,9 @@ class InquirySerializer(serializers.ModelSerializer):
             'listing',
             'listing_crop',
             'listing_price',
+            'listing_currency',
+            'listing_unit',
+            'listing_location',
             'buyer',
             'buyer_email',
             'buyer_name',
