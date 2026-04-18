@@ -10,7 +10,8 @@ export default function LoginPage() {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
   const sessionExpired = searchParams.get('session_expired') === '1';
-  const nextPath = searchParams.get('next') || '/dashboard';
+  const nextParam = searchParams.get('next') || '/dashboard';
+  const nextPath = nextParam.startsWith('/') ? nextParam : '/dashboard';
   const { login, loading } = useAuthStore();
 
   const handleSubmit = async (e) => {

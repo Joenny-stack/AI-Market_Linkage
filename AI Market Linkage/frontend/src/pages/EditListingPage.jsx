@@ -143,6 +143,10 @@ export default function EditListingPage() {
     setFormData((prev) => ({
       ...prev,
       [name]: value,
+      ...(name === 'latitude' ? { gps_latitude: value } : {}),
+      ...(name === 'longitude' ? { gps_longitude: value } : {}),
+      ...(name === 'gps_latitude' ? { latitude: value } : {}),
+      ...(name === 'gps_longitude' ? { longitude: value } : {}),
     }));
   };
 
@@ -340,6 +344,11 @@ export default function EditListingPage() {
             </div>
           </div>
 
+          <div className="form-group">
+            <label>Location <span className="optional-label">(optional)</span></label>
+            <input type="text" name="location" value={formData.location} onChange={handleChange} placeholder="e.g., Gweru, Midlands" />
+          </div>
+
           <div className="form-row">
             <div className="form-group">
               <label>Province *</label>
@@ -354,15 +363,21 @@ export default function EditListingPage() {
 
           <div className="form-row">
             <div className="form-group">
-              <label>GPS Latitude *</label>
-              <input type="number" step="0.0001" name="gps_latitude" value={formData.gps_latitude} onChange={handleChange} required />
+              <label>Latitude <span className="optional-label">(optional)</span></label>
+              <input type="number" step="0.0001" name="latitude" value={formData.latitude} onChange={handleChange} placeholder="e.g., -17.8252" />
             </div>
 
             <div className="form-group">
-              <label>GPS Longitude *</label>
-              <input type="number" step="0.0001" name="gps_longitude" value={formData.gps_longitude} onChange={handleChange} required />
+              <label>Longitude <span className="optional-label">(optional)</span></label>
+              <input type="number" step="0.0001" name="longitude" value={formData.longitude} onChange={handleChange} placeholder="e.g., 31.0335" />
             </div>
           </div>
+
+          {(formData.latitude && formData.longitude) && (
+            <p className="hint" style={{ marginTop: '0.25rem' }}>
+              Current coordinates: {formData.latitude}, {formData.longitude}
+            </p>
+          )}
         </div>
 
         <div className="form-section">

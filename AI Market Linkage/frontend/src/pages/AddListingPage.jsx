@@ -144,7 +144,11 @@ export default function AddListingPage() {
     const { name, value } = e.target;
     setFormData(prev => ({
       ...prev,
-      [name]: value
+      [name]: value,
+      ...(name === 'latitude' ? { gps_latitude: value } : {}),
+      ...(name === 'longitude' ? { gps_longitude: value } : {}),
+      ...(name === 'gps_latitude' ? { latitude: value } : {}),
+      ...(name === 'gps_longitude' ? { longitude: value } : {}),
     }));
   };
 
