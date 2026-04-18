@@ -391,7 +391,7 @@ export default function AddListingPage() {
 
           <div className="form-row">
             <div className="form-group">
-              <label>Location String</label>
+              <label>Location <span className="optional-label">(optional)</span></label>
               <input
                 type="text"
                 name="location"
@@ -426,57 +426,12 @@ export default function AddListingPage() {
             </div>
           </div>
 
-          <div className="form-row">
-            <div className="form-group">
-              <label>Latitude</label>
-              <input
-                type="number"
-                step="0.0001"
-                name="latitude"
-                value={formData.latitude}
-                onChange={handleChange}
-                placeholder="e.g., -17.8252"
-              />
-            </div>
-
-            <div className="form-group">
-              <label>Longitude</label>
-              <input
-                type="number"
-                step="0.0001"
-                name="longitude"
-                value={formData.longitude}
-                onChange={handleChange}
-                placeholder="e.g., 31.0335"
-              />
-            </div>
-          </div>
-
-          <div className="form-row">
-            <div className="form-group">
-              <label>Legacy GPS Latitude</label>
-              <input
-                type="number"
-                step="0.0001"
-                name="gps_latitude"
-                value={formData.gps_latitude}
-                onChange={handleChange}
-                placeholder="e.g., -17.8252"
-              />
-            </div>
-
-            <div className="form-group">
-              <label>Legacy GPS Longitude</label>
-              <input
-                type="number"
-                step="0.0001"
-                name="gps_longitude"
-                value={formData.gps_longitude}
-                onChange={handleChange}
-                placeholder="e.g., 31.0335"
-              />
-            </div>
-          </div>
+          {/* Coordinates are set automatically by GPS detection above. Manual override is available if needed. */}
+          {formData.latitude && formData.longitude && (
+            <p className="hint" style={{ marginBottom: '0.5rem' }}>
+              📍 GPS coordinates captured: {formData.latitude}, {formData.longitude}
+            </p>
+          )}
         </div>
 
         <div className="form-section">

@@ -6,6 +6,7 @@ import '../styles/InquiriesPage.css';
 export default function MyInquiriesPage() {
   const [inquiries, setInquiries] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [fetchError, setFetchError] = useState('');
 
   useEffect(() => {
     fetchInquiries();
@@ -13,11 +14,12 @@ export default function MyInquiriesPage() {
 
   const fetchInquiries = async () => {
     setLoading(true);
+    setFetchError('');
     try {
       const response = await inquiryAPI.getByerInquiries();
       setInquiries(response.data);
     } catch (error) {
-      console.error('Error fetching inquiries:', error);
+      setFetchError('Unable to load your inquiries. Please check your connection and try again.');
     }
     setLoading(false);
   };
@@ -28,6 +30,11 @@ export default function MyInquiriesPage() {
 
       {loading ? (
         <div className="loading">Loading inquiries...</div>
+      ) : fetchError ? (
+        <div className="fetch-error">
+          <span>{fetchError}</span>
+          <button className="retry-btn" onClick={fetchInquiries}>Retry</button>
+        </div>
       ) : inquiries.length > 0 ? (
         <div className="inquiries-list">
           {inquiries.map(inquiry => (

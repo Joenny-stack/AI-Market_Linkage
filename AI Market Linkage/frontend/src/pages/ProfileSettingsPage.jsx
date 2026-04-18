@@ -10,17 +10,20 @@ export default function ProfileSettingsPage() {
   });
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState('');
+  const [saveError, setSaveError] = useState('');
+  const [fetchError, setFetchError] = useState('');
 
   useEffect(() => {
     fetchProfile();
   }, []);
 
   const fetchProfile = async () => {
+    setFetchError('');
     try {
       const response = await authAPI.getProfile();
       setProfile(response.data);
     } catch (error) {
-      console.error('Error fetching profile:', error);
+      setFetchError('Failed to load your profile. Please refresh the page.');
     }
   };
 
@@ -36,12 +39,13 @@ export default function ProfileSettingsPage() {
     e.preventDefault();
     setLoading(true);
     setSuccess('');
+    setSaveError('');
 
     try {
       await authAPI.updateProfile(profile);
       setSuccess('Profile updated successfully!');
     } catch (error) {
-      console.error('Error updating profile:', error);
+      setSaveError(error.response?.data?.detail || 'Failed to save changes. Please try again.');
     }
     setLoading(false);
   };
@@ -51,7 +55,9 @@ export default function ProfileSettingsPage() {
       <div className="profile-container">
         <h1>Profile Settings</h1>
 
+        {fetchError && <div className="error-message">{fetchError}</div>}
         {success && <div className="success-message">{success}</div>}
+        {saveError && <div className="error-message">{saveError}</div>}
 
         <form onSubmit={handleSubmit} className="profile-form">
           <div className="form-group">

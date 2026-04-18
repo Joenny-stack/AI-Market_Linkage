@@ -150,12 +150,88 @@ h4 { font-size: 1.2rem; font-weight: 600; }
   border-radius: 4px;
 }
 
+.warning-message {
+  background-color: #fff8e1;
+  border-left: 4px solid var(--warning-color);
+  color: #7f4f00;
+  padding: 1rem;
+  margin-bottom: 1rem;
+  border-radius: 4px;
+}
+
+/* Access denied page */
+.access-denied-page {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 60vh;
+  padding: 2rem;
+}
+
+.access-denied-container {
+  background: white;
+  border-radius: 8px;
+  padding: 2.5rem;
+  max-width: 480px;
+  text-align: center;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+}
+
+.access-denied-container h2 {
+  color: var(--danger-color);
+  margin-bottom: 1rem;
+}
+
+.access-denied-container p {
+  color: var(--text-dark);
+  margin-bottom: 1.5rem;
+  line-height: 1.6;
+}
+
+/* Inline fetch-error state */
+.fetch-error {
+  background-color: #fee;
+  border-left: 4px solid var(--danger-color);
+  color: #c0392b;
+  padding: 1rem 1.25rem;
+  border-radius: 4px;
+  margin-bottom: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.fetch-error .retry-btn {
+  margin-left: auto;
+  padding: 0.35rem 0.9rem;
+  font-size: 0.875rem;
+  background: transparent;
+  border: 1px solid #c0392b;
+  border-radius: 4px;
+  color: #c0392b;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.fetch-error .retry-btn:hover {
+  background: #c0392b;
+  color: white;
+}
+
 /* Loading */
 .loading {
   text-align: center;
   padding: 3rem;
   font-size: 1.1rem;
   color: var(--text-light);
+}
+
+/* Optional field label hint */
+.optional-label {
+  font-weight: 400;
+  color: var(--text-light);
+  font-size: 0.85em;
+  margin-left: 0.25rem;
 }
 
 /* Responsive */

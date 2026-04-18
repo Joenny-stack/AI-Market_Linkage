@@ -10,11 +10,14 @@ export default function ListingDetailPage() {
   const { isAuthenticated, user } = useAuthStore();
   const [listing, setListing] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [fetchError, setFetchError] = useState('');
   const [showInquiryForm, setShowInquiryForm] = useState(false);
   const [inquiryData, setInquiryData] = useState({
     message: '',
     contact_phone: '',
   });
+  const [inquirySuccess, setInquirySuccess] = useState('');
+  const [inquiryError, setInquiryError] = useState('');
 
   useEffect(() => {
     fetchListing();
@@ -22,17 +25,20 @@ export default function ListingDetailPage() {
 
   const fetchListing = async () => {
     setLoading(true);
+    setFetchError('');
     try {
       const response = await listingAPI.getListingDetail(id);
       setListing(response.data);
     } catch (error) {
-      console.error('Error fetching listing:', error);
+      setFetchError('Unable to load this listing. It may have been removed or there was a connection problem.');
     }
     setLoading(false);
   };
 
   const handleInquirySubmit = async (e) => {
     e.preventDefault();
+    setInquiryError('');
+    setInquirySuccess('');
     try {
       await inquiryAPI.createInquiry({
         listing: id,
@@ -40,14 +46,21 @@ export default function ListingDetailPage() {
       });
       setShowInquiryForm(false);
       setInquiryData({ message: '', contact_phone: '' });
-      alert('Inquiry sent successfully!');
+      setInquirySuccess('Your inquiry has been sent! The farmer will contact you shortly.');
     } catch (error) {
-      console.error('Error sending inquiry:', error);
-      alert('Failed to send inquiry');
+      setInquiryError(error.response?.data?.detail || 'Failed to send inquiry. Please try again.');
     }
   };
 
   if (loading) return <div className="loading">Loading listing...</div>;
+  if (fetchError) return (
+    <div className="listing-detail-page">
+      <div className="fetch-error" style={{ margin: '2rem auto', maxWidth: '600px' }}>
+        <span>{fetchError}</span>
+        <button className="retry-btn" onClick={fetchListing}>Retry</button>
+      </div>
+    </div>
+  );
   if (!listing) return <div className="not-found">Listing not found</div>;
 
   const mainImage = resolveMediaUrl(listing.images?.[0]?.image);
@@ -170,11 +183,14 @@ export default function ListingDetailPage() {
           {isAuthenticated && user?.role === 'BUYER' && user?.id !== listing.farmer && (
             <button
               className="inquiry-btn"
-              onClick={() => setShowInquiryForm(!showInquiryForm)}
+              onClick={() => { setShowInquiryForm(!showInquiryForm); setInquiryError(''); setInquirySuccess(''); }}
             >
               {showInquiryForm ? 'Cancel' : 'Send Inquiry'}
             </button>
           )}
+
+          {inquirySuccess && <div className="success-message" style={{ marginTop: '1rem' }}>{inquirySuccess}</div>}
+          {inquiryError && <div className="error-message" style={{ marginTop: '1rem' }}>{inquiryError}</div>}
 
           {showInquiryForm && (
             <form className="inquiry-form" onSubmit={handleInquirySubmit}>

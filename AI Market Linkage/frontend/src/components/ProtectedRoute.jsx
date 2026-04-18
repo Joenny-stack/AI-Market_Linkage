@@ -15,7 +15,19 @@ export default function ProtectedRoute({ children, requiredRole }) {
   }
 
   if (required && userRole !== required) {
-    return <Navigate to="/" />;
+    const dashboardPath = userRole === 'BUYER' ? '/buyer/dashboard' : '/farmer/dashboard';
+    return (
+      <div className="access-denied-page">
+        <div className="access-denied-container">
+          <h2>Access Restricted</h2>
+          <p>
+            This page is available to <strong>{required.charAt(0) + required.slice(1).toLowerCase()}s</strong> only.
+            Your account is registered as a <strong>{userRole.charAt(0) + userRole.slice(1).toLowerCase()}</strong>.
+          </p>
+          <a href={dashboardPath} className="btn btn-primary">Go to My Dashboard</a>
+        </div>
+      </div>
+    );
   }
 
   return children;

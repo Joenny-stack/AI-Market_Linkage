@@ -25,7 +25,12 @@ apiClient.interceptors.response.use(
     if (error.response?.status === 401) {
       localStorage.removeItem('access_token');
       localStorage.removeItem('refresh_token');
-      window.location.href = '/login';
+      // Preserve the current path so the user can be returned after login
+      const returnTo = window.location.pathname + window.location.search;
+      const loginUrl = returnTo && returnTo !== '/login'
+        ? `/login?session_expired=1&next=${encodeURIComponent(returnTo)}`
+        : '/login?session_expired=1';
+      window.location.href = loginUrl;
     }
     return Promise.reject(error);
   }

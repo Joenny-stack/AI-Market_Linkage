@@ -1,18 +1,33 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import '../styles/ListingFilter.css';
 
-export default function ListingFilter({ onFilter }) {
-  const [filters, setFilters] = useState({
-    crop_name: '',
-    province: '',
-    min_price: '',
-    max_price: '',
-    status: 'AVAILABLE',
-    quality_grade: '',
-  });
+const STATUS_OPTIONS = [
+  { value: '', label: 'All' },
+  { value: 'AVAILABLE', label: 'Available' },
+  { value: 'PENDING', label: 'Pending' },
+  { value: 'SOLD', label: 'Sold' },
+];
 
+const EMPTY_FILTERS = {
+  crop_name: '',
+  province: '',
+  min_price: '',
+  max_price: '',
+  status: '',
+  quality_grade: '',
+};
+
+export default function ListingFilter({ onFilter }) {
+  const [filters, setFilters] = useState(EMPTY_FILTERS);
+  const debounceRef = useRef(null);
+
+  // Debounce filter updates 350ms to reduce noisy API calls
   useEffect(() => {
-    onFilter(filters);
+    clearTimeout(debounceRef.current);
+    debounceRef.current = setTimeout(() => {
+      onFilter(filters);
+    }, 350);
+    return () => clearTimeout(debounceRef.current);
   }, [filters]);
 
   const handleChange = (e) => {
@@ -24,14 +39,7 @@ export default function ListingFilter({ onFilter }) {
   };
 
   const handleReset = () => {
-    setFilters({
-      crop_name: '',
-      province: '',
-      min_price: '',
-      max_price: '',
-      status: 'AVAILABLE',
-      quality_grade: '',
-    });
+    setFilters(EMPTY_FILTERS);
   };
 
   return (
@@ -96,11 +104,18 @@ export default function ListingFilter({ onFilter }) {
 
       <div className="filter-group">
         <label>Status</label>
-        <select name="status" value={filters.status} onChange={handleChange}>
-          <option value="AVAILABLE">Available</option>
-          <option value="SOLD">Sold</option>
-          <option value="PENDING">Pending</option>
-        </select>
+        <div className="status-chips">
+          {STATUS_OPTIONS.map(opt => (
+            <button
+              key={opt.value}
+              type="button"
+              className={`status-chip${filters.status === opt.value ? ' active' : ''}`}
+              onClick={() => setFilters(prev => ({ ...prev, status: opt.value }))}
+            >
+              {opt.label}
+            </button>
+          ))}
+        </div>
       </div>
 
       <button onClick={handleReset} className="reset-btn">

@@ -57,3 +57,34 @@
 .reset-btn:hover {
   background-color: var(--text-dark);
 }
+
+/* Status filter chips */
+.status-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin-top: 0.25rem;
+}
+
+.status-chip {
+  padding: 0.3rem 0.8rem;
+  border: 1px solid var(--border-color);
+  border-radius: 20px;
+  background: white;
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: background 0.2s, border-color 0.2s, color 0.2s;
+  font-family: inherit;
+}
+
+.status-chip:hover {
+  border-color: var(--primary-color);
+  color: var(--primary-color);
+}
+
+.status-chip.active {
+  background: var(--primary-color);
+  border-color: var(--primary-color);
+  color: white;
+  font-weight: 600;
+}

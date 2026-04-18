@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useNavigate, Link } from 'react-router-dom';
+import { useNavigate, useSearchParams, Link } from 'react-router-dom';
 import useAuthStore from '../context/authStore';
 import '../styles/LoginPage.css';
 
@@ -8,6 +8,9 @@ export default function LoginPage() {
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
+  const sessionExpired = searchParams.get('session_expired') === '1';
+  const nextPath = searchParams.get('next') || '/dashboard';
   const { login, loading } = useAuthStore();
 
   const handleSubmit = async (e) => {
@@ -16,7 +19,7 @@ export default function LoginPage() {
 
     const success = await login(email, password);
     if (success) {
-      navigate('/dashboard');
+      navigate(nextPath);
     } else {
       setError('Failed to login. Please check your credentials.');
     }
@@ -28,6 +31,11 @@ export default function LoginPage() {
         <h1>Login</h1>
         <p>Sign in to your account</p>
 
+        {sessionExpired && (
+          <div className="warning-message">
+            Your session has expired. Please log in again to continue.
+          </div>
+        )}
         {error && <div className="error-message">{error}</div>}
 
         <form onSubmit={handleSubmit}>

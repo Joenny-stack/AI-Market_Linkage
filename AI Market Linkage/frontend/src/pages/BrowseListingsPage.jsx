@@ -8,6 +8,7 @@ import '../styles/BrowseListingsPage.css';
 export default function BrowseListingsPage() {
   const [listings, setListings] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [fetchError, setFetchError] = useState('');
   const [filters, setFilters] = useState({});
 
   useEffect(() => {
@@ -16,11 +17,12 @@ export default function BrowseListingsPage() {
 
   const fetchListings = async () => {
     setLoading(true);
+    setFetchError('');
     try {
       const response = await listingAPI.getListings(filters);
       setListings(response.data.results || response.data);
     } catch (error) {
-      console.error('Error fetching listings:', error);
+      setFetchError('Failed to load listings. Please check your connection and try again.');
     }
     setLoading(false);
   };
@@ -45,19 +47,25 @@ export default function BrowseListingsPage() {
         </aside>
 
         <section className="listings-section">
+          {fetchError && (
+            <div className="fetch-error">
+              <span>{fetchError}</span>
+              <button className="retry-btn" onClick={fetchListings}>Retry</button>
+            </div>
+          )}
           {loading ? (
             <div className="loading">Loading listings...</div>
-          ) : listings.length > 0 ? (
+          ) : !fetchError && listings.length > 0 ? (
             <div className="listings-grid">
               {listings.map(listing => (
                 <ListingCard key={listing.id} listing={listing} />
               ))}
             </div>
-          ) : (
+          ) : !fetchError ? (
             <div className="no-listings">
               <p>No listings found. Try adjusting your filters.</p>
             </div>
-          )}
+          ) : null}
         </section>
       </div>
     </div>

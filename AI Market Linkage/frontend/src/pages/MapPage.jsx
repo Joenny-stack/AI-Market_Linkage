@@ -19,6 +19,7 @@ const DEFAULT_CENTER = [-19.0154, 29.1549]; // Zimbabwe centroid
 export default function MapPage() {
   const [listings, setListings] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [fetchError, setFetchError] = useState('');
 
   useEffect(() => {
     fetchListings();
@@ -26,12 +27,13 @@ export default function MapPage() {
 
   const fetchListings = async () => {
     setLoading(true);
+    setFetchError('');
     try {
       const response = await listingAPI.getListings();
       const data = response.data?.results || response.data || [];
       setListings(Array.isArray(data) ? data : []);
     } catch (error) {
-      console.error('Error fetching listings for map:', error);
+      setFetchError('Failed to load map listings. Please check your connection and try again.');
       setListings([]);
     }
     setLoading(false);
@@ -62,6 +64,11 @@ export default function MapPage() {
 
       {loading ? (
         <div className="loading">Loading map data...</div>
+      ) : fetchError ? (
+        <div className="fetch-error" style={{ margin: '1.5rem' }}>
+          <span>{fetchError}</span>
+          <button className="retry-btn" onClick={fetchListings}>Retry</button>
+        </div>
       ) : (
         <MapContainer center={mapCenter} zoom={7} className="listings-map">
           <TileLayer

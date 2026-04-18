@@ -42,8 +42,8 @@ export default function HomePage() {
           </div>
 
           <div className="feature-card">
-            <h3>💬 Direct Messaging</h3>
-            <p>Send inquiries directly to farmers and manage all your communications</p>
+            <h3>💬 Buyer Inquiries</h3>
+            <p>Send inquiries directly to farmers and track all your communications in one place</p>
           </div>
 
           <div className="feature-card">
@@ -57,8 +57,8 @@ export default function HomePage() {
           </div>
 
           <div className="feature-card">
-            <h3>📊 Admin Dashboard</h3>
-            <p>Comprehensive management and moderation tools for platform administration</p>
+            <h3>🤖 AI Quality Insights</h3>
+            <p>AI-powered crop quality grading and recommended pricing to help you trade at fair market value</p>
           </div>
         </div>
       </section>
@@ -81,7 +81,7 @@ export default function HomePage() {
           <div className="step">
             <div className="step-number">3</div>
             <h3>Connect</h3>
-            <p>Send inquiries and communicate directly</p>
+            <p>Send inquiries to farmers and manage your responses</p>
           </div>
 
           <div className="step">
