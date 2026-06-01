@@ -8,7 +8,7 @@ User = get_user_model()
 
 class UserRegistrationTestCase(APITestCase):
     """Test user registration."""
-    
+
     def test_register_farmer(self):
         data = {
             'email': 'farmer@example.com',
@@ -24,7 +24,7 @@ class UserRegistrationTestCase(APITestCase):
 
 class ListingTestCase(APITestCase):
     """Test listing creation and retrieval."""
-    
+
     def setUp(self):
         self.farmer = User.objects.create_user(
             email='farmer@example.com',
@@ -32,7 +32,7 @@ class ListingTestCase(APITestCase):
             role='FARMER',
             password='testpass123'
         )
-    
+
     def test_get_listings(self):
         response = self.client.get(reverse('listing-list'))
         self.assertEqual(response.status_code, status.HTTP_200_OK)

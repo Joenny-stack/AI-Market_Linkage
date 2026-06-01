@@ -4,6 +4,7 @@ Serializers for listings.
 from decimal import Decimal
 import logging
 
+from django.conf import settings
 from rest_framework import serializers
 
 from .models import Listing, ListingImage
@@ -182,6 +183,24 @@ class ListingCreateUpdateSerializer(serializers.ModelSerializer):
         if value <= 0:
             raise serializers.ValidationError('Quantity must be greater than 0 kg.')
         return value
+
+    def validate_images(self, value):
+        max_upload_size = getattr(settings, 'MAX_UPLOAD_SIZE', 5 * 1024 * 1024)
+        for image_file in value:
+            if getattr(image_file, 'size', 0) > max_upload_size:
+                raise serializers.ValidationError('Each image must be 5MB or smaller.')
+        return value
+
+    def validate(self, attrs):
+        attrs = super().validate(attrs)
+
+        # Require at least one image only on create; update remains optional.
+        if self.instance is None:
+            images = attrs.get('images')
+            if not images:
+                raise serializers.ValidationError({'images': ['Image file is required.']})
+
+        return attrs
 
     @staticmethod
     def _compute_variance_flag(user_price: Decimal, recommended_price: Decimal):

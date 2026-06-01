@@ -1,5 +1,38 @@
 import apiClient from './client';
 
+export const getTomatoClassificationErrorMessage = (err) => {
+  const status = err?.response?.status;
+  const responseData = err?.response?.data;
+  const apiMessage = String(responseData?.error || responseData?.detail || '').trim();
+  const normalized = apiMessage.toLowerCase();
+
+  if (normalized.includes('file too large')) {
+    return 'Image is too large. Please upload an image up to 5MB.';
+  }
+
+  if (normalized.includes('invalid file type')) {
+    return 'Unsupported image format. Use JPG, JPEG, PNG, GIF, or WEBP.';
+  }
+
+  if (normalized.includes('image file is required')) {
+    return 'Please select an image before running AI analysis.';
+  }
+
+  if (status === 503 || normalized.includes('classifier unavailable')) {
+    return 'AI service is temporarily unavailable. Try again shortly.';
+  }
+
+  if (status === 400 && apiMessage) {
+    return apiMessage;
+  }
+
+  if (status >= 500) {
+    return 'AI analysis failed due to a server error. Please try again.';
+  }
+
+  return 'AI analysis unavailable. Listing can still be created.';
+};
+
 const normalizeListingParams = (params = {}) => {
   const next = { ...params };
 

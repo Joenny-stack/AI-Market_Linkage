@@ -1,8 +1,10 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { aiAPI, classifyTomatoImage, listingAPI } from '../api/endpoints';
+import { aiAPI, classifyTomatoImage, getTomatoClassificationErrorMessage, listingAPI } from '../api/endpoints';
 import AIQualityResult from '../components/AIQualityResult';
 import '../styles/AddListingPage.css';
+
+const MAX_IMAGE_SIZE_BYTES = 5 * 1024 * 1024;
 
 export default function AddListingPage() {
   const navigate = useNavigate();
@@ -181,6 +183,14 @@ export default function AddListingPage() {
       return;
     }
 
+    if (imageFile.size > MAX_IMAGE_SIZE_BYTES) {
+      setAiPrediction('');
+      setAiConfidence(null);
+      setAiGrade('');
+      setAiError('Image is too large. Please upload an image up to 5MB.');
+      return;
+    }
+
     setAiLoading(true);
     setAiError('');
     try {
@@ -188,11 +198,11 @@ export default function AddListingPage() {
       setAiPrediction(prediction.class || '');
       setAiConfidence(typeof prediction.confidence === 'number' ? prediction.confidence : null);
       setAiGrade(prediction.grade || '');
-    } catch {
+    } catch (err) {
       setAiPrediction('');
       setAiConfidence(null);
       setAiGrade('');
-      setAiError('AI analysis unavailable. Listing can still be created.');
+      setAiError(getTomatoClassificationErrorMessage(err));
     } finally {
       setAiLoading(false);
     }
