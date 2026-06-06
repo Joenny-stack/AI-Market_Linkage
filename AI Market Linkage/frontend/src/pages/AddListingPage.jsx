@@ -37,6 +37,8 @@ export default function AddListingPage() {
   const [aiError, setAiError] = useState('');
   const [aiPriceRecommendation, setAiPriceRecommendation] = useState(null);
   const [priceLoading, setPriceLoading] = useState(false);
+  const [priceMessage, setPriceMessage] = useState('');
+  const [priceError, setPriceError] = useState('');
   const [geoLoading, setGeoLoading] = useState(false);
   const [geoError, setGeoError] = useState('');
   const [detectedLocation, setDetectedLocation] = useState('');
@@ -109,27 +111,54 @@ export default function AddListingPage() {
       { enableHighAccuracy: true, timeout: 10000, maximumAge: 30000 }
     );
   };
-  // Auto-fetch price recommendation when grade + crop are known
+  const getPriceErrorMessage = (err) => {
+    const apiMessage = err?.response?.data?.error || err?.response?.data?.detail;
+    if (apiMessage) {
+      return `${apiMessage} No image re-upload is required; adjust the crop, location, grade, or quantity.`;
+    }
+    return 'Price recommendation is unavailable right now. No image re-upload is required; you can still create the listing.';
+  };
+
+  // Auto-fetch price recommendation when grade + crop are known.
   useEffect(() => {
-    const crop = formData.crop_name.trim();
-    if (!aiGrade || !crop) {
+    if (!aiGrade) {
       setAiPriceRecommendation(null);
+      setPriceMessage('');
+      setPriceError('');
+      return;
+    }
+
+    const crop = formData.crop_name.trim();
+    const location = formData.location.trim() || formData.province.trim() || 'Harare';
+    const quantity = parseFloat(formData.quantity_available) || 100;
+    if (!crop) {
+      setAiPriceRecommendation(null);
+      setPriceError('');
+      setPriceMessage('Quality analysis is ready. Enter the crop name to calculate price; no image re-upload is needed.');
       return;
     }
 
     let cancelled = false;
     const timer = setTimeout(async () => {
       setPriceLoading(true);
+      setPriceMessage('');
+      setPriceError('');
       try {
         const resp = await aiAPI.recommendPrice(
-          crop || 'Tomatoes',
-          formData.location.trim() || formData.province.trim() || 'Harare',
+          crop,
+          location,
           aiGrade,
-          parseFloat(formData.quantity_available) || 100,
+          quantity,
         );
-        if (!cancelled) setAiPriceRecommendation(resp.data.recommended_price);
-      } catch {
-        if (!cancelled) setAiPriceRecommendation(null);
+        if (!cancelled) {
+          setAiPriceRecommendation(resp.data.recommended_price);
+          setPriceMessage('');
+        }
+      } catch (err) {
+        if (!cancelled) {
+          setAiPriceRecommendation(null);
+          setPriceError(getPriceErrorMessage(err));
+        }
       } finally {
         if (!cancelled) setPriceLoading(false);
       }
@@ -170,6 +199,8 @@ export default function AddListingPage() {
       setAiError('');
       setAiLoading(false);
       setAiPriceRecommendation(null);
+      setPriceMessage('');
+      setPriceError('');
       return;
     }
 
@@ -188,11 +219,15 @@ export default function AddListingPage() {
       setAiConfidence(null);
       setAiGrade('');
       setAiError('Image is too large. Please upload an image up to 5MB.');
+      setAiPriceRecommendation(null);
+      setPriceMessage('');
+      setPriceError('');
       return;
     }
 
     setAiLoading(true);
     setAiError('');
+    setPriceError('');
     try {
       const prediction = await classifyTomatoImage(imageFile);
       setAiPrediction(prediction.class || '');
@@ -203,6 +238,9 @@ export default function AddListingPage() {
       setAiConfidence(null);
       setAiGrade('');
       setAiError(getTomatoClassificationErrorMessage(err));
+      setAiPriceRecommendation(null);
+      setPriceMessage('');
+      setPriceError('');
     } finally {
       setAiLoading(false);
     }
@@ -475,6 +513,8 @@ export default function AddListingPage() {
                 grade={aiGrade}
                 recommendedPrice={aiPriceRecommendation}
                 priceLoading={priceLoading}
+                priceMessage={priceMessage}
+                priceError={priceError}
               />
             )}
 

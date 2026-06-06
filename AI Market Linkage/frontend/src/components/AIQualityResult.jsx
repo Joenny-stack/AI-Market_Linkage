@@ -1,4 +1,12 @@
-export default function AIQualityResult({ prediction, confidence, grade, recommendedPrice, priceLoading }) {
+export default function AIQualityResult({
+  prediction,
+  confidence,
+  grade,
+  recommendedPrice,
+  priceLoading,
+  priceMessage,
+  priceError,
+}) {
   const confidencePercent = typeof confidence === 'number' ? `${Math.round(confidence * 100)}%` : 'N/A';
 
   return (
@@ -31,6 +39,10 @@ export default function AIQualityResult({ prediction, confidence, grade, recomme
           }}>
             AI Recommended Price: ${recommendedPrice.toFixed(2)}/kg
           </p>
+        ) : priceError ? (
+          <p style={{ margin: 0, color: '#9a3412', fontWeight: 600 }}>{priceError}</p>
+        ) : priceMessage ? (
+          <p style={{ margin: 0, color: '#555', fontStyle: 'italic' }}>{priceMessage}</p>
         ) : null}
       </div>
     </div>
