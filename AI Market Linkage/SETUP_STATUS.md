@@ -19,7 +19,7 @@ Useful URLs when the backend server is running:
 Run locally:
 
 ```powershell
-cd "C:\Users\DELL\Desktop\Deals\Affix\System\AI Market Linkage\backend"
+
 .\venv\Scripts\python.exe manage.py migrate
 .\venv\Scripts\python.exe manage.py runserver
 ```
@@ -37,7 +37,7 @@ Verified:
 Run locally:
 
 ```powershell
-cd "C:\Users\DELL\Desktop\Deals\Affix\System\AI Market Linkage\frontend"
+
 npm install
 npm run dev
 ```

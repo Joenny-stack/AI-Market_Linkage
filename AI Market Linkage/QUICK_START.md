@@ -20,7 +20,7 @@ C:\Users\DELL\Desktop\Deals\Affix\System\AI Market Linkage\
 
 ```powershell
 # Navigate to backend
-cd "C:\Users\DELL\Desktop\Deals\Affix\System\AI Market Linkage\backend"
+
 
 # Create virtual environment
 python -m venv venv
@@ -52,7 +52,7 @@ python manage.py runserver
 
 ```powershell
 # Navigate to frontend
-cd "C:\Users\DELL\Desktop\Deals\Affix\System\AI Market Linkage\frontend"
+
 
 # Install dependencies
 npm install

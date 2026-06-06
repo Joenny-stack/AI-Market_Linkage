@@ -4,16 +4,8 @@ This document is for running the project test cases manually for documentation.
 
 ## 1. Environment Setup
 
-1. Open terminal in backend folder:
-   - `cd "AI Market Linkage/backend"`
-2. Install dependencies:
-   - `c:/Users/DELL/Desktop/Deals/Affix/System/.venv/Scripts/python.exe -m pip install -r requirements.txt`
-3. Ensure PostgreSQL is running and matches `.env` values used by `config/settings.py`.
-4. Run migrations:
-   - `c:/Users/DELL/Desktop/Deals/Affix/System/.venv/Scripts/python.exe manage.py migrate`
-5. Start backend server:
-   - `c:/Users/DELL/Desktop/Deals/Affix/System/.venv/Scripts/python.exe manage.py runserver`
-6. Start frontend (new terminal):
+ 'python.exe manage.py runserver`
+ Start frontend (new terminal):
    - `cd "AI Market Linkage/frontend"`
    - `npm install`
    - `npm run dev`
