@@ -7,6 +7,8 @@ from PIL import Image
 from rest_framework import status
 from rest_framework.test import APITestCase
 
+from listings.location_utils import map_location_to_coordinates
+
 User = get_user_model()
 
 
@@ -103,3 +105,11 @@ class PriceRecommendationTestCase(APITestCase):
 
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertGreater(response.data['recommended_price'], 0)
+
+
+class LocationMappingTestCase(APITestCase):
+    """Test location-to-coordinate fallback mapping."""
+
+    def test_combined_location_maps_to_city_coordinates(self):
+        self.assertEqual(map_location_to_coordinates('Gweru, Midlands'), (-19.45, 29.81))
+        self.assertEqual(map_location_to_coordinates('Harare Province'), (-17.83, 31.05))

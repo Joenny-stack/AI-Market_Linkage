@@ -42,6 +42,7 @@ export default function AddListingPage() {
   const [geoLoading, setGeoLoading] = useState(false);
   const [geoError, setGeoError] = useState('');
   const [detectedLocation, setDetectedLocation] = useState('');
+  const [geoAccuracy, setGeoAccuracy] = useState(null);
 
   useEffect(() => {
     return () => {
@@ -51,10 +52,6 @@ export default function AddListingPage() {
     };
   }, [imagePreview]);
 
-  useEffect(() => {
-    detectLocation();
-  }, []);
-
   const detectLocation = () => {
     if (!navigator.geolocation) {
       setGeoError('Geolocation is not supported by this browser. Enter location manually.');
@@ -63,11 +60,14 @@ export default function AddListingPage() {
 
     setGeoLoading(true);
     setGeoError('');
+    setGeoAccuracy(null);
 
     navigator.geolocation.getCurrentPosition(
       async (position) => {
         const lat = Number(position.coords.latitude.toFixed(6));
         const lng = Number(position.coords.longitude.toFixed(6));
+        const accuracy = Math.round(position.coords.accuracy || 0);
+        setGeoAccuracy(accuracy || null);
 
         setFormData((prev) => ({
           ...prev,
@@ -97,11 +97,15 @@ export default function AddListingPage() {
         } catch {
           setDetectedLocation(`${lat}, ${lng}`);
         } finally {
+          if (accuracy > 1000) {
+            setGeoError('GPS result is approximate. Please verify the coordinates or enter them manually.');
+          }
           setGeoLoading(false);
         }
       },
       (err) => {
         setGeoLoading(false);
+        setGeoAccuracy(null);
         if (err.code === err.PERMISSION_DENIED) {
           setGeoError('Location permission denied. Please enter location manually.');
         } else {
@@ -110,6 +114,19 @@ export default function AddListingPage() {
       },
       { enableHighAccuracy: true, timeout: 10000, maximumAge: 30000 }
     );
+  };
+
+  const clearDetectedCoordinates = () => {
+    setDetectedLocation('');
+    setGeoAccuracy(null);
+    setGeoError('');
+    setFormData((prev) => ({
+      ...prev,
+      latitude: '',
+      longitude: '',
+      gps_latitude: '',
+      gps_longitude: '',
+    }));
   };
   const getPriceErrorMessage = (err) => {
     const apiMessage = err?.response?.data?.error || err?.response?.data?.detail;
@@ -411,13 +428,26 @@ export default function AddListingPage() {
           <h2>Location & Dates</h2>
 
           <div className="form-group">
-            <label>Detected Location</label>
+            <label>GPS Location</label>
+            <p className="hint">Use GPS only when your browser location is correct. Desktop browsers can be approximate.</p>
             {geoLoading && <p className="hint">Detecting location...</p>}
-            {!geoLoading && detectedLocation && <p className="hint">Detected: {detectedLocation}</p>}
+            {!geoLoading && detectedLocation && (
+              <p className="hint">
+                Detected: {detectedLocation}
+                {geoAccuracy ? ` (accuracy about ${geoAccuracy}m)` : ''}
+              </p>
+            )}
             {!geoLoading && geoError && <p className="ai-error">{geoError}</p>}
-            <button type="button" className="btn btn-secondary btn-sm" onClick={detectLocation} disabled={geoLoading}>
-              {geoLoading ? 'Detecting...' : 'Detect My GPS Location'}
-            </button>
+            <div className="ai-actions">
+              <button type="button" className="btn btn-secondary btn-sm" onClick={detectLocation} disabled={geoLoading}>
+                {geoLoading ? 'Detecting...' : 'Use My GPS Location'}
+              </button>
+              {(formData.latitude || formData.longitude) && (
+                <button type="button" className="btn btn-secondary btn-sm" onClick={clearDetectedCoordinates}>
+                  Clear GPS
+                </button>
+              )}
+            </div>
           </div>
 
           <div className="form-row">
@@ -474,6 +504,32 @@ export default function AddListingPage() {
                 onChange={handleChange}
                 required
                 placeholder="District name"
+              />
+            </div>
+          </div>
+
+          <div className="form-row">
+            <div className="form-group">
+              <label>Latitude <span className="optional-label">(optional)</span></label>
+              <input
+                type="number"
+                step="0.000001"
+                name="latitude"
+                value={formData.latitude}
+                onChange={handleChange}
+                placeholder="e.g., -17.8252"
+              />
+            </div>
+
+            <div className="form-group">
+              <label>Longitude <span className="optional-label">(optional)</span></label>
+              <input
+                type="number"
+                step="0.000001"
+                name="longitude"
+                value={formData.longitude}
+                onChange={handleChange}
+                placeholder="e.g., 31.0335"
               />
             </div>
           </div>

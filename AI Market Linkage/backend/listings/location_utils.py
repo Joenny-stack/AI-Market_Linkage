@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import re
 from typing import Optional, Tuple
 
 LOCATION_TO_COORDS = {
@@ -27,4 +28,18 @@ def map_location_to_coordinates(location: str) -> Optional[Tuple[float, float]]:
     key = str(location or "").strip().lower()
     if not key:
         return None
-    return LOCATION_TO_COORDS.get(key)
+
+    normalized_key = re.sub(r"\s+", " ", key.replace(" province", "")).strip()
+    if normalized_key in LOCATION_TO_COORDS:
+        return LOCATION_TO_COORDS[normalized_key]
+
+    # Handle combined labels such as "Gweru, Midlands" or "Harare - Zimbabwe".
+    parts = [
+        re.sub(r"\s+", " ", part.replace(" province", "")).strip()
+        for part in re.split(r"[,;/|-]", normalized_key)
+    ]
+    for part in parts:
+        if part in LOCATION_TO_COORDS:
+            return LOCATION_TO_COORDS[part]
+
+    return None
