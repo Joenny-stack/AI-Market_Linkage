@@ -443,7 +443,7 @@ export default function AddListingPage() {
           {/* Coordinates are set automatically by GPS detection above. Manual override is available if needed. */}
           {formData.latitude && formData.longitude && (
             <p className="hint" style={{ marginBottom: '0.5rem' }}>
-              📍 GPS coordinates captured: {formData.latitude}, {formData.longitude}
+              GPS coordinates captured: {formData.latitude}, {formData.longitude}
             </p>
           )}
         </div>

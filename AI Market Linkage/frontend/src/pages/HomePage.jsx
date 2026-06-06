@@ -1,10 +1,9 @@
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import useAuthStore from '../context/authStore';
 import '../styles/HomePage.css';
 
 export default function HomePage() {
   const { isAuthenticated, user } = useAuthStore();
-  const navigate = useNavigate();
 
   return (
     <div className="home-page">
@@ -18,11 +17,9 @@ export default function HomePage() {
               Browse Listings
             </Link>
             {!isAuthenticated && (
-              <>
-                <Link to="/register" className="btn btn-secondary">
-                  Get Started
-                </Link>
-              </>
+              <Link to="/register" className="btn btn-secondary">
+                Get Started
+              </Link>
             )}
           </div>
         </div>
@@ -32,32 +29,32 @@ export default function HomePage() {
         <h2>Platform Features</h2>
         <div className="features-grid">
           <div className="feature-card">
-            <h3>🌾 Farmer Listings</h3>
+            <h3>Farmer Listings</h3>
             <p>Easily list your agricultural products with images and detailed information</p>
           </div>
 
           <div className="feature-card">
-            <h3>🔍 Browse & Filter</h3>
+            <h3>Browse & Filter</h3>
             <p>Find exactly what you need with advanced filtering and search capabilities</p>
           </div>
 
           <div className="feature-card">
-            <h3>💬 Buyer Inquiries</h3>
+            <h3>Buyer Inquiries</h3>
             <p>Send inquiries directly to farmers and track all your communications in one place</p>
           </div>
 
           <div className="feature-card">
-            <h3>🗺️ Location-Based Discovery</h3>
+            <h3>Location-Based Discovery</h3>
             <p>Find products based on location and distance from your area</p>
           </div>
 
           <div className="feature-card">
-            <h3>🛡️ Secure Transactions</h3>
+            <h3>Secure Transactions</h3>
             <p>Safe and verified buyer-seller interactions with JWT authentication</p>
           </div>
 
           <div className="feature-card">
-            <h3>🤖 AI Quality Insights</h3>
+            <h3>AI Quality Insights</h3>
             <p>AI-powered crop quality grading and recommended pricing to help you trade at fair market value</p>
           </div>
         </div>

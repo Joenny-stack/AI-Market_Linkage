@@ -28,7 +28,7 @@ export default function ListingFilter({ onFilter }) {
       onFilter(filters);
     }, 350);
     return () => clearTimeout(debounceRef.current);
-  }, [filters]);
+  }, [filters, onFilter]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;

@@ -1,178 +1,61 @@
-# 🚀 Setup Status - March 2, 2026
+# Setup Status
 
-## ✅ Backend - COMPLETE
+## Backend
 
-**Status**: Running successfully on `http://localhost:8000`
+Status: ready for local development and prototype demonstration.
 
-### Completed Steps:
-- ✅ Virtual environment created and activated
-- ✅ All dependencies installed (Django 4.2, DRF, JWT, PostgreSQL driver, etc.)
-- ✅ Database migrations created and applied
-- ✅ Superuser created (admin@example.com)
-- ✅ Development server running
+Verified:
+- Django system check passes.
+- Database migrations are applied in the local environment.
+- Backend tests pass.
+- AI price model loads successfully.
+- Tomato classifier model loads successfully during API checks.
 
-### Backend Access:
-- 🌐 API Base URL: `http://localhost:8000/api/`
-- 📚 API Documentation: `http://localhost:8000/api/docs/`
-- 🔐 Admin Panel: `http://localhost:8000/admin/`
-- Admin Credentials: 
-  - Email: `admin@example.com`
-  - Password: `adminpass123`
+Useful URLs when the backend server is running:
+- API base URL: `http://localhost:8000/api/`
+- API documentation: `http://localhost:8000/api/docs/`
+- Admin panel: `http://localhost:8000/admin/`
 
-### Backend Status Check:
-All available endpoints:
-- POST `/api/auth/register/` - Register new user
-- POST `/api/auth/login/` - Login user
-- GET/PUT `/api/farmers/me/` - Farmer profile
-- GET/POST `/api/listings/` - Listings CRUD
-- GET/POST `/api/inquiries/` - Inquiries CRUD
+Run locally:
 
----
+```powershell
+cd "C:\Users\DELL\Desktop\Deals\Affix\System\AI Market Linkage\backend"
+.\venv\Scripts\python.exe manage.py migrate
+.\venv\Scripts\python.exe manage.py runserver
+```
 
-## ⏳ Frontend - READY FOR SETUP
+## Frontend
 
-**Status**: Waiting for Node.js installation
+Status: ready for local development and prototype demonstration.
 
-### Next Steps:
+Verified:
+- Dependencies are installed.
+- `npm run lint` passes.
+- `npm run build` passes.
+- Production dependency audit passes with `npm audit --omit=dev --audit-level=high`.
 
-#### 1. Install Node.js (Required)
-Download and install from: https://nodejs.org/
+Run locally:
 
-**Recommended**: v18 LTS or v20 LTS (includes npm)
-
-#### 2. Install Frontend Dependencies
 ```powershell
 cd "C:\Users\DELL\Desktop\Deals\Affix\System\AI Market Linkage\frontend"
 npm install
-```
-
-#### 3. Start Frontend Development Server
-```powershell
 npm run dev
 ```
 
-This will start the React frontend on `http://localhost:3000`
+Frontend URL: `http://127.0.0.1:5173`
 
-#### 4. Configure Environment (Optional)
-Create `frontend/.env.local`:
-```
-VITE_API_URL=http://localhost:8000/api
-```
+## Current Feature Coverage
 
----
+- Farmer and buyer registration/login.
+- Farmer product listing with image upload.
+- Tomato image quality classification.
+- AI price recommendation.
+- Buyer listing browsing and inquiries.
+- Farmer inquiry viewing.
+- Map-based listing discovery using Leaflet and OpenStreetMap.
 
-## 📋 Testing Checklist
+## Remaining Before Final Submission
 
-Once both backend and frontend are running:
-
-### 1. Test User Registration
-- Navigate to `http://localhost:3000/register`
-- Register as FARMER:
-  - Email: `farmer1@example.com`
-  - Password: `TestPass123!`
-  - Phone: `+1234567890`
-  - Name: John Farmer
-  
-### 2. Test User Login
-- Navigate to `http://localhost:3000/login`
-- Login with farmer credentials
-- Verify successfully redirected to dashboard
-
-### 3. Test Listing Creation
-- Click "Add New Listing" in Farmer Dashboard
-- Fill in: crop, category, quantity, price, location
-- Upload test image
-- Submit and verify listing appears
-
-### 4. Test Browsing
-- Navigate to Browse Listings page
-- Test filters: crop, price range, location
-- Click on listing to view details
-
-### 5. Test Inquiry System
-- Register as BUYER
-- Search and view listings
-- Send inquiry on a listing
-- Switch to farmer account
-- View and respond to inquiries
-
----
-
-## 🛠️ Backend Configuration
-
-### Environment Variables (.env)
-Location: `backend/.env`
-
-```
-# Database
-DATABASE_URL=postgresql://user:password@localhost:5432/ai_market
-
-# Django Settings
-SECRET_KEY=your-secret-key-here
-DEBUG=True
-ALLOWED_HOSTS=localhost,127.0.0.1
-
-# JWT
-SIMPLE_JWT_SECRET_KEY=your-jwt-secret-key
-
-# Media Files
-MEDIA_URL=/media/
-MEDIA_ROOT=media/
-
-# CORS
-CORS_ALLOWED_ORIGINS=http://localhost:3000
-```
-
----
-
-## 📊 Project Structure
-
-```
-AI Market Linkage/
-├── backend/                    ✅ Running
-│   ├── config/                (Django settings)
-│   ├── users/                 (Authentication)
-│   ├── farmers/               (Farmer profiles)
-│   ├── listings/              (Product listings)
-│   ├── inquiries/             (Buyer inquiries)
-│   ├── core/                  (Utilities)
-│   └── manage.py
-│
-├── frontend/                  ⏳ Ready to start
-│   ├── src/
-│   │   ├── api/              (API client)
-│   │   ├── pages/            (11 page components)
-│   │   ├── components/       (6 reusable components)
-│   │   └── styles/           (15 CSS files)
-│   └── package.json
-│
-├── README.md                  (Main documentation)
-├── QUICK_START.md             (5-minute setup guide)
-└── PROJECT_OVERVIEW.md        (Detailed architecture)
-```
-
----
-
-## 🎯 Next Immediate Actions
-
-1. **Install Node.js** → Restart terminal
-2. **Run `npm install`** in frontend directory
-3. **Run `npm run dev`** to start frontend
-4. **Test user workflows** (register, login, create listing)
-
----
-
-## 📞 Support Resources
-
-- **Django Documentation**: https://docs.djangoproject.com/
-- **React Documentation**: https://react.dev/
-- **DRF Guide**: https://www.django-rest-framework.org/
-- **API Testing**: Use Postman or Insomnia
-
----
-
-**Backend Status**: ✅ RUNNING & READY
-**Frontend Status**: ⏳ AWAITING NODE.JS
-
-**Estimated Time to Full Setup**: 10-15 minutes (after Node.js installation)
-
+- Run a manual browser demonstration and capture screenshots for the report.
+- Configure production secrets and HTTPS settings before any real deployment.
+- Keep the project report clear that image classification is tomato-focused in this prototype.

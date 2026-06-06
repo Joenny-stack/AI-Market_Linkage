@@ -55,7 +55,7 @@ export default function MyInquiriesPage() {
         </div>
       ) : (
         <div className="no-inquiries">
-          <p>You haven't sent any inquiries yet.</p>
+          <p>You have not sent any inquiries yet.</p>
         </div>
       )}
     </div>

@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { aiAPI, classifyTomatoImage, getTomatoClassificationErrorMessage, listingAPI } from '../api/endpoints';
 import AIQualityResult from '../components/AIQualityResult';
@@ -6,6 +6,21 @@ import '../styles/AddListingPage.css';
 import '../styles/EditListingPage.css';
 
 const MAX_IMAGE_SIZE_BYTES = 5 * 1024 * 1024;
+
+const getMediaBaseUrl = () => {
+  const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:8000/api';
+  return apiUrl.replace(/\/api\/?$/, '');
+};
+
+const normalizeImageUrl = (url) => {
+  if (!url) {
+    return '';
+  }
+  if (url.startsWith('http://') || url.startsWith('https://') || url.startsWith('blob:')) {
+    return url;
+  }
+  return `${getMediaBaseUrl()}${url}`;
+};
 
 export default function EditListingPage() {
   const navigate = useNavigate();
@@ -79,26 +94,7 @@ export default function EditListingPage() {
     };
   }, [imagePreview]);
 
-  useEffect(() => {
-    fetchListing();
-  }, [id]);
-
-  const getMediaBaseUrl = () => {
-    const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:8000/api';
-    return apiUrl.replace(/\/api\/?$/, '');
-  };
-
-  const normalizeImageUrl = (url) => {
-    if (!url) {
-      return '';
-    }
-    if (url.startsWith('http://') || url.startsWith('https://') || url.startsWith('blob:')) {
-      return url;
-    }
-    return `${getMediaBaseUrl()}${url}`;
-  };
-
-  const fetchListing = async () => {
+  const fetchListing = useCallback(async () => {
     setPageLoading(true);
     setError('');
 
@@ -138,7 +134,11 @@ export default function EditListingPage() {
     }
 
     setPageLoading(false);
-  };
+  }, [id]);
+
+  useEffect(() => {
+    fetchListing();
+  }, [fetchListing]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;

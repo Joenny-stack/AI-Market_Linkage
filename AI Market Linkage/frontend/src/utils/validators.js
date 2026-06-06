@@ -24,6 +24,6 @@ export const isValidEmail = (email) => {
 };
 
 export const isValidPhoneNumber = (phone) => {
-  const phoneRegex = /^[\d\s\-\+\(\)]+$/;
+  const phoneRegex = /^[\d\s+()-]+$/;
   return phoneRegex.test(phone) && phone.length >= 10;
 };

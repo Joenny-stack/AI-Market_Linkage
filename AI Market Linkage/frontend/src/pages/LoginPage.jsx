@@ -70,7 +70,7 @@ export default function LoginPage() {
         </form>
 
         <div className="form-footer">
-          <p>Don't have an account? <Link to="/register">Register here</Link></p>
+          <p>Do not have an account? <Link to="/register">Register here</Link></p>
         </div>
       </div>
     </div>

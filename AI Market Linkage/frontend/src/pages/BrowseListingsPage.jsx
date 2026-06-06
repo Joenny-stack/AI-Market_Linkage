@@ -1,4 +1,4 @@
-import { useMemo, useState, useEffect } from 'react';
+import { useCallback, useMemo, useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { listingAPI } from '../api/endpoints';
 import ListingCard from '../components/ListingCard';
@@ -11,11 +11,7 @@ export default function BrowseListingsPage() {
   const [fetchError, setFetchError] = useState('');
   const [filters, setFilters] = useState({});
 
-  useEffect(() => {
-    fetchListings();
-  }, [filters]);
-
-  const fetchListings = async () => {
+  const fetchListings = useCallback(async () => {
     setLoading(true);
     setFetchError('');
     try {
@@ -25,7 +21,11 @@ export default function BrowseListingsPage() {
       setFetchError('Failed to load listings. Please check your connection and try again.');
     }
     setLoading(false);
-  };
+  }, [filters]);
+
+  useEffect(() => {
+    fetchListings();
+  }, [fetchListings]);
 
   const mappedCount = useMemo(
     () => listings.filter((l) => Number.isFinite(Number(l.latitude ?? l.gps_latitude))

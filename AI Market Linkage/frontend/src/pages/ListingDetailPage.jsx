@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useCallback, useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { listingAPI, inquiryAPI } from '../api/endpoints';
 import useAuthStore from '../context/authStore';
@@ -19,11 +19,7 @@ export default function ListingDetailPage() {
   const [inquirySuccess, setInquirySuccess] = useState('');
   const [inquiryError, setInquiryError] = useState('');
 
-  useEffect(() => {
-    fetchListing();
-  }, [id]);
-
-  const fetchListing = async () => {
+  const fetchListing = useCallback(async () => {
     setLoading(true);
     setFetchError('');
     try {
@@ -33,7 +29,11 @@ export default function ListingDetailPage() {
       setFetchError('Unable to load this listing. It may have been removed or there was a connection problem.');
     }
     setLoading(false);
-  };
+  }, [id]);
+
+  useEffect(() => {
+    fetchListing();
+  }, [fetchListing]);
 
   const handleInquirySubmit = async (e) => {
     e.preventDefault();

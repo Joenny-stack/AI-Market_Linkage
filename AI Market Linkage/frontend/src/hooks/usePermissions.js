@@ -6,7 +6,7 @@ import { useAuthStore } from '../context/authStore';
 export const usePermissions = () => {
   const { user } = useAuthStore();
 
-  const can = (action, resource = null) => {
+  const can = (action) => {
     if (!user) return false;
 
     // Farmer permissions

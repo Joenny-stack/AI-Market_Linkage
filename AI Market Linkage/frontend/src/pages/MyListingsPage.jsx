@@ -99,7 +99,7 @@ export default function MyListingsPage() {
         </div>
       ) : (
         <div className="no-listings">
-          <p>You haven't created any listings yet.</p>
+          <p>You have not created any listings yet.</p>
           <Link to="/farmer/listings/add" className="btn btn-primary">
             Create Your First Listing
           </Link>
