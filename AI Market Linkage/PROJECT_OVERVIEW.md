@@ -1,475 +1,119 @@
-# AI Market Linkage Platform - Project Skeleton Complete
+# Project Overview
 
-## 📋 Overview
+## Purpose
 
-A functional prototype for an **AI-powered agricultural marketplace** connecting smallholder farmers with buyers. The current implementation includes marketplace workflows, tomato image quality classification, price recommendation, and map-based listing discovery.
+The AI Powered Market Linkage Platform is a prototype system for improving agricultural market access. It connects farmers and buyers, supports produce listings and inquiries, and adds AI-based decision support for quality assessment and price recommendation.
 
----
+## Users
 
-## 🏗️ Project Structure
+- Farmers create listings, upload images, manage their produce, and view buyer inquiries.
+- Buyers browse listings, filter products, view details, and send inquiries.
+- Admin users can manage platform data through Django admin.
 
-```
-AI Market Linkage/
-│
-├── backend/                          # Django REST API
-│   ├── config/
-│   │   ├── __init__.py
-│   │   ├── settings.py              # Django configurations
-│   │   ├── urls.py                  # URL routing
-│   │   └── wsgi.py                  # WSGI application
-│   │
-│   ├── users/                       # Authentication & Custom User Model
-│   │   ├── models.py                # CustomUser with UUID & roles
-│   │   ├── serializers.py           # User serializers
-│   │   ├── views.py                 # Auth endpoints
-│   │   ├── urls.py                  # Auth routes
-│   │   ├── admin.py                 # Django admin
-│   │   └── apps.py
-│   │
-│   ├── farmers/                     # Farmer Profiles
-│   │   ├── models.py                # FarmerProfile model
-│   │   ├── serializers.py           # Profile serializers
-│   │   ├── views.py                 # Profile endpoints
-│   │   ├── urls.py                  # Profile routes
-│   │   ├── admin.py
-│   │   └── apps.py
-│   │
-│   ├── listings/                    # Product Listings
-│   │   ├── models.py                # Listing & ListingImage
-│   │   ├── serializers.py           # Listing serializers
-│   │   ├── views.py                 # Listing viewsets
-│   │   ├── permissions.py           # Custom permissions
-│   │   ├── filters.py               # Listing filters
-│   │   ├── urls.py                  # Listing routes
-│   │   ├── admin.py
-│   │   └── apps.py
-│   │
-│   ├── inquiries/                   # Buyer Inquiries
-│   │   ├── models.py                # Inquiry model
-│   │   ├── serializers.py           # Inquiry serializers
-│   │   ├── views.py                 # Inquiry endpoints
-│   │   ├── permissions.py           # Inquiry permissions
-│   │   ├── urls.py                  # Inquiry routes
-│   │   ├── admin.py
-│   │   └── apps.py
-│   │
-│   ├── core/                        # Utilities & Common Code
-│   │   ├── models.py                # Base models
-│   │   ├── utils.py                 # Utility functions
-│   │   ├── apps.py
-│   │   └── __init__.py
-│   │
-│   ├── manage.py
-│   ├── requirements.txt
-│   ├── gunicorn_config.py
-│   ├── .env.example
-│   ├── .gitignore
-│   ├── README.md
-│   └── tests.py
-│
-├── frontend/                        # React SPA
-│   ├── src/
-│   │   ├── api/
-│   │   │   ├── client.js            # Axios instance with interceptors
-│   │   │   └── endpoints.js         # API endpoints
-│   │   │
-│   │   ├── components/
-│   │   │   ├── Navbar.jsx           # Navigation bar
-│   │   │   ├── Footer.jsx           # Footer
-│   │   │   ├── ProtectedRoute.jsx   # Route guard
-│   │   │   ├── ListingCard.jsx      # Listing card component
-│   │   │   └── ListingFilter.jsx    # Filter component
-│   │   │
-│   │   ├── pages/
-│   │   │   ├── HomePage.jsx         # Home/landing
-│   │   │   ├── LoginPage.jsx        # Login
-│   │   │   ├── RegisterPage.jsx     # Registration
-│   │   │   ├── BrowseListingsPage.jsx
-│   │   │   ├── ListingDetailPage.jsx
-│   │   │   ├── FarmerDashboardPage.jsx
-│   │   │   ├── BuyerDashboardPage.jsx
-│   │   │   ├── MyListingsPage.jsx
-│   │   │   ├── AddListingPage.jsx
-│   │   │   ├── EditListingPage.jsx
-│   │   │   ├── MyInquiriesPage.jsx
-│   │   │   ├── ViewInquiriesPage.jsx
-│   │   │   └── ProfileSettingsPage.jsx
-│   │   │
-│   │   ├── context/
-│   │   │   └── authStore.js         # Zustand auth store
-│   │   │
-│   │   ├── hooks/
-│   │   │   ├── useAuth.js           # Auth hook
-│   │   │   └── usePermissions.js    # Permissions hook
-│   │   │
-│   │   ├── utils/
-│   │   │   ├── validators.js        # Form validators
-│   │   │   └── constants.js         # App constants
-│   │   │
-│   │   ├── styles/
-│   │   │   ├── index.css            # Global styles
-│   │   │   ├── Navbar.css
-│   │   │   ├── Footer.css
-│   │   │   ├── HomePage.css
-│   │   │   ├── LoginPage.css
-│   │   │   ├── RegisterPage.css
-│   │   │   ├── BrowseListingsPage.css
-│   │   │   ├── ListingFilter.css
-│   │   │   ├── ListingCard.css
-│   │   │   ├── ListingDetailPage.css
-│   │   │   ├── DashboardPage.css
-│   │   │   ├── MyListingsPage.css
-│   │   │   ├── AddListingPage.css
-│   │   │   ├── EditListingPage.css
-│   │   │   ├── InquiriesPage.css
-│   │   │   └── ProfileSettingsPage.css
-│   │   │
-│   │   ├── App.jsx
-│   │   └── main.jsx
-│   │
-│   ├── public/
-│   ├── index.html
-│   ├── vite.config.js
-│   ├── tsconfig.json
-│   ├── .eslintrc.json
-│   ├── package.json
-│   ├── .gitignore
-│   ├── .env.local.example
-│   └── README.md
-│
-├── README.md                        # Main project README
-└── DEPLOYMENT.md                    # Deployment guide
-```
+## Main Modules
 
----
+Backend:
 
-## 🚀 Features
+- `users`: custom email-based user model, roles, registration, login, and profile endpoints.
+- `farmers`: farmer profile data.
+- `listings`: product listing, image upload, filters, coordinate handling, and owner permissions.
+- `inquiries`: buyer-to-farmer inquiry workflow.
+- `ai_service`: tomato image classification and price recommendation APIs.
 
-### ✅ Implemented (Phase 1 MVP)
+Frontend:
 
-**Authentication & Users**
-- User registration (Farmer/Buyer/Admin roles)
-- JWT-based authentication
-- Token refresh mechanism
-- Email-based login
+- `api`: Axios client and endpoint wrappers.
+- `context`: Zustand authentication store.
+- `components`: navigation, route protection, filters, listing cards, and AI result display.
+- `pages`: dashboards, listing forms, detail pages, inquiries, map, login, and registration.
+- `styles`: page and component CSS.
 
-**Farmer Features**
-- Create and manage farmer profiles
-- Create product listings with:
-  - Multiple images
-  - Detailed product information
-  - GPS coordinates
-  - Harvest dates
-- View buyer inquiries
-- Mark inquiries as responded
-- Edit/delete own listings
+AI assets:
 
-**Buyer Features**
-- Browse all listings
-- Advanced search & filtering:
-  - By crop name
-  - By price range
-  - By location (province/district)
-  - By status
-- View listing details with images
-- Send inquiries to farmers
-- Track inquiry status
-- Save favorite searches (optional)
+- `ai_model/train_model.py`: trains the tomato quality image classifier.
+- `ai_model/model/tomato_classifier.h5`: trained tomato classifier.
+- `ai_model/model/evaluation_metrics.json`: classifier evaluation results.
+- `ai_model/price_model/train_price_model.py`: trains the price recommender.
+- `ai_model/price_model/price_model.pkl`: trained Random Forest price model.
+- `ai_model/price_model/encoders.pkl`: categorical encoders for crop, location, and grade.
 
-**Admin Features**
-- Moderate all listings
-- Delete inappropriate content
-- Manage user accounts
-- View all inquiries
-- Generate reports
+## Model Choices
 
-**Technical**
-- Role-based access control (RBAC)
-- Image upload & storage
-- Pagination (20 items per page)
-- Error handling & validation
-- CORS configured
-- Responsive UI
-- API documentation with Swagger
+### Tomato Image Classifier
 
-### Implemented AI and Discovery Features
+The image model uses a MobileNetV2-based convolutional neural network with transfer learning. This is suitable because produce-quality assessment is an image-classification task. MobileNetV2 is lightweight compared with larger CNNs, which makes it practical for a prototype that may later target web or mobile use. Transfer learning reduces the amount of training data required, and fine-tuning the later layers adapts the model to tomato quality classes.
 
-- AI-powered price recommendations
-- Tomato image quality grade prediction
-- Confidence scoring
-- Map-based visualization
+The classifier predicts:
 
-### Future Enhancements
+- `Damaged`
+- `Old`
+- `Ripe`
+- `Unripe`
 
-- Real-time chat messaging
-- Payment integration
-- Ratings & reviews system
-- Supply chain tracking
+These are mapped to market grades:
 
----
+- `Ripe` -> `Grade A`
+- `Unripe` -> `Grade B`
+- `Old` -> `Grade C`
+- `Damaged` -> `Reject`
 
-## 📊 Data Models
+The saved evaluation metrics show approximately 93 percent accuracy for the current classifier, which is strong enough for a prototype demonstration.
 
-### CustomUser
-```python
-id: UUID
-email: String (unique)
-full_name: String
-phone_number: String
-role: FARMER | BUYER | ADMIN
-is_active: Boolean
-created_at: DateTime
-```
+### Price Recommendation Model
 
-### FarmerProfile
-```python
-user: OneToOne(CustomUser)
-farm_name: String
-description: Text
-primary_crop_types: Text
-province: String
-district: String
-gps_latitude: Float
-gps_longitude: Float
-profile_image: Image
-```
+The price model uses `RandomForestRegressor`. This is suitable because the inputs are structured/tabular fields:
 
-### Listing
-```python
-id: UUID
-farmer: ForeignKey(User)
-crop_name: String
-category: String
-description: Text
-quantity_available: Decimal
-unit: String
-price_per_unit: Decimal
-currency: String
-harvest_date: Date
-province: String
-district: String
-gps_latitude: Float
-gps_longitude: Float
-status: AVAILABLE | SOLD | PENDING
-created_at: DateTime
-quality_grade: String
-ai_price_recommendation: Decimal
-confidence_score: Float
-```
+- crop
+- location
+- quality grade
+- quantity
 
-### ListingImage
-```python
-listing: ForeignKey(Listing)
-image: Image
-uploaded_at: DateTime
-```
+Random Forest handles non-linear relationships better than a single linear model, is robust for small-to-medium tabular datasets, and is easier to explain during defense than a neural network for pricing. The system maps untrained towns to the nearest trained market city where possible, and falls back to a general market price when the location is completely unknown.
 
-### Inquiry
-```python
-listing: ForeignKey(Listing)
-buyer: ForeignKey(User)
-message: Text
-contact_phone: String
-status: NEW | RESPONDED
-created_at: DateTime
-```
+## Current Feature Coverage
 
----
+- Secure user registration and login.
+- Farmer and buyer roles.
+- Listing creation with required image upload.
+- Tomato AI quality classification.
+- AI price recommendation.
+- Price fallback for untrained or unknown towns.
+- Manual and GPS-assisted location entry.
+- Map-based listing discovery.
+- Buyer inquiries and farmer inquiry management.
+- API documentation.
 
-## 🔌 API Endpoints
+## Known Prototype Boundaries
 
-### Authentication
-- `POST /api/auth/register/` - Register new user
-- `POST /api/auth/login/` - Login (returns JWT tokens)
-- `POST /api/auth/refresh/` - Refresh access token
+- Image recognition is limited to tomato quality classification.
+- Price recommendations are based on the available training data and fallback logic, not live market feeds.
+- The platform does not include payments, logistics, delivery tracking, or real-time chat.
+- Browser GPS can be approximate, so manual coordinates are supported.
+- Production deployment requires security hardening.
 
-### Farmer Profile
-- `GET /api/farmers/me/` - Get farmer profile
-- `PUT /api/farmers/me/` - Update farmer profile
+## System Flow
 
-### Listings
-- `GET /api/listings/` - List all listings (with filtering)
-- `POST /api/listings/` - Create new listing
-- `GET /api/listings/{id}/` - Get listing details
-- `PUT /api/listings/{id}/` - Update listing
-- `DELETE /api/listings/{id}/` - Delete listing
-- `GET /api/listings/my_listings/` - Get farmer's listings
-- `POST /api/listings/{id}/add_images/` - Add images
+1. A user registers as a farmer or buyer.
+2. A farmer creates a listing and uploads a produce image.
+3. If the listing is tomato-related, the image classifier predicts quality.
+4. The quality grade, crop, location, and quantity are used for price recommendation.
+5. Buyers browse listings, use filters or the map, and send inquiries.
+6. Farmers view and respond to inquiries outside the platform or mark them as responded.
 
-### Inquiries
-- `GET /api/inquiries/` - List inquiries
-- `POST /api/inquiries/` - Create inquiry
-- `GET /api/inquiries/buyer/` - Get buyer's inquiries
-- `GET /api/inquiries/farmer/` - Get farmer's inquiries
-- `PATCH /api/inquiries/{id}/mark_responded/` - Mark as responded
+## Validation
 
----
-
-## 🛠️ Tech Stack
-
-### Backend
-- **Framework**: Django 4.2
-- **API**: Django REST Framework 3.14
-- **Authentication**: djangorestframework-simplejwt 5.3
-- **Database**: PostgreSQL (configured)
-- **Image Processing**: Pillow 10.1
-- **CORS**: django-cors-headers 4.3
-- **Filtering**: django-filter 23.5
-- **Server**: Gunicorn 21.2
-- **API Docs**: drf-spectacular 0.27
-
-### Frontend
-- **Library**: React 18.2
-- **Routing**: React Router 6.20
-- **HTTP**: Axios 1.6
-- **State**: Zustand 4.4
-- **Build**: Vite 5.0
-- **Maps**: Leaflet 1.9 with OpenStreetMap listing discovery
-- **Styling**: CSS3
-
----
-
-## 🔐 Security Features
-
-- UUID primary keys instead of sequential IDs
-- JWT authentication with token refresh
-- CSRF protection enabled
-- CORS configured for frontend
-- Password validation
-- Role-based access control
-- Secure password hashing
-- SQL injection prevention (ORM usage)
-- Rate limiting ready (can add)
-- SSL/HTTPS ready for production
-
----
-
-## 📱 Responsive Design
-
-- Mobile-first approach
-- Breakpoints at 768px (tablet/mobile)
-- Touch-friendly buttons and forms
-- Flexible grid layouts
-- Optimized images
-- Fast page loads
-
----
-
-## ⚙️ Setup Instructions
-
-### Backend Setup
+Backend validation:
 
 ```bash
-cd backend
-
-# Create virtual environment
-python -m venv venv
-source venv/bin/activate  # Windows: venv\Scripts\activate
-
-# Install dependencies
-pip install -r requirements.txt
-
-# Configure environment
-cp .env.example .env
-# Edit .env with your database credentials
-
-# Run migrations
-python manage.py migrate
-
-# Create superuser
-python manage.py createsuperuser
-
-# Start development server
-python manage.py runserver
-```
-
-**Backend**: http://localhost:8000
-
-### Frontend Setup
-
-```bash
-cd frontend
-
-# Install dependencies
-npm install
-
-# Start development server
-npm run dev
-```
-
-**Frontend**: http://localhost:3000
-
----
-
-## 📚 Documentation
-
-- **Main README**: [README.md](./README.md)
-- **Backend README**: [backend/README.md](./backend/README.md)
-- **Frontend README**: [frontend/README.md](./frontend/README.md)
-- **Deployment Guide**: [DEPLOYMENT.md](./DEPLOYMENT.md)
-- **API Docs**: http://localhost:8000/api/docs/ (when running)
-
----
-
-## 🧪 Testing
-
-Backend tests included in `tests.py`:
-```bash
+cd "AI Market Linkage/backend"
+python manage.py check
 python manage.py test
 ```
 
----
+Frontend validation:
 
-## 📝 Next Steps
-
-1. **Complete Setup**
-   - [ ] Install all dependencies
-   - [ ] Configure PostgreSQL database
-   - [ ] Set up environment variables
-   - [ ] Run migrations
-
-2. **Testing**
-   - [ ] Test user registration
-   - [ ] Test listing creation
-   - [ ] Test filtering
-   - [ ] Test inquiries
-
-3. **Customization**
-   - [ ] Add your branding
-   - [ ] Configure email notifications
-   - [ ] Add additional fields as needed
-   - [ ] Customize styling
-
-4. **Deployment**
-   - [ ] Choose hosting provider
-   - [ ] Configure production settings
-   - [ ] Set up database backups
-   - [ ] Enable monitoring
-
-5. **Phase 2**
-   - [ ] Implement AI features
-   - [ ] Add map visualization
-   - [ ] Payment integration
-   - [ ] Rating system
-
----
-
-## 📞 Support & Resources
-
-- Django: https://docs.djangoproject.com/
-- DRF: https://www.django-rest-framework.org/
-- React: https://react.dev/
-- Zustand: https://github.com/pmndrs/zustand
-- Vite: https://vitejs.dev/
-
----
-
-## 📄 License
-
-MIT License - Feel free to use for your project
-
----
-
-**Created**: March 2, 2026
-**Version**: 0.1.0 (Phase 1 Skeleton)
-**Status**: ✅ Complete and Ready for Development
+```bash
+cd "AI Market Linkage/frontend"
+npm run lint
+npm run build
+```

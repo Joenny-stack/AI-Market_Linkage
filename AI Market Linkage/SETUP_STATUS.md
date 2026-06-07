@@ -1,61 +1,72 @@
 # Setup Status
 
-## Backend
+## Current State
 
-Status: ready for local development and prototype demonstration.
+The project is ready for local prototype demonstration and defense preparation.
 
-Verified:
+## Verified Backend Checks
+
 - Django system check passes.
-- Database migrations are applied in the local environment.
 - Backend tests pass.
 - AI price model loads successfully.
-- Tomato classifier model loads successfully during API checks.
+- Tomato classifier model loads successfully.
+- Price recommendation supports nearest-market and general-market fallback for unknown towns.
 
-Useful URLs when the backend server is running:
-- API base URL: `http://localhost:8000/api/`
-- API documentation: `http://localhost:8000/api/docs/`
-- Admin panel: `http://localhost:8000/admin/`
+Run:
 
-Run locally:
-
-```powershell
-
-.\venv\Scripts\python.exe manage.py migrate
-.\venv\Scripts\python.exe manage.py runserver
+```bash
+cd "AI Market Linkage/backend"
+python manage.py check
+python manage.py test
 ```
 
-## Frontend
+## Verified Frontend Checks
 
-Status: ready for local development and prototype demonstration.
+- Frontend dependencies install through `npm install`.
+- Lint passes.
+- Production build passes.
+- Production dependency audit has no high vulnerabilities when checked with `npm audit --omit=dev --audit-level=high`.
 
-Verified:
-- Dependencies are installed.
-- `npm run lint` passes.
-- `npm run build` passes.
-- Production dependency audit passes with `npm audit --omit=dev --audit-level=high`.
+Run:
 
-Run locally:
-
-```powershell
-
-npm install
-npm run dev
+```bash
+cd "AI Market Linkage/frontend"
+npm run lint
+npm run build
+npm audit --omit=dev --audit-level=high
 ```
 
-Frontend URL: `http://127.0.0.1:5173`
+## Local URLs
+
+- Frontend: `http://127.0.0.1:5173`
+- Backend API: `http://127.0.0.1:8000/api/`
+- API documentation: `http://127.0.0.1:8000/api/docs/`
+- Django admin: `http://127.0.0.1:8000/admin/`
 
 ## Current Feature Coverage
 
 - Farmer and buyer registration/login.
 - Farmer product listing with image upload.
 - Tomato image quality classification.
-- AI price recommendation.
+- AI price recommendation with fallback for unknown locations.
 - Buyer listing browsing and inquiries.
 - Farmer inquiry viewing.
+- Explicit GPS capture with accuracy warning and manual coordinate override.
 - Map-based listing discovery using Leaflet and OpenStreetMap.
 
-## Remaining Before Final Submission
+## Remaining Before Production
 
-- Run a manual browser demonstration and capture screenshots for the report.
-- Configure production secrets and HTTPS settings before any real deployment.
-- Keep the project report clear that image classification is tomato-focused in this prototype.
+- Set `DEBUG=False`.
+- Use a strong production `SECRET_KEY`.
+- Configure production `ALLOWED_HOSTS`.
+- Configure production `CORS_ALLOWED_ORIGINS`.
+- Enable HTTPS and secure cookie settings.
+- Configure production static/media storage.
+- Use a managed database or backed-up PostgreSQL instance.
+
+## Remaining Before Final Defense
+
+- Capture screenshots of the main workflows.
+- Prepare a short model-choice explanation for MobileNetV2 and Random Forest.
+- State clearly that image classification is tomato-focused in this prototype.
+- State clearly that price prediction uses trained market data plus fallback mapping.

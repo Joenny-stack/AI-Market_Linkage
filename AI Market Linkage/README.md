@@ -1,216 +1,163 @@
-# AI Powered Market Linkage Platform - Phase 1
+# AI Powered Market Linkage Platform
 
-Complete skeleton for an agricultural marketplace connecting farmers and buyers.
+AI Powered Market Linkage is a prototype web platform that connects smallholder farmers with buyers. Farmers can publish produce listings with images, buyers can browse and send inquiries, and the system adds AI support for tomato quality assessment and crop price recommendation.
 
-## Project Directory Structure
+The current implementation is a functional prototype for submission and defense. It is not a logistics, payment, or delivery system.
 
-```
+## Current Features
+
+- Farmer and buyer registration/login with JWT authentication.
+- Role-based dashboards for farmers and buyers.
+- Farmer listing creation, editing, deletion, and image upload.
+- Buyer listing browsing, filtering, detail view, and inquiries.
+- Farmer inquiry viewing and response-status tracking.
+- Tomato image classification into `Damaged`, `Old`, `Ripe`, and `Unripe`.
+- Quality-grade mapping: `Grade A`, `Grade B`, `Grade C`, and `Reject`.
+- AI price recommendation using crop, location, grade, and quantity.
+- Fallback pricing for untrained towns using the nearest trained market city or a general market fallback.
+- Location capture with explicit GPS button, visible accuracy estimate, and manual latitude/longitude override.
+- Map-based listing discovery using Leaflet and OpenStreetMap.
+- API documentation through Swagger/OpenAPI.
+
+## AI Scope
+
+The platform uses two trained models:
+
+- Image model: a MobileNetV2-based CNN trained for tomato quality classification.
+- Price model: a scikit-learn `RandomForestRegressor` trained on structured produce-pricing data.
+
+Image recognition is tomato-focused in this prototype. Price recommendation supports the crops and locations represented in the training artifacts, with fallback behavior for unknown towns.
+
+## Project Structure
+
+```text
 AI Market Linkage/
-├── backend/              # Django REST API
-│   ├── config/          # Project settings
-│   ├── users/           # Custom user model & auth
-│   ├── farmers/         # Farmer profiles
-│   ├── listings/        # Product listings
-│   ├── inquiries/       # Buyer inquiries
-│   ├── core/            # Utilities
-│   ├── manage.py
-│   └── requirements.txt
-├── frontend/            # React SPA
-│   ├── src/
-│   │   ├── api/         # API client & endpoints
-│   │   ├── components/  # Reusable components
-│   │   ├── pages/       # Page components
-│   │   ├── context/     # State management
-│   │   ├── styles/      # CSS files
-│   │   └── main.jsx
-│   ├── index.html
-│   ├── package.json
-│   └── vite.config.js
-└── README.md
+  ai_model/
+    train_model.py
+    model/
+      tomato_classifier.h5
+      evaluation_metrics.json
+    price_model/
+      train_price_model.py
+      price_model.pkl
+      encoders.pkl
+      data/prices.csv
+  backend/
+    manage.py
+    requirements.txt
+    config/
+    users/
+    farmers/
+    listings/
+    inquiries/
+    ai_service/
+  frontend/
+    package.json
+    src/
 ```
 
 ## Quick Start
 
-### Backend Setup
+Run the backend:
 
-1. Navigate to backend directory:
 ```bash
-cd backend
-```
-
-2. Create virtual environment and install dependencies:
-```bash
+cd "AI Market Linkage/backend"
 python -m venv venv
-# Windows: venv\Scripts\activate
-# Linux/Mac: source venv/bin/activate
+# Windows:
+venv\Scripts\activate
+# macOS/Linux:
+# source venv/bin/activate
 pip install -r requirements.txt
-```
-
-3. Configure environment variables:
-```bash
-cp .env.example .env
-# Edit .env with your database credentials
-```
-
-4. Run migrations and start server:
-```bash
 python manage.py migrate
-python manage.py createsuperuser
 python manage.py runserver
 ```
 
-Backend running at: `http://localhost:8000`
-Admin at: `http://localhost:8000/admin/`
+Run the frontend in a second terminal:
 
-### Frontend Setup
-
-1. Navigate to frontend directory:
 ```bash
-cd frontend
-```
-
-2. Install dependencies:
-```bash
+cd "AI Market Linkage/frontend"
 npm install
-```
-
-3. Start development server:
-```bash
 npm run dev
 ```
 
-Frontend running at: `http://localhost:3000`
+Default local URLs:
 
-## Key Features
+- Frontend: `http://127.0.0.1:5173`
+- Backend API: `http://127.0.0.1:8000/api/`
+- API docs: `http://127.0.0.1:8000/api/docs/`
+- Django admin: `http://127.0.0.1:8000/admin/`
 
-### ✅ Phase 1 MVP
+If the frontend needs a custom API URL, create `frontend/.env.local`:
 
-- [x] User authentication (Farmer/Buyer/Admin roles)
-- [x] Farmer registration and profiles
-- [x] Buyer registration
-- [x] Product listing creation by farmers
-- [x] Multi-image upload support
-- [x] Advanced listing search and filtering
-- [x] Location-based discovery
-- [x] Buyer inquiry system
-- [x] Role-based access control
-- [x] Admin moderation capability
-- [x] JWT authentication
-- [x] Responsive UI
-
-### 🚀 Phase 2 (Reserved)
-
-- [ ] AI-powered price recommendations
-- [ ] Quality grade predictions
-- [ ] Confidence scoring
-- [ ] Map-based visualization
-- [ ] Chat/messaging system
-- [ ] Payment integration
-- [ ] Ratings and reviews
-
-## Technology Stack
-
-### Backend
-- **Framework**: Django 4.2
-- **API**: Django REST Framework
-- **Authentication**: SimpleJWT
-- **Database**: PostgreSQL
-- **Storage**: Local/Cloud media storage
-
-### Frontend
-- **Framework**: React 18
-- **Routing**: React Router v6
-- **State Management**: Zustand
-- **Styling**: CSS3
-- **HTTP Client**: Axios
-- **Build Tool**: Vite
-
-## API Examples
-
-### Register User
-```bash
-POST /api/auth/register/
-{
-  "email": "farmer@example.com",
-  "full_name": "John Farmer",
-  "phone_number": "+1234567890",
-  "role": "FARMER",
-  "password": "securepass123",
-  "password2": "securepass123"
-}
+```env
+VITE_API_URL=http://127.0.0.1:8000/api
 ```
 
-### Login
+## Core API Endpoints
+
+Authentication:
+
+- `POST /api/auth/register/`
+- `POST /api/auth/login/`
+- `POST /api/auth/refresh/`
+- `GET /api/auth/profile/me/`
+
+Listings:
+
+- `GET /api/listings/`
+- `POST /api/listings/`
+- `GET /api/listings/{id}/`
+- `PUT /api/listings/{id}/`
+- `DELETE /api/listings/{id}/`
+- `GET /api/listings/my_listings/`
+
+Inquiries:
+
+- `POST /api/inquiries/`
+- `GET /api/inquiries/buyer/`
+- `GET /api/inquiries/farmer/`
+- `PATCH /api/inquiries/{id}/mark_responded/`
+
+AI:
+
+- `POST /api/ai/classify-tomato/`
+- `POST /api/ai/recommend-price/`
+
+## Validation
+
+Backend:
+
 ```bash
-POST /api/auth/login/
-{
-  "email": "farmer@example.com",
-  "password": "securepass123"
-}
+cd "AI Market Linkage/backend"
+python manage.py check
+python manage.py test
 ```
 
-### Create Listing
+Frontend:
+
 ```bash
-POST /api/listings/
-{
-  "crop_name": "Tomatoes",
-  "category": "Vegetables",
-  "description": "Fresh ripe tomatoes...",
-  "quantity_available": 100,
-  "unit": "kg",
-  "price_per_unit": 5.50,
-  "currency": "USD",
-  "harvest_date": "2026-03-15",
-  "province": "Mashonaland",
-  "district": "Harare",
-  "gps_latitude": -17.8252,
-  "gps_longitude": 31.0335,
-  "status": "AVAILABLE"
-}
+cd "AI Market Linkage/frontend"
+npm run lint
+npm run build
+npm audit --omit=dev --audit-level=high
 ```
 
-## Authentication Flow
+## Notes for Deployment
 
-1. User registers via `/api/auth/register/`
-2. User logs in via `/api/auth/login/` - receives `access_token` and `refresh_token`
-3. Access token stored in localStorage
-4. All API requests include: `Authorization: Bearer {access_token}`
-5. Token refreshed via `/api/auth/refresh/` when expired
+Before deploying publicly:
 
-## Permissions
-
-- **FARMER**: Can create/edit/delete own listings, view inquiries, update profile
-- **BUYER**: Can view all listings, send inquiries, view own inquiries
-- **ADMIN**: Can moderate all content, delete any listing, manage users
-
-## Environment Variables
-
-See `.env.example` in backend directory for required variables.
+- Set `DEBUG=False`.
+- Generate a strong `SECRET_KEY`.
+- Configure production database credentials.
+- Set production `ALLOWED_HOSTS` and `CORS_ALLOWED_ORIGINS`.
+- Serve media and static files using production storage.
+- Enable HTTPS and secure cookie settings.
 
 ## Documentation
 
-- Backend API docs: http://localhost:8000/api/docs/
-- Backend README: `backend/README.md`
-- Frontend README: `frontend/README.md`
-
-## Next Steps
-
-1. Complete the skeleton setup
-2. Configure database and environment variables
-3. Run backend migrations
-4. Test API endpoints with Postman/curl
-5. Test frontend with sample data
-6. Implement additional features from Phase 2
-
-## Support
-
-For issues or questions, refer to:
-- Django Documentation: https://docs.djangoproject.com/
-- React Documentation: https://react.dev/
-- DRF Documentation: https://www.django-rest-framework.org/
-- Zustand Documentation: https://github.com/pmndrs/zustand
-
----
-
-**Project Version**: 0.1.0 (Phase 1 Skeleton)
-**Last Updated**: March 2, 2026
+- [Quick Start](./QUICK_START.md)
+- [Project Overview](./PROJECT_OVERVIEW.md)
+- [Manual Test Cases](./MANUAL_TEST_CASES.md)
+- [Setup Status](./SETUP_STATUS.md)
+- [Backend README](./backend/README.md)
+- [Frontend README](./frontend/README.md)

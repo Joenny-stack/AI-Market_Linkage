@@ -1,125 +1,145 @@
-# AI Market Linkage Backend
+# Backend README
 
-Django REST API for the AI-powered agricultural marketplace.
+The backend is a Django REST Framework API for the AI Powered Market Linkage Platform.
+
+## Main Responsibilities
+
+- User registration and JWT authentication.
+- Farmer and buyer role management.
+- Farmer profile management.
+- Product listing CRUD with image upload.
+- Buyer inquiry workflow.
+- Tomato quality classification API.
+- Price recommendation API.
+- Coordinate handling and fallback location mapping.
+- Swagger/OpenAPI documentation.
 
 ## Setup
 
-### Prerequisites
-- Python 3.10+
-- PostgreSQL
-- pip/venv
-
-### Installation
-
-1. Create virtual environment:
 ```bash
+cd "AI Market Linkage/backend"
 python -m venv venv
-source venv/bin/activate  # Windows: venv\Scripts\activate
 ```
 
-2. Install dependencies:
+Activate the virtual environment:
+
+```bash
+# Windows
+venv\Scripts\activate
+
+# macOS/Linux
+# source venv/bin/activate
+```
+
+Install dependencies:
+
 ```bash
 pip install -r requirements.txt
 ```
 
-3. Configure environment:
+Create environment file:
+
 ```bash
 cp .env.example .env
-# Edit .env with your database and settings
 ```
 
-4. Run migrations:
+Update `.env` for your local database and Django settings.
+
+Run migrations and server:
+
 ```bash
 python manage.py migrate
-```
-
-5. Create superuser:
-```bash
-python manage.py createsuperuser
-```
-
-6. Run development server:
-```bash
 python manage.py runserver
 ```
 
-The API will be available at `http://localhost:8000`
+## Environment Variables
 
-## API Documentation
+Typical variables:
 
-- **Swagger UI**: http://localhost:8000/api/docs/
-- **Schema**: http://localhost:8000/api/schema/
+```env
+SECRET_KEY=replace-with-a-secure-key
+DEBUG=True
+ALLOWED_HOSTS=localhost,127.0.0.1
 
-## Project Structure
+DB_NAME=ai_market_linkage
+DB_USER=postgres
+DB_PASSWORD=your_password
+DB_HOST=localhost
+DB_PORT=5432
 
-```
-backend/
-├── config/           # Django settings & URLs
-├── users/            # Custom user model
-├── farmers/          # Farmer profiles
-├── listings/         # Product listings
-├── inquiries/        # Buyer inquiries
-├── core/             # Common utilities
-└── manage.py         # Django management script
+CORS_ALLOWED_ORIGINS=http://127.0.0.1:5173,http://localhost:5173
 ```
 
-## Key Features
+Do not commit real production secrets.
 
-- **Authentication**: JWT with SimpleJWT
-- **Custom User Model**: UUID primary key, role-based access
-- **Farmer Profiles**: Location and crop information
-- **Listings**: Detailed product information with images
-- **Inquiries**: Buyer to farmer communication
-- **Permissions**: Role-based access control
-- **Filtering**: Advanced search and filtering
-- **Image Uploads**: Media file management
+## API URLs
 
-## API Endpoints
+- API base: `http://127.0.0.1:8000/api/`
+- Swagger UI: `http://127.0.0.1:8000/api/docs/`
+- Schema: `http://127.0.0.1:8000/api/schema/`
+- Admin: `http://127.0.0.1:8000/admin/`
 
-### Authentication
-- `POST /api/auth/register/` - Register new user
-- `POST /api/auth/login/` - Login (get JWT tokens)
-- `POST /api/auth/refresh/` - Refresh access token
+## Important Endpoints
 
-### Listings
-- `GET /api/listings/` - List all listings (with filters)
-- `POST /api/listings/` - Create new listing (farmers)
-- `GET /api/listings/{id}/` - Get listing details
-- `PUT /api/listings/{id}/` - Update listing
-- `DELETE /api/listings/{id}/` - Delete listing
-- `GET /api/listings/my_listings/` - Get farmer's listings
+Authentication:
 
-### Inquiries
-- `GET /api/inquiries/` - List inquiries
-- `POST /api/inquiries/` - Create inquiry
-- `GET /api/inquiries/buyer/` - Get buyer's inquiries
-- `GET /api/inquiries/farmer/` - Get farmer's inquiries
+- `POST /api/auth/register/`
+- `POST /api/auth/login/`
+- `POST /api/auth/refresh/`
+- `GET /api/auth/profile/me/`
 
-### Farmers
-- `GET /api/farmers/me/` - Get farmer profile
-- `PUT /api/farmers/me/` - Update farmer profile
+Listings:
 
-## Admin Panel
+- `GET /api/listings/`
+- `POST /api/listings/`
+- `GET /api/listings/{id}/`
+- `PUT /api/listings/{id}/`
+- `DELETE /api/listings/{id}/`
+- `GET /api/listings/my_listings/`
 
-Access Django admin at `http://localhost:8000/admin/`
+Inquiries:
 
-## Technologies
+- `POST /api/inquiries/`
+- `GET /api/inquiries/buyer/`
+- `GET /api/inquiries/farmer/`
+- `PATCH /api/inquiries/{id}/mark_responded/`
 
-- Django 4.2
-- Django REST Framework
-- SimpleJWT
-- PostgreSQL
-- Pillow (Image processing)
-- Django Filters
-- CORS Headers
+AI:
 
+- `POST /api/ai/classify-tomato/`
+- `POST /api/ai/recommend-price/`
 
+## AI Runtime Files
 
+The runtime model files are stored under:
 
-cd "AI Market Linkage"
-pip install tensorflow numpy matplotlib scikit-learn pillow
-python ai_model/train_model.py
+```text
+backend/ai_service/model/tomato_classifier.h5
+backend/ai_service/price_model/price_model.pkl
+backend/ai_service/price_model/encoders.pkl
+```
 
+The training scripts and source artifacts are stored under `../ai_model/`.
 
+## Price Location Fallback
 
-pip install seaborn
+The price model was trained on selected market cities. If the user enters an untrained town, the backend attempts to map it to the nearest trained market city. If no confident mapping exists, it uses a general default market location so the user still receives a recommendation.
+
+## Validation
+
+```bash
+python manage.py check
+python manage.py test
+```
+
+## Production Notes
+
+Before deployment:
+
+- Set `DEBUG=False`.
+- Use a strong `SECRET_KEY`.
+- Configure `ALLOWED_HOSTS`.
+- Configure CORS for the real frontend domain.
+- Enable HTTPS and secure cookie settings.
+- Configure production static and media file serving.
+- Use a backed-up PostgreSQL database.

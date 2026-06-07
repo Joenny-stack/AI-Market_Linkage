@@ -1,142 +1,249 @@
-# Manual Test Cases (TC01-TC10)
+# Manual Test Cases
 
-This document is for running the project test cases manually for documentation.
+Use these test cases to collect screenshots and evidence for the project report or defense.
 
-## 1. Environment Setup
+## Environment
 
- 'python.exe manage.py runserver`
- Start frontend (new terminal):
-   - `cd "AI Market Linkage/frontend"`
-   - `npm install`
-   - `npm run dev`
+Backend:
 
-Base API URL: `http://127.0.0.1:8000/api`
-Frontend URL: `http://127.0.0.1:5173`
+```bash
+cd "AI Market Linkage/backend"
+python manage.py migrate
+python manage.py runserver
+```
 
-## 2. Accounts to Prepare
+Frontend:
 
-Create one farmer and one buyer account using UI registration or API:
-- Farmer: role `FARMER`
-- Buyer: role `BUYER`
+```bash
+cd "AI Market Linkage/frontend"
+npm install
+npm run dev
+```
 
-## 3. Test Data Files
+Default URLs:
 
-Prepare these files:
-- Valid tomato image: under 5MB (jpg/png/webp)
-- Low-quality tomato image (poor lighting)
-- Large image file: over 5MB
+- API: `http://127.0.0.1:8000/api/`
+- Frontend: `http://127.0.0.1:5173`
 
-## 4. Manual Test Execution Matrix
+## Accounts
 
-### TC01 - User login (valid)
-Objective: Verify successful login.
-- Input: Correct email and password.
-- Steps:
-  1. Open frontend login page.
-  2. Enter valid farmer credentials.
-  3. Submit.
-- Expected Result: Redirect to dashboard.
-- Evidence to Capture: Dashboard screenshot with logged-in user.
+Prepare at least:
 
-### TC02 - User login (invalid)
-Objective: Verify login error handling.
-- Input: Wrong password.
-- Steps:
-  1. Open frontend login page.
-  2. Enter valid email with incorrect password.
-  3. Submit.
-- Expected Result: Error message shown.
-- Evidence to Capture: Screenshot showing failed login message.
+- one farmer account
+- one buyer account
+- one admin account if admin screenshots are needed
 
-### TC03 - Upload listing
-Objective: Verify listing creation with image and AI fields.
-- Input: Product details + valid image.
-- Steps:
-  1. Login as farmer.
-  2. Go to create listing form.
-  3. Fill required fields (crop, quantity, unit=kg, price, location, province, district, harvest date).
-  4. Attach valid image.
-  5. Submit.
-- Expected Result: Listing created and saved with AI result fields.
-- Evidence to Capture: Listing detail screenshot and API response payload.
+## Test Images
 
-### TC04 - AI classification
-Objective: Verify classification output values appear.
-- Input: Clear tomato image.
-- Steps:
-  1. Repeat TC03 using a clear ripe tomato image.
-  2. Open created listing details.
-- Expected Result: Class and grade returned (for example Ripe, Grade A) with confidence value.
-- Evidence to Capture: API response containing `predicted_class`, `quality_grade`, `confidence_score`.
+Prepare:
 
-### TC05 - Price recommendation
-Objective: Verify AI recommended price is returned.
-- Input: Crop + grade + quantity.
-- Steps:
-  1. Create listing as in TC03.
-  2. Inspect response details.
-- Expected Result: Recommended price is populated.
-- Evidence to Capture: API response containing `recommended_price` / `ai_price_recommendation`.
+- a clear tomato image under 5 MB
+- a poor-quality or poorly lit tomato image
+- an image larger than 5 MB for upload validation
 
-### TC06 - Missing image
-Objective: Verify listing image is mandatory on create.
-- Input: Product details without image.
-- Steps:
-  1. Login as farmer.
-  2. Submit listing form without attaching image.
-- Expected Result: Validation error with message `Image file is required.`
-- Evidence to Capture: Error toast/screenshot and API 400 response.
+## TC01 - Register Farmer
 
-### TC07 - Invalid quantity
-Objective: Verify negative quantity validation.
-- Input: Negative quantity value.
-- Steps:
-  1. Login as farmer.
-  2. Fill listing form with quantity `< 0`.
-  3. Attach valid image and submit.
-- Expected Result: Validation error for quantity.
-- Evidence to Capture: API 400 response with `quantity_available` error.
+Objective: verify farmer registration.
 
-### TC08 - Unauthorized access
-Objective: Verify buyer cannot access farmer-only create listing API.
-- Input: Buyer account creating listing.
-- Steps:
-  1. Login as buyer.
-  2. Attempt to create listing.
-- Expected Result: Access denied (`403`).
-- Evidence to Capture: Network tab / API response status 403.
+Steps:
 
-### TC09 - AI classification (poor lighting)
-Objective: Observe model behavior on low-quality images.
-- Input: Poor lighting tomato image.
-- Steps:
-  1. Login as farmer.
-  2. Create listing with low-quality image.
-- Expected Result: Classification may degrade; document actual class and confidence.
-- Evidence to Capture: Listing response and side-by-side sample image.
+1. Open the register page.
+2. Select `Farmer`.
+3. Enter name, email, phone, and password.
+4. Submit the form.
 
-### TC10 - Large image upload
-Objective: Verify oversized image rejection.
-- Input: Image larger than 5MB.
-- Steps:
-  1. Login as farmer.
-  2. Attempt listing create with image file > 5MB.
-- Expected Result: Rejected with validation error (5MB limit).
-- Evidence to Capture: API 400 response and screenshot.
+Expected result:
 
-## 5. API Endpoints Used
+- Account is created.
+- User can login as a farmer.
 
-- Login: `POST /api/auth/login/`
-- Listings create: `POST /api/listings/`
-- Listings list: `GET /api/listings/`
+Evidence:
 
-## 6. Notes for Documentation
+- Registration screen.
+- Successful login/dashboard screen.
 
-- For each TC, record:
-  - Date/time
-  - Tester
-  - Input used
-  - Expected result
-  - Actual result
-  - Status (Pass/Fail/Partial Pass)
-  - Screenshot or response JSON snippet
+## TC02 - Register Buyer
+
+Objective: verify buyer registration.
+
+Steps:
+
+1. Open the register page.
+2. Select `Buyer`.
+3. Enter name, email, phone, and password.
+4. Submit the form.
+
+Expected result:
+
+- Account is created.
+- User can login as a buyer.
+
+## TC03 - Login Valid User
+
+Objective: verify successful authentication.
+
+Steps:
+
+1. Open login page.
+2. Enter valid email and password.
+3. Submit.
+
+Expected result:
+
+- User is redirected to the correct dashboard for their role.
+
+## TC04 - Login Invalid User
+
+Objective: verify login error handling.
+
+Steps:
+
+1. Open login page.
+2. Enter valid email with wrong password.
+3. Submit.
+
+Expected result:
+
+- Error message is shown.
+- User is not logged in.
+
+## TC05 - Create Listing With Image
+
+Objective: verify farmer listing creation.
+
+Steps:
+
+1. Login as farmer.
+2. Open create listing page.
+3. Enter crop, category, description, quantity, unit, price, location, province, district, and harvest date.
+4. Upload a valid image.
+5. Submit.
+
+Expected result:
+
+- Listing is created.
+- Listing appears in farmer listings and public browse.
+
+## TC06 - Tomato AI Classification
+
+Objective: verify image quality prediction.
+
+Steps:
+
+1. Login as farmer.
+2. Create a tomato listing.
+3. Upload a clear tomato image.
+
+Expected result:
+
+- AI quality result appears.
+- Response includes `predicted_class`, `quality_grade`, and `confidence_score`.
+
+Evidence:
+
+- Screenshot of the AI result.
+- API payload or listing detail showing AI fields.
+
+## TC07 - Price Recommendation
+
+Objective: verify recommended price output.
+
+Steps:
+
+1. Create or edit a listing.
+2. Enter crop, quantity, location/province, and upload a tomato image to produce a grade.
+3. Wait for price recommendation.
+
+Expected result:
+
+- Recommended price appears.
+- Listing response contains `recommended_price` or `ai_price_recommendation`.
+
+## TC08 - Unknown Town Price Fallback
+
+Objective: verify price recommendation does not fail for towns outside the training data.
+
+Steps:
+
+1. Create a listing with a town such as `Kwekwe`, `Chinhoyi`, or an unknown rural ward.
+2. Complete crop, grade, and quantity inputs.
+
+Expected result:
+
+- Price recommendation is still returned.
+- The backend maps known untrained towns to a nearest trained market city or falls back to a general market price.
+
+## TC09 - GPS and Manual Coordinates
+
+Objective: verify location capture.
+
+Steps:
+
+1. Open create listing page.
+2. Click `Use My GPS Location`.
+3. Check detected accuracy and coordinates.
+4. If location is wrong, clear GPS and manually enter latitude/longitude.
+
+Expected result:
+
+- User can use GPS only when correct.
+- User can manually correct coordinates before saving.
+
+## TC10 - Map View
+
+Objective: verify map-based discovery.
+
+Steps:
+
+1. Create one or more listings with coordinates.
+2. Open the listings map.
+
+Expected result:
+
+- Listings with valid latitude/longitude appear as map markers.
+- Marker popup links to listing details.
+
+## TC11 - Buyer Inquiry
+
+Objective: verify buyer-to-farmer inquiry flow.
+
+Steps:
+
+1. Login as buyer.
+2. Open a listing detail page.
+3. Send an inquiry.
+4. Login as the farmer who owns the listing.
+5. Open farmer inquiries.
+
+Expected result:
+
+- Buyer inquiry is created.
+- Farmer can view it.
+
+## TC12 - Validation Errors
+
+Objective: verify invalid listing input is rejected.
+
+Scenarios:
+
+- Missing image on create.
+- Quantity less than or equal to zero.
+- Unit other than `kg`.
+- Image larger than 5 MB.
+
+Expected result:
+
+- API or UI shows validation error.
+- Invalid listing is not saved.
+
+## Evidence Template
+
+For each test case, record:
+
+- tester name
+- date
+- input data
+- expected result
+- actual result
+- pass/fail status
+- screenshot or API response snippet
