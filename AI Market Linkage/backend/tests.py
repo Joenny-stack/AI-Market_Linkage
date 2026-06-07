@@ -8,6 +8,7 @@ from rest_framework import status
 from rest_framework.test import APITestCase
 
 from listings.location_utils import map_location_to_coordinates
+from ai_service.location_normalization import normalize_location_for_model
 
 User = get_user_model()
 
@@ -106,6 +107,38 @@ class PriceRecommendationTestCase(APITestCase):
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertGreater(response.data['recommended_price'], 0)
 
+    def test_price_recommendation_uses_nearest_market_for_untrained_city(self):
+        self.client.force_authenticate(user=self.buyer)
+        response = self.client.post(
+            reverse('recommend-price'),
+            {
+                'crop': 'Tomatoes',
+                'location': 'Kwekwe',
+                'grade': 'Grade A',
+                'quantity': 50,
+            },
+            format='json'
+        )
+
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertGreater(response.data['recommended_price'], 0)
+
+    def test_price_recommendation_uses_default_market_for_unknown_city(self):
+        self.client.force_authenticate(user=self.buyer)
+        response = self.client.post(
+            reverse('recommend-price'),
+            {
+                'crop': 'Tomatoes',
+                'location': 'Unknown Rural Ward',
+                'grade': 'Grade A',
+                'quantity': 50,
+            },
+            format='json'
+        )
+
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertGreater(response.data['recommended_price'], 0)
+
 
 class LocationMappingTestCase(APITestCase):
     """Test location-to-coordinate fallback mapping."""
@@ -113,3 +146,8 @@ class LocationMappingTestCase(APITestCase):
     def test_combined_location_maps_to_city_coordinates(self):
         self.assertEqual(map_location_to_coordinates('Gweru, Midlands'), (-19.45, 29.81))
         self.assertEqual(map_location_to_coordinates('Harare Province'), (-17.83, 31.05))
+
+    def test_untrained_price_location_maps_to_nearest_trained_market(self):
+        known_locations = ['Bulawayo', 'Gweru', 'Harare', 'Kadoma', 'Masvingo', 'Mutare']
+        self.assertEqual(normalize_location_for_model('Kwekwe', known_locations), ('Gweru', 'nearest-city'))
+        self.assertEqual(normalize_location_for_model('Unknown Rural Ward', known_locations), ('Harare', 'default-market'))
